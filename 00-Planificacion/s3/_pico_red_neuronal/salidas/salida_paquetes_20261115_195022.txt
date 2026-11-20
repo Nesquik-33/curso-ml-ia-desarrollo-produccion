@@ -1,0 +1,5 @@
+python 3.11.18  2026-11-15 19:50:22
+A_onnxruntime: 51 paquetes, ruedas 83.2 MB, descomprimido 263.5 MB; mayores: [('onnxruntime-1.32.0-cp311-cp311-manylinux_2_28_x86_64.whl', 75.7), ('numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl', 57.4), ('pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl', 43.6)]
+B_pytorch_cpu: 58 paquetes, ruedas 275.3 MB, descomprimido 981.5 MB; mayores: [('torch-2.15.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl', 752.5), ('numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl', 57.4), ('pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl', 43.6)]
+C_scikit_learn_(MLP): 54 paquetes, ruedas 100.9 MB, descomprimido 336.6 MB; mayores: [('scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl', 114.3), ('numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl', 57.4), ('pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl', 43.6)]
+imagen base: 45.6 MB comprimida

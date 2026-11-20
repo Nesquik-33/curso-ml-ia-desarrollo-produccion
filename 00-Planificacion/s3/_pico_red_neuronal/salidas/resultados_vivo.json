@@ -1,0 +1,110 @@
+{
+  "curva_aprendizaje_mnet128_C0.1": [
+    {
+      "exactitud": 0.7778,
+      "ic95": [
+        0.7472,
+        0.8069
+      ],
+      "n_test": 720,
+      "por_clase": 10,
+      "n_train": 20,
+      "segundos_rasgos_y_cabeza": 0.1
+    },
+    {
+      "exactitud": 0.8319,
+      "ic95": [
+        0.8056,
+        0.8583
+      ],
+      "n_test": 720,
+      "por_clase": 25,
+      "n_train": 50,
+      "segundos_rasgos_y_cabeza": 0.1
+    },
+    {
+      "exactitud": 0.8903,
+      "ic95": [
+        0.8681,
+        0.9111
+      ],
+      "n_test": 720,
+      "por_clase": 50,
+      "n_train": 100,
+      "segundos_rasgos_y_cabeza": 0.2
+    },
+    {
+      "exactitud": 0.9111,
+      "ic95": [
+        0.8903,
+        0.9319
+      ],
+      "n_test": 720,
+      "por_clase": 100,
+      "n_train": 200,
+      "segundos_rasgos_y_cabeza": 0.3
+    },
+    {
+      "exactitud": 0.9278,
+      "ic95": [
+        0.9083,
+        0.9459
+      ],
+      "n_test": 720,
+      "por_clase": 300,
+      "n_train": 600,
+      "segundos_rasgos_y_cabeza": 0.7
+    },
+    {
+      "exactitud": 0.9292,
+      "ic95": [
+        0.9097,
+        0.9472
+      ],
+      "n_test": 720,
+      "por_clase": 600,
+      "n_train": 1200,
+      "segundos_rasgos_y_cabeza": 1.3
+    },
+    {
+      "exactitud": 0.9389,
+      "ic95": [
+        0.9208,
+        0.9556
+      ],
+      "n_test": 720,
+      "por_clase": 1680,
+      "n_train": 3360,
+      "segundos_rasgos_y_cabeza": 3.2
+    }
+  ],
+  "subconjunto_repartible_600_por_clase_train_+_360_test": {
+    "jpeg_q90": {
+      "imagenes": 1920,
+      "MB_total": 12.35,
+      "KB_por_imagen": 6.4
+    },
+    "jpeg_q80": {
+      "imagenes": 1920,
+      "MB_total": 8.74,
+      "KB_por_imagen": 4.5
+    }
+  },
+  "en_vivo_600_por_clase": {
+    "1_leer_1200_jpeg_128px": 0.5,
+    "2_rasgos_mobilenet_1200_fotos": 1.0,
+    "3_ajustar_cabeza_logistica": 0.0,
+    "4_exportar_onnx": 0.3,
+    "5_registrar_en_mlflow_con_firma": 5.7,
+    "6_cargar_pyfunc_y_predecir_5": 0.1,
+    "total_s": 7.6,
+    "exactitud_test": {
+      "exactitud": 0.9333,
+      "ic95": [
+        0.9139,
+        0.95
+      ],
+      "n_test": 720
+    }
+  }
+}

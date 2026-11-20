@@ -1,0 +1,43 @@
+ENSAYO LOCAL, NO ES GCP: salida real de las tres ordenes sueltas de la migracion que usa la guia (las mismas que ejecuta el ensayo, una a una).
+Ejecutado el 20/11/2026 en local (Python 3.11.18 del entorno env-ia-mlops), desde 04-Proyecto-Base, con CARPETA = una carpeta temporal fuera del repositorio.
+Los bytes y las huellas se repiten entre ejecuciones; los segundos no.
+----------------------------------------------------------------------------------------------------
+$ python -m ia_mlops.migracion exportar --db data/processed/curso.db --salida CARPETA
+fs_catalogo                 13 filas       2668 bytes
+fs_cliente_corte           990 filas      31002 bytes
+master_calidad              13 filas       2918 bytes
+master_clientes            150 filas       5555 bytes
+master_descartes           953 filas       5914 bytes
+master_facturas           1430 filas      26023 bytes
+master_lineas            22117 filas     270390 bytes
+master_productos          3077 filas      67217 bytes
+ml_dataset                 990 filas      31693 bytes
+ml_particiones              10 filas       1476 bytes
+TOTAL 29743 filas, 444856 bytes de Parquet, 1.801 s
+(codigo de salida 0; la carpeta queda con 10 .parquet, esquema.json, conteos.json y MANIFEST.sha256)
+
+$ python -m ia_mlops.migracion huella verificar CARPETA
+coincide conteos.json: huella igual
+coincide esquema.json: huella igual
+coincide fs_catalogo.parquet: huella igual
+coincide fs_cliente_corte.parquet: huella igual
+coincide master_calidad.parquet: huella igual
+coincide master_clientes.parquet: huella igual
+coincide master_descartes.parquet: huella igual
+coincide master_facturas.parquet: huella igual
+coincide master_lineas.parquet: huella igual
+coincide master_productos.parquet: huella igual
+coincide ml_dataset.parquet: huella igual
+coincide ml_particiones.parquet: huella igual
+(codigo de salida 0)
+
+$ python -m ia_mlops.migracion validar --db data/processed/curso.db --destino CARPETA --json CARPETA/validacion.json
+(... 62 lineas como las de validar.txt ...)
+  coincide  ml_dataset.parquet        huella    huella igual
+  coincide  ml_particiones.parquet    huella    huella igual
+RESULTADO: coincide (62 comprobaciones)
+(codigo de salida 0)
+
+$ python -m ia_mlops.migracion validar --db data/processed/curso.db
+Error: Indica el destino con --destino CARPETA o con --bigquery PROYECTO.DATASET (uno de los dos)
+(codigo de salida 2: uso incorrecto)

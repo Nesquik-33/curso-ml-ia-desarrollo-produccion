@@ -155,15 +155,49 @@ SESIONES = [
         ],
     ),
     dict(
-        id='S3', titulo='Despliegue en la nube (red neuronal opcional)', horas='4 h', carpeta=S3, estado=SOLO_README, esperados=TODOS,
-        resumen='Migrar de local a GCP: Cloud Storage, BigQuery, Secret Manager, Artifact Registry y Cloud Run. Kubernetes en Codespaces si hay tiempo.',
+        id='S3', titulo='Laboratorios: el servicio de S2, MLflow, GitHub Actions y una red neuronal', horas='4 h', carpeta=S3, estado=PREPARADO,
+        esperados=['guion', 'checklist', 'teoria', 'practica', 'tarea', 'rubrica', 'evidencia'],
+        resumen='Cuatro laboratorios en el orden en que se construye el sistema: 1) el servicio de S2 (la API, la inferencia, las variables FS al vuelo y la interfaz); '
+                '2) MLflow (de dónde sale el modelo: runs, comparación, firma y versiones del registro); 3) GitHub Actions (cada cambio se comprueba solo: '
+                'verde, rojo, verde); 4) extra: una red neuronal, ¿perro o gato?, registrada en MLflow como un modelo más. GCP se explica para llegar a S4 con '
+                'Google Cloud activado. Tarea (avance 3): workflow con una prueba propia en rojo y en verde, y Google Cloud activado.',
+        nota='Cambio del 20/11/2026: la migración a GCP en vivo pasa a S4; la teoría y la guía de GCP de esta carpeta son material de preparación para S4. '
+             'Las capturas son reales (Codespace del curso y GitHub Actions, 20/11/2026); en la red neuronal, entrenar, MLflow y predecir se capturaron en local. '
+             'Las presentaciones de la sesión son los cuatro laboratorios (no hay slides/index.html). Minutos de cada bloque: en el guion.',
         enlaces=[
+            deck('1 · Laboratorio-recap de S2: interfaz, inferencia y variables al vuelo', f'{S3}/laboratorio-recap-s2/index.html',
+                 'Bloque 1 (70 min en clase). La API (/docs, una predicción y un lote), las variables FS calculadas al vuelo y comparadas con la tabla, la interfaz y vivo frente a listo. '
+                 'Órdenes para copiar y capturas de un Codespace real.', volver=True),
+            deck('2 · Laboratorio de MLflow: experimentos, comparación y registro de modelos', f'{S3}/laboratorio-mlflow/index.html',
+                 'Bloque 2 (35 min). La base de MLflow del proyecto, la interfaz en el puerto 5000, runs y métricas, comparar modelos, la firma, '
+                 'versiones del modelo registrado (reentrenar → versión 2) y cargarlo desde Python. Capturas reales del Codespace.', volver=True),
+            deck('3 · Laboratorio de GitHub Actions: romper y arreglar', f'{S3}/laboratorio-github-actions/index.html',
+                 'Bloque 3 (70 min). Un workflow que ejecuta las pruebas del proyecto en tu rama: verde, rotura a propósito, rojo, leer el registro y arreglar. Capturas reales.', volver=True),
+            deck('4 · Extra: red neuronal, ¿perro o gato?', f'{S3}/laboratorio-red-neuronal/index.html',
+                 'Bloque 4 (20 min). Transferencia: MobileNetV3-small congelada + regresión logística sobre fotos de Oxford-IIIT Pet; entrenar en segundos, '
+                 'registrar en MLflow y predecir una foto (93 % en test: 6 fallos de 90). Replicarlo es autoestudio.', volver=True),
+            deck('Recap de S2 (diapositivas resumen)', '01-Sesiones/recap/recap-02/index.html', 'S2 en cinco minutos, con autoevaluación.'),
+            alumno('1 · Guía del laboratorio-recap de S2', f'{S3}/laboratorio-recap-s2/guia.md', 'El mismo recorrido en texto: cada orden, qué debes ver y si falla.'),
+            alumno('2 · Guía del laboratorio de MLflow', f'{S3}/laboratorio-mlflow/guia.md', 'El mismo recorrido en texto: cada orden, qué debes ver y si falla.'),
+            alumno('3 · Guía del laboratorio de GitHub Actions', f'{S3}/laboratorio-github-actions/guia.md', 'El YAML línea a línea y los ocho pasos del laboratorio.'),
+            alumno('3 · El workflow del laboratorio', f'{S3}/laboratorio-github-actions/pruebas-proyecto.yml', 'Se copia en .github/workflows/ de tu copia del repositorio.'),
+            alumno('4 · Guía del laboratorio de red neuronal', f'{S3}/laboratorio-red-neuronal/guia.md', 'Instalar, preparar las fotos, entrenar, ver en MLflow y predecir.'),
+            alumno('4 · Script del laboratorio de red neuronal', f'{S3}/laboratorio-red-neuronal/red_gato_perro.py', 'Subórdenes datos, entrenar y predecir.'),
+            alumno('Tarea (avance 3)', f'{S3}/tarea/README.md', 'Entrega: miércoles 25/11/2026, 10:00 (hora de Perú).'),
+            alumno('Rúbrica', f'{S3}/tarea/rubrica.md', '20 % reproducibilidad · 40 % técnica · 40 % análisis y decisión.'),
+            alumno('Plantilla del avance 3', f'{S3}/evidencias/plantilla-avance-3.md', 'La evidencia que se entrega.'),
+            alumno('Activa Google Cloud para S4', f'{S3}/preparar-gcp-para-s4.md', 'Lo obligatorio: cuenta de Google y Google Cloud activado; no crear nada todavía.'),
+            alumno('Checklist', f'{S3}/checklist.md'),
+            alumno('Teoría de la migración a GCP (para S4)', f'{S3}/teoria/README.md', 'Fases, estrategias, mapa de equivalencias, identidad, secretos y costes.'),
+            alumno('Guía de migración a GCP (para S4)', f'{S3}/practica/guia-laboratorio.md', 'Ruta con nube y ruta sin nube; los pasos de GCP, sin verificar.'),
+            alumno('SDK de Google Cloud en VS Code y en el Codespace', f'{ENTORNO}/guias/sdk-google-cloud-vscode-y-codespaces.md', 'Instalar gcloud, iniciar sesión sin pegar claves y comprobar la conexión.'),
+            alumno('Ensayo local de la migración (para S4)', f'{S3}/practica/ensayo-local/LEEME.md', 'Salidas reales de exportar y validar sin nube; no es GCP.'),
+            alumno('Guía de migración de local a GCP (general)', f'{ENTORNO}/guias/migracion-on-premise-a-gcp.md', 'El hilo de la migración, para S4.'),
             deck('Docker, Kubernetes y GKE', f'{ENTORNO}/guia-docker-kubernetes-gke/index.html',
-                 'Conceptos con dibujos, práctica real con kind en el Codespace (con capturas), GKE explicado, chuleta y ejercicios.'),
-            alumno('Chuleta de Docker, kubectl y GKE', f'{ENTORNO}/guia-docker-kubernetes-gke/chuleta.md', 'Para imprimir.'),
-            alumno('Ejercicios de Kubernetes con solución', f'{ENTORNO}/guia-docker-kubernetes-gke/ejercicios.md', 'Seis ejercicios; cada uno dice si se comprobó.'),
-            alumno('Guía de migración de local a GCP', f'{ENTORNO}/guias/migracion-on-premise-a-gcp.md', 'Ya escrita; es el hilo de S3.'),
-            instructor('README de S3', f'{S3}/README.md'),
+                 'Autoestudio: conceptos, práctica con kind en el Codespace, GKE explicado, chuleta y ejercicios.'),
+            instructor('README de S3', f'{S3}/README.md', 'Agenda y orden de uso del material.'),
+            instructor('Guion', f'{S3}/guion.md', '240 min por bloques y qué hacer si algo falla.'),
+            instructor('Carpeta slides/ (estado)', f'{S3}/slides/README.md', 'Vacía a propósito: las presentaciones de S3 son los cuatro laboratorios; lo demás es del plan previo (S4).'),
         ],
     ),
     dict(

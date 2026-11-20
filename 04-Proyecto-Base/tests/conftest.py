@@ -106,3 +106,20 @@ def arrancar_servidor(tmp_path):
         proceso.terminate()
         proceso.wait(timeout=10)
         f.close()
+
+
+# ------------------------------------------------------------------------------------------------ marca «gcp»
+def omitir_gcp(items, entorno=None):
+    """Las pruebas marcadas @pytest.mark.gcp necesitan una cuenta real de GCP: se omiten salvo que CURSO_PRUEBAS_GCP=1. Nunca fallan en CI."""
+    import os
+    entorno = os.environ if entorno is None else entorno
+    if entorno.get('CURSO_PRUEBAS_GCP') == '1':
+        return
+    omitir = pytest.mark.skip(reason='necesita GCP real: se omite por defecto (CURSO_PRUEBAS_GCP=1 para ejecutarla)')
+    for item in items:
+        if item.get_closest_marker('gcp'):
+            item.add_marker(omitir)
+
+
+def pytest_collection_modifyitems(config, items):
+    omitir_gcp(items)

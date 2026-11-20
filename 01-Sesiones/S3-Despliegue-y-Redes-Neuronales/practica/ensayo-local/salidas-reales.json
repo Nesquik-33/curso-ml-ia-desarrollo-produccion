@@ -1,0 +1,124 @@
+{
+  "rotulo": "ENSAYO LOCAL, NO ES GCP",
+  "entorno": {
+    "python": "3.11.18",
+    "pyarrow": "26.0.1",
+    "sqlite": "3.54.1",
+    "sistema": "Windows"
+  },
+  "inventario": {
+    "segundos": 0.016,
+    "tablas_a_migrar": 10,
+    "tablas_no_migradas": 7,
+    "bytes_sqlite": 7520256,
+    "filas_total": 29743
+  },
+  "exportar": {
+    "tablas": {
+      "fs_catalogo": {
+        "filas": 13,
+        "columnas": 5,
+        "bytes_parquet": 2668,
+        "segundos": 0.895
+      },
+      "fs_cliente_corte": {
+        "filas": 990,
+        "columnas": 15,
+        "bytes_parquet": 31002,
+        "segundos": 0.018
+      },
+      "master_calidad": {
+        "filas": 13,
+        "columnas": 6,
+        "bytes_parquet": 2918,
+        "segundos": 0.005
+      },
+      "master_clientes": {
+        "filas": 150,
+        "columnas": 4,
+        "bytes_parquet": 5555,
+        "segundos": 0.005
+      },
+      "master_descartes": {
+        "filas": 953,
+        "columnas": 2,
+        "bytes_parquet": 5914,
+        "segundos": 0.006
+      },
+      "master_facturas": {
+        "filas": 1430,
+        "columnas": 5,
+        "bytes_parquet": 26023,
+        "segundos": 0.013
+      },
+      "master_lineas": {
+        "filas": 22117,
+        "columnas": 7,
+        "bytes_parquet": 270390,
+        "segundos": 0.126
+      },
+      "master_productos": {
+        "filas": 3077,
+        "columnas": 3,
+        "bytes_parquet": 67217,
+        "segundos": 0.018
+      },
+      "ml_dataset": {
+        "filas": 990,
+        "columnas": 17,
+        "bytes_parquet": 31693,
+        "segundos": 0.021
+      },
+      "ml_particiones": {
+        "filas": 10,
+        "columnas": 4,
+        "bytes_parquet": 1476,
+        "segundos": 0.006
+      }
+    },
+    "filas_total": 29743,
+    "bytes_parquet_total": 444856,
+    "segundos_total": 1.137
+  },
+  "huellas_sha256": {
+    "conteos.json": "82439ab151e825ae13ce74717c1fed697af4945df159e14d805319aae8cc6052",
+    "esquema.json": "e592a4e32b5383f24365042ba6146780cf34f3098f2503980d6813a00d330906",
+    "fs_catalogo.parquet": "c34bc8f1f1870d0f86f2d8a2a7d8a387d5bd3e4a6112f2a239f40b972a066293",
+    "fs_cliente_corte.parquet": "4f95349c42303bc5d47341fd883ae4cc3ca80de36b38e29c1a3f99256466fd75",
+    "master_calidad.parquet": "a35d00524f5f4b3073b32719bce47a481e7d350ff5ab967b038d9549059d9f59",
+    "master_clientes.parquet": "84bfe42699ec8ed6d4664ac00f1ba2d0d5434cb8ab1a00b131a39e0b999cd27c",
+    "master_descartes.parquet": "c982b8d306288ffe6948085351ebfc3844fb024605f77001e901742834a3cda5",
+    "master_facturas.parquet": "5a4b6686cad200a84febd25ff9cda4d73a4d2c055f9304cb20efb61d56329107",
+    "master_lineas.parquet": "cd37064dcca60ff7e7edb76934a98812b042bb8d1a9f295a57c998a74f732b8a",
+    "master_productos.parquet": "89d2765b8d2e466317958957a57ed4058941898b408032c41d0c64122d139b2d",
+    "ml_dataset.parquet": "c9207ba5b74322574893b3ab95e32b4c15d8d41edb054925309829253c403448",
+    "ml_particiones.parquet": "55b448d618e4c7c002d64c11c952a7932bfba9337271009aa874cfae227b191a"
+  },
+  "verificar_huella": {
+    "archivos": 12,
+    "todos_coinciden": true,
+    "segundos": 0.014
+  },
+  "validar": {
+    "resultado": "coincide",
+    "comprobaciones": 62,
+    "fallos": 0,
+    "segundos": 0.219
+  },
+  "validar_exhaustivo": {
+    "resultado": "coincide",
+    "comprobaciones": 62,
+    "segundos": 0.351
+  },
+  "rotura_deliberada": {
+    "tabla": "master_lineas",
+    "rotura": "se borra una fila del Parquet",
+    "resultado": "difiere",
+    "comprobaciones_que_fallan": [
+      "master_lineas:filas",
+      "master_lineas:agregados",
+      "master_lineas:muestra",
+      "master_lineas.parquet:huella"
+    ]
+  }
+}

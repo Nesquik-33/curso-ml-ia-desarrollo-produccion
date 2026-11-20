@@ -1,0 +1,13 @@
+MODO MOSTRAR, NO ES GCP: salida real del script sin opciones. No crea nada ni llama a gcloud (en esta prueba gcloud ni siquiera estaba en el PATH).
+Orden: bash deploy/cloud-run/desplegar.sh   (desde 04-Proyecto-Base; sin env.sh y sin variables CURSO_GCP_*, por eso salen los marcadores TU-...)
+Ejecutado el 20/11/2026 en local con bash 5.2. Codigo de salida: 0
+----------------------------------------------------------------------------------------------------
+### MODO MOSTRAR: solo se imprimen las ordenes, NO se ejecuta nada. Para ejecutarlas anade --ejecutar.
+
+== Desplegar retencion-api (privado, minimo 0, maximo 2) con la imagen retencion-api:s3-1
+   (memoria sin fijar: mide primero con docker stats y define CURSO_GCP_MEMORIA)
++ gcloud run deploy retencion-api --project TU-PROYECTO --region TU-REGION --image TU-REGION-docker.pkg.dev/TU-PROYECTO/curso-ml-imagenes/retencion-api:s3-1 --no-allow-unauthenticated --min-instances 0 --max-instances 2 --port 8080 --service-account sa-retencion-api@TU-PROYECTO.iam.gserviceaccount.com --set-secrets CURSO_DEMO_SECRETO=curso-ml-demo-secreto:1 --set-env-vars CURSO_LOG_NIVEL=INFO --labels=curso=ml-ia
+
+== Comprobacion (solo lecturas): el servicio NO debe permitir invocaciones publicas
++ gcloud run services describe retencion-api --project TU-PROYECTO --region TU-REGION --format value\(status.url\,spec.template.spec.serviceAccountName\)
++ gcloud run services get-iam-policy retencion-api --project TU-PROYECTO --region TU-REGION

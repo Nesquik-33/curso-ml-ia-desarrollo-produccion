@@ -1,0 +1,448 @@
+{
+  "fotos": {
+    "salud": {
+      "estado": "ok",
+      "lado_entrada": 128,
+      "clases": [
+        "gato",
+        "perro"
+      ]
+    },
+    "max_dif_api_vs_directo_(50 imagenes, redondeo a 4 decimales)": 4.936246871944938e-05,
+    "exif_aplicado_(las_dos_probabilidades_deben_ser_casi_iguales)": [
+      {
+        "gato": 0.2577,
+        "perro": 0.7423
+      },
+      {
+        "gato": 0.2999,
+        "perro": 0.7001
+      }
+    ],
+    "latencia_peticion_imagen_ya_del_tamano_del_modelo_ms": {
+      "mediana": 73.3,
+      "p95": 115.5
+    },
+    "latencia_foto_real_jpeg_ms": {
+      "mediana": 52.2,
+      "p95": 118.9,
+      "bytes": 153697
+    },
+    "casos": {
+      "png_test_0": {
+        "http": 200,
+        "ms": 56.0,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.7032,
+            "perro": 0.2968
+          }
+        }
+      },
+      "png_test_1": {
+        "http": 200,
+        "ms": 143.6,
+        "cuerpo": {
+          "etiqueta": "perro",
+          "probabilidades": {
+            "gato": 0.0,
+            "perro": 1.0
+          }
+        }
+      },
+      "png_test_2": {
+        "http": 200,
+        "ms": 215.0,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9981,
+            "perro": 0.0019
+          }
+        }
+      },
+      "RGBA con transparencia": {
+        "http": 200,
+        "ms": 174.1,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.7032,
+            "perro": 0.2968
+          }
+        }
+      },
+      "gris (L)": {
+        "http": 200,
+        "ms": 228.7,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.8616,
+            "perro": 0.1384
+          }
+        }
+      },
+      "paleta (P)": {
+        "http": 200,
+        "ms": 218.0,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.945,
+            "perro": 0.055
+          }
+        }
+      },
+      "JPEG CMYK": {
+        "http": 200,
+        "ms": 173.5,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.6181,
+            "perro": 0.3819
+          }
+        }
+      },
+      "JPEG con EXIF orientacion=6": {
+        "http": 200,
+        "ms": 114.7,
+        "cuerpo": {
+          "etiqueta": "perro",
+          "probabilidades": {
+            "gato": 0.2577,
+            "perro": 0.7423
+          }
+        }
+      },
+      "JPEG ya girado, sin EXIF": {
+        "http": 200,
+        "ms": 139.6,
+        "cuerpo": {
+          "etiqueta": "perro",
+          "probabilidades": {
+            "gato": 0.2999,
+            "perro": 0.7001
+          }
+        }
+      },
+      "foto real gato (150 KB, (375, 500))": {
+        "http": 200,
+        "ms": 91.0,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9486,
+            "perro": 0.0514
+          }
+        }
+      },
+      "foto real perro (88 KB, (357, 500))": {
+        "http": 200,
+        "ms": 35.9,
+        "cuerpo": {
+          "etiqueta": "perro",
+          "probabilidades": {
+            "gato": 0.0,
+            "perro": 1.0
+          }
+        }
+      },
+      "JPEG 4000x3000 (12 MP, sintetica)": {
+        "http": 200,
+        "ms": 265.4,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9934,
+            "perro": 0.0066
+          }
+        }
+      },
+      "archivo de texto con nombre .jpg": {
+        "http": 415,
+        "ms": 245.5,
+        "cuerpo": {
+          "detail": "El archivo no es una imagen reconocible."
+        }
+      },
+      "vacio": {
+        "http": 400,
+        "ms": 45.7,
+        "cuerpo": {
+          "detail": "Archivo vacio."
+        }
+      },
+      "2,5 MB de ruido PNG (> 2 MB)": {
+        "http": 413,
+        "ms": 35.5,
+        "cuerpo": {
+          "detail": "Archivo demasiado grande (maximo 2048 KB)."
+        }
+      },
+      "JPEG truncado a la mitad": {
+        "http": 422,
+        "ms": 14.0,
+        "cuerpo": {
+          "detail": "Imagen corrupta o incompleta."
+        }
+      },
+      "GIF (no admitido)": {
+        "http": 415,
+        "ms": 14.5,
+        "cuerpo": {
+          "detail": "Formato GIF no admitido; use ['JPEG', 'PNG']."
+        }
+      },
+      "WEBP (no admitido)": {
+        "http": 415,
+        "ms": 15.1,
+        "cuerpo": {
+          "detail": "Formato WEBP no admitido; use ['JPEG', 'PNG']."
+        }
+      },
+      "muy pequena (8x8)": {
+        "http": 422,
+        "ms": 13.4,
+        "cuerpo": {
+          "detail": "Imagen demasiado pequena (minimo 16 px por lado)."
+        }
+      },
+      "bomba de descompresion PNG 12000x12000 (136 KB)": {
+        "http": 413,
+        "ms": 16.7,
+        "cuerpo": {
+          "detail": "Imagen con demasiados pixeles."
+        }
+      },
+      "campo \"archivo\" ausente": {
+        "http": 422
+      }
+    }
+  },
+  "cifar": {
+    "salud": {
+      "estado": "ok",
+      "lado_entrada": 32,
+      "clases": [
+        "gato",
+        "perro"
+      ]
+    },
+    "max_dif_api_vs_directo_(50 imagenes, redondeo a 4 decimales)": 4.8708026856184115e-05,
+    "exif_aplicado_(las_dos_probabilidades_deben_ser_casi_iguales)": [
+      {
+        "gato": 0.9488,
+        "perro": 0.0512
+      },
+      {
+        "gato": 0.9517,
+        "perro": 0.0483
+      }
+    ],
+    "latencia_peticion_imagen_ya_del_tamano_del_modelo_ms": {
+      "mediana": 32.3,
+      "p95": 129.1
+    },
+    "latencia_foto_real_jpeg_ms": {
+      "mediana": 52.9,
+      "p95": 110.3,
+      "bytes": 153697
+    },
+    "casos": {
+      "png_test_0": {
+        "http": 200,
+        "ms": 62.3,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.996,
+            "perro": 0.004
+          }
+        }
+      },
+      "png_test_1": {
+        "http": 200,
+        "ms": 117.6,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9719,
+            "perro": 0.0281
+          }
+        }
+      },
+      "png_test_2": {
+        "http": 200,
+        "ms": 132.2,
+        "cuerpo": {
+          "etiqueta": "perro",
+          "probabilidades": {
+            "gato": 0.2686,
+            "perro": 0.7314
+          }
+        }
+      },
+      "RGBA con transparencia": {
+        "http": 200,
+        "ms": 264.8,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.996,
+            "perro": 0.004
+          }
+        }
+      },
+      "gris (L)": {
+        "http": 200,
+        "ms": 179.9,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9901,
+            "perro": 0.0099
+          }
+        }
+      },
+      "paleta (P)": {
+        "http": 200,
+        "ms": 141.7,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9999,
+            "perro": 0.0001
+          }
+        }
+      },
+      "JPEG CMYK": {
+        "http": 200,
+        "ms": 59.4,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9952,
+            "perro": 0.0048
+          }
+        }
+      },
+      "JPEG con EXIF orientacion=6": {
+        "http": 200,
+        "ms": 224.5,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9488,
+            "perro": 0.0512
+          }
+        }
+      },
+      "JPEG ya girado, sin EXIF": {
+        "http": 200,
+        "ms": 107.7,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9517,
+            "perro": 0.0483
+          }
+        }
+      },
+      "foto real gato (150 KB, (375, 500))": {
+        "http": 200,
+        "ms": 79.2,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.9957,
+            "perro": 0.0043
+          }
+        }
+      },
+      "foto real perro (88 KB, (357, 500))": {
+        "http": 200,
+        "ms": 102.1,
+        "cuerpo": {
+          "etiqueta": "perro",
+          "probabilidades": {
+            "gato": 0.036,
+            "perro": 0.964
+          }
+        }
+      },
+      "JPEG 4000x3000 (12 MP, sintetica)": {
+        "http": 200,
+        "ms": 239.2,
+        "cuerpo": {
+          "etiqueta": "gato",
+          "probabilidades": {
+            "gato": 0.6896,
+            "perro": 0.3104
+          }
+        }
+      },
+      "archivo de texto con nombre .jpg": {
+        "http": 415,
+        "ms": 35.9,
+        "cuerpo": {
+          "detail": "El archivo no es una imagen reconocible."
+        }
+      },
+      "vacio": {
+        "http": 400,
+        "ms": 28.9,
+        "cuerpo": {
+          "detail": "Archivo vacio."
+        }
+      },
+      "2,5 MB de ruido PNG (> 2 MB)": {
+        "http": 413,
+        "ms": 24.9,
+        "cuerpo": {
+          "detail": "Archivo demasiado grande (maximo 2048 KB)."
+        }
+      },
+      "JPEG truncado a la mitad": {
+        "http": 422,
+        "ms": 13.4,
+        "cuerpo": {
+          "detail": "Imagen corrupta o incompleta."
+        }
+      },
+      "GIF (no admitido)": {
+        "http": 415,
+        "ms": 12.8,
+        "cuerpo": {
+          "detail": "Formato GIF no admitido; use ['JPEG', 'PNG']."
+        }
+      },
+      "WEBP (no admitido)": {
+        "http": 415,
+        "ms": 12.3,
+        "cuerpo": {
+          "detail": "Formato WEBP no admitido; use ['JPEG', 'PNG']."
+        }
+      },
+      "muy pequena (8x8)": {
+        "http": 422,
+        "ms": 13.3,
+        "cuerpo": {
+          "detail": "Imagen demasiado pequena (minimo 16 px por lado)."
+        }
+      },
+      "bomba de descompresion PNG 12000x12000 (136 KB)": {
+        "http": 413,
+        "ms": 11.0,
+        "cuerpo": {
+          "detail": "Imagen con demasiados pixeles."
+        }
+      },
+      "campo \"archivo\" ausente": {
+        "http": 422
+      }
+    }
+  }
+}

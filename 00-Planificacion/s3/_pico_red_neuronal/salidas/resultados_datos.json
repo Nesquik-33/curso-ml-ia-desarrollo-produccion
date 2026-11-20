@@ -1,0 +1,90 @@
+{
+  "cifar10_gato_perro": {
+    "origen": "https://huggingface.co/datasets/uoft-cs/cifar10/resolve/main/plain_text/",
+    "servidor_oficial_toronto": "demasiado lento por el proxy (~40 KB/s medidos); no usado",
+    "train": {
+      "descargado_ahora": true,
+      "bytes": 119705255,
+      "segundos": 11.5,
+      "sha256": "8428b53a88a11ac374111006708df51469e315a22ac6d66470afd9c78d2ae883"
+    },
+    "test": {
+      "descargado_ahora": true,
+      "bytes": 23940850,
+      "segundos": 2.2,
+      "sha256": "841389e6f2d64f28bf17310e430aebac20ec3ba611a3c5e231dc93c645ce84de"
+    },
+    "resumen": {
+      "x_train": [
+        8000,
+        32,
+        32,
+        3
+      ],
+      "x_val": [
+        2000,
+        32,
+        32,
+        3
+      ],
+      "x_test": [
+        2000,
+        32,
+        32,
+        3
+      ]
+    },
+    "por_clase_test": {
+      "gato": 1000,
+      "perro": 1000
+    }
+  },
+  "oxford_iiit_pet_gato_perro": {
+    "descargado_ahora": true,
+    "bytes": 791918971,
+    "segundos": 73.8,
+    "sha256_descarga": "67195c5e1c01f1ab5f9b6a5d22b8c27a580d896ece458917e61d459337fa318d",
+    "resumen": {
+      "imagenes_validas_total": 7390,
+      "gatos": 2400,
+      "perros_total": 4990,
+      "perros_usados_equilibrado": 2400,
+      "train": 3360,
+      "val": 720,
+      "test": 720
+    }
+  },
+  "red": {
+    "pypi": {
+      "estado": 200,
+      "bytes": "109293"
+    },
+    "indice_pytorch_cpu": {
+      "estado": 200,
+      "bytes": "431099"
+    },
+    "pesos_torchvision": {
+      "estado": 200,
+      "bytes": "10306551"
+    },
+    "cifar_toronto": {
+      "estado": 200,
+      "bytes": "170498071"
+    },
+    "cifar_huggingface": {
+      "estado": 200,
+      "bytes": "119705255"
+    },
+    "oxford_pets": {
+      "estado": 200,
+      "bytes": "791918971"
+    },
+    "tensorflow_cats_and_dogs_filtered": {
+      "error": "HTTP Error 403: Forbidden"
+    },
+    "huggingface_cats_vs_dogs_readme": {
+      "estado": 200,
+      "bytes": "8161"
+    }
+  }
+}

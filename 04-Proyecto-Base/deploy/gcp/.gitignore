@@ -1,0 +1,6 @@
+# Tus valores reales (proyecto, region, cuenta de facturacion): NUNCA al repositorio
+env.sh
+# Claves de cuentas de servicio: el curso NO usa claves JSON
+*-key.json
+*credentials*.json
+service-account*.json

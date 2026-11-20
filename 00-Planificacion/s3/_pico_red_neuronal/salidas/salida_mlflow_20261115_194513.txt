@@ -1,0 +1,126 @@
+python 3.11.18  2026-11-15 19:45:13
+finalistas: ['cifar_cnn', 'cifar_mnet_128', 'pets_mnet_128']   mlflow 3.18.0  onnxruntime 1.32.0  onnx 1.23.2
+
+=== cifar_cnn
+  onnxruntime_directo: max|dif|=6.56e-07  predicciones distintas=0/2000
+  mlflow.pyfunc (carpeta, mlflow completo): max|dif|=6.56e-07  predicciones distintas=0/2000
+  mlflow.pyfunc (models:/ del registro): max|dif|=6.56e-07  predicciones distintas=0/2000
+  mlflow.pyfunc (venv limpio con mlflow-skinny): max|dif|=6.56e-07  predicciones distintas=0/2000
+  entrada float32 en vez de uint8: MlflowException: Failed to enforce schema of data '[[[[158. 112.  49.]
+   [159. 111.  47.]
+   [165. 116.  51.]
+   ...
+   [137.  95.  36.]
+   [126.  91.  36.]
+   [116.  85.  33.]
+  entrada forma equivocada (sin canal): MlflowException: Failed to enforce schema of data '[[[158 159 165 ... 137 126 116]
+  [152 151 159 ... 136 125 119]
+  [151 151 158 ... 139 130 120]
+  ...
+  [ 68  42  31 ...  38  
+  entrada lado distinto (+1 pixel): MlflowException: Failed to enforce schema of data '[[[[158 112  49]
+   [159 111  47]
+   [165 116  51]
+   ...
+   [126  91  36]
+   [116  85  33]
+   [  0   0   0]]
+
+  [[152 112  51
+  entrada una sola imagen sin lote: MlflowException: Failed to enforce schema of data '[[[158 112  49]
+  [159 111  47]
+  [165 116  51]
+  ...
+  [137  95  36]
+  [126  91  36]
+  [116  85  33]]
+
+ [[152 112  51]
+  [151
+  tiempos 1 imagen: {'onnxruntime': {'mediana_ms': 0.6, 'p95_ms': 0.68}, 'mlflow.pyfunc': {'mediana_ms': 0.5, 'p95_ms': 2.95}, 'torch_eager': {'mediana_ms': 2.0, 'p95_ms': 4.47}}
+  bytes: PNG max dif=4.77e-07 distintas=0/600; JPEG q95/85/70 distintas vs PNG: [31, 44, 54]
+  foto real: {'bytes': 153697, 'dimensiones': [375, 500], 'probabilidades_[gato,perro]': [0.9957, 0.0043], 'etiqueta_real': 'gato (nombre de fichero)', 'tiempo_ms_pyfunc_bytes': {'mediana_ms': 3.65, 'p95_ms': 4.91}}
+
+=== cifar_mnet_128
+  onnxruntime_directo: max|dif|=1.04e-05  predicciones distintas=0/2000
+  mlflow.pyfunc (carpeta, mlflow completo): max|dif|=1.04e-05  predicciones distintas=0/2000
+  mlflow.pyfunc (models:/ del registro): max|dif|=1.04e-05  predicciones distintas=0/2000
+  mlflow.pyfunc (venv limpio con mlflow-skinny): max|dif|=1.04e-05  predicciones distintas=0/2000
+  entrada float32 en vez de uint8: MlflowException: Failed to enforce schema of data '[[[[158. 112.  49.]
+   [159. 111.  47.]
+   [165. 116.  51.]
+   ...
+   [137.  95.  36.]
+   [126.  91.  36.]
+   [116.  85.  33.]
+  entrada forma equivocada (sin canal): MlflowException: Failed to enforce schema of data '[[[158 159 165 ... 137 126 116]
+  [152 151 159 ... 136 125 119]
+  [151 151 158 ... 139 130 120]
+  ...
+  [ 68  42  31 ...  38  
+  entrada lado distinto (+1 pixel): MlflowException: Failed to enforce schema of data '[[[[158 112  49]
+   [159 111  47]
+   [165 116  51]
+   ...
+   [126  91  36]
+   [116  85  33]
+   [  0   0   0]]
+
+  [[152 112  51
+  entrada una sola imagen sin lote: MlflowException: Failed to enforce schema of data '[[[158 112  49]
+  [159 111  47]
+  [165 116  51]
+  ...
+  [137  95  36]
+  [126  91  36]
+  [116  85  33]]
+
+ [[152 112  51]
+  [151
+  tiempos 1 imagen: {'onnxruntime': {'mediana_ms': 0.85, 'p95_ms': 1.09}, 'mlflow.pyfunc': {'mediana_ms': 0.91, 'p95_ms': 1.67}, 'torch_eager': {'mediana_ms': 4.55, 'p95_ms': 6.28}}
+  bytes: PNG max dif=5.84e-06 distintas=0/600; JPEG q95/85/70 distintas vs PNG: [25, 47, 75]
+  foto real: {'bytes': 153697, 'dimensiones': [375, 500], 'probabilidades_[gato,perro]': [0.9304, 0.0696], 'etiqueta_real': 'gato (nombre de fichero)', 'tiempo_ms_pyfunc_bytes': {'mediana_ms': 4.59, 'p95_ms': 5.03}}
+
+=== pets_mnet_128
+  onnxruntime_directo: max|dif|=1.25e-05  predicciones distintas=0/720
+  mlflow.pyfunc (carpeta, mlflow completo): max|dif|=1.25e-05  predicciones distintas=0/720
+  mlflow.pyfunc (models:/ del registro): max|dif|=1.25e-05  predicciones distintas=0/720
+  mlflow.pyfunc (venv limpio con mlflow-skinny): max|dif|=1.25e-05  predicciones distintas=0/720
+  entrada float32 en vez de uint8: MlflowException: Failed to enforce schema of data '[[[[ 46.  56.  65.]
+   [ 43.  53.  62.]
+   [ 39.  49.  58.]
+   ...
+   [ 53.  64.  78.]
+   [ 54.  66.  80.]
+   [ 53.  65.  79.]
+  entrada forma equivocada (sin canal): MlflowException: Failed to enforce schema of data '[[[ 46  43  39 ...  53  54  53]
+  [ 44  48  47 ...  52  46  42]
+  [ 40  38  39 ...  50  50  46]
+  ...
+  [ 66  62  56 ...  15  
+  entrada lado distinto (+1 pixel): MlflowException: Failed to enforce schema of data '[[[[ 46  56  65]
+   [ 43  53  62]
+   [ 39  49  58]
+   ...
+   [ 54  66  80]
+   [ 53  65  79]
+   [  0   0   0]]
+
+  [[ 44  54  63
+  entrada una sola imagen sin lote: MlflowException: Failed to enforce schema of data '[[[46 56 65]
+  [43 53 62]
+  [39 49 58]
+  ...
+  [53 64 78]
+  [54 66 80]
+  [53 65 79]]
+
+ [[44 54 63]
+  [48 58 67]
+  [47 57 66]
+ 
+  tiempos 1 imagen: {'onnxruntime': {'mediana_ms': 0.61, 'p95_ms': 0.73}, 'mlflow.pyfunc': {'mediana_ms': 0.77, 'p95_ms': 0.93}, 'torch_eager': {'mediana_ms': 3.56, 'p95_ms': 4.54}}
+  bytes: PNG max dif=1.25e-05 distintas=0/600; JPEG q95/85/70 distintas vs PNG: [10, 13, 19]
+  foto real: {'bytes': 153697, 'dimensiones': [375, 500], 'probabilidades_[gato,perro]': [0.9486, 0.0514], 'etiqueta_real': 'gato (nombre de fichero)', 'tiempo_ms_pyfunc_bytes': {'mediana_ms': 3.92, 'p95_ms': 5.49}}
+
+venv limpio: {'site_packages_total_MB': 331.2, 'mayores_MB': {'pandas': 69.6, 'onnxruntime': 55.0, 'mlflow': 36.5, 'numpy': 34.6, 'numpy.libs': 21.0, 'databricks': 16.7, 'PIL': 16.3, 'pip': 14.4, 'cryptography': 11.0, 'setuptools': 8.9}}

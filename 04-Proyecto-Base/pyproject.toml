@@ -21,11 +21,12 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest", "httpx", "jupyterlab", "ipykernel", "matplotlib", "papermill", "jupytext", "nbclient"]  # httpx: lo usa TestClient en las pruebas de la API
 api = ["fastapi", "uvicorn", "pydantic"]
+migracion = ["pyarrow"]   # Parquet: lo usa ia_mlops.migracion (no hace falta para servir el modelo)
 
 [tool.setuptools.packages.find]
 include = ["ia_mlops*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-markers = ["lento: pruebas que ejecutan los cuadernos de punta a punta"]
+markers = ["lento: pruebas que ejecutan los cuadernos de punta a punta", "gcp: pruebas que necesitan una cuenta real de GCP (se omiten salvo CURSO_PRUEBAS_GCP=1)"]
 filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning", "ignore::UserWarning"]

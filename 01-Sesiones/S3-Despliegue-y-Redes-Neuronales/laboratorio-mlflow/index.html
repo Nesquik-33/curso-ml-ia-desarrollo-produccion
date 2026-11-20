@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio de MLflow · S3 · ML e IA: de desarrollo a producción</title>
+<!-- Generado por generar.py: no se edita a mano. -->
+<style>
+:root{--bg:#ffffff;--text:#1d2733;--muted:#5b6673;--line:#d6dde6;--panel:#f6f8fb;--blue:#1f5fa8;--gold:#9a6a00;
+  --ok:#1d7a4f;--bad:#b4323c;--code:#0f1b2a;--codetx:#e6eef8;
+  --mono:ui-monospace,"Cascadia Code","SFMono-Regular",Consolas,Menlo,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+a{color:var(--blue)}
+.mono,code,pre{font-family:var(--mono);font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+#viewport{position:fixed;left:0;right:0;top:0;bottom:46px;overflow:hidden;background:var(--bg)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center}
+.slide{position:absolute;inset:0;padding:40px 60px 52px;display:none;background:var(--bg);overflow:hidden}
+.slide.active{display:block}
+.slide::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--blue)}
+.kick{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:6px}
+h1{font-size:34px;line-height:1.15;margin-bottom:18px;font-weight:750}
+h1 .mono{font-size:30px}
+h3{font-size:17px;margin-bottom:6px;color:var(--text)}
+p{font-size:17px;line-height:1.45}
+.sub{font-size:22px;line-height:1.4;color:var(--muted)}
+.small{font-size:15px;line-height:1.4}
+.foot{position:absolute;left:60px;right:60px;bottom:16px;display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.foot b{color:var(--blue)}
+.split{display:grid;gap:18px}
+.col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.card p{font-size:16px}
+.callout{border-left:4px solid var(--blue);background:#eef4fb;padding:10px 14px;border-radius:8px;font-size:17px}
+.mira{border-color:#9fd1b7;background:#f1faf5}.mira h3{color:var(--ok)}
+.falla{border-color:#ebb7bb;background:#fdf3f4}.falla h3{color:var(--bad)}
+.list{list-style:none}.list li{position:relative;padding-left:16px;font-size:15.5px;line-height:1.4;margin:3px 0}
+.list li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.mira .list li::before{background:var(--ok)}.falla .list li::before{background:var(--bad)}
+.tbl{border-collapse:collapse;width:100%;font-size:14.5px}
+.tbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:2px solid var(--line);padding:5px 8px}
+.tbl td{border-bottom:1px solid var(--line);padding:5px 8px;vertical-align:top;line-height:1.3}
+.tbl .mono{font-size:13px}
+.term{background:var(--code);border-radius:10px;overflow:hidden;border:1px solid #23344a}
+.term .bar{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1a2a3e;color:#b8c7d9;font-size:12.5px}
+.term .bar em{flex:1;font-style:normal}
+.tls{padding:6px 8px 8px;font-family:var(--mono);font-size:13.5px;line-height:1.45}
+.tln{display:flex;align-items:flex-start;gap:6px;padding:2px 4px}
+.tln code{flex:1;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--codetx)}
+.tln.c{color:#8fa3b8;font-style:italic}
+.ps{color:#7fd4a8}
+pre.code{margin:0;padding:8px 12px 10px;font-family:var(--mono);font-size:11.6px;line-height:1.36;color:var(--codetx);white-space:pre-wrap;overflow-wrap:anywhere}
+.cp{flex:none;min-width:26px;height:24px;border-radius:6px;border:1px solid #55708f;font-size:13px;color:#d8e4f2;background:#22364e}
+.cp.ok{border-color:#7fd4a8;color:#7fd4a8}
+.cpall{padding:0 10px;font-family:var(--sans);font-size:12px}
+.realbox{border:1px solid #9fd1b7;border-radius:10px;padding:7px 11px;background:#fbfdfc}
+.realbox .rk{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ok);font-weight:700;margin-bottom:3px}
+.realbox pre{font-family:var(--mono);font-size:12.2px;line-height:1.38;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text)}
+.realbox.pq pre{font-size:11.6px}
+.capcol{gap:10px}
+.cap{margin:0;display:flex;flex-direction:column;gap:4px;min-width:0}
+.cap figcaption{font-size:12.5px;color:var(--muted)}
+.capa{display:block;cursor:zoom-in;padding:0;text-align:left}
+.capa img{display:block;max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#1e1e1e}
+.falta{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;min-height:120px;border:2px dashed #b9c3cf;border-radius:8px;background:#f8fafc;color:var(--muted);text-align:center;padding:10px}
+.falta b{color:var(--text);font-size:16px}.falta small{font-size:12.5px}
+details summary{cursor:pointer;color:var(--blue);font-size:14.5px;margin-top:4px}
+details p{margin-top:6px}
+svg text.sv-t{font:700 16px var(--sans);fill:var(--text);text-anchor:middle}
+svg text.sv-s{font:13px var(--sans);fill:var(--muted);text-anchor:middle}
+svg .sv-n{fill:#f6f8fb;stroke:#9fb3c8;stroke-width:1.5}svg .sv-g{fill:#eef4fb;stroke:var(--blue);stroke-width:2}
+#bar{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:6px;padding:0 10px;background:#f3f5f8;border-top:1px solid var(--line);font-size:13.5px}
+#bar button,#bar a{padding:5px 10px;border-radius:7px;border:1px solid var(--line);background:#fff;text-decoration:none;color:var(--text)}
+#bar .part.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+#bar .sp{flex:1}
+#count,#clockref{color:var(--muted);padding:0 6px}
+#prog{position:fixed;left:0;top:0;height:3px;background:var(--blue);z-index:5}
+#notes{position:fixed;right:12px;bottom:56px;width:min(460px,92vw);max-height:60vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.15);display:none;z-index:10}
+#notes.on{display:block}#notes p{font-size:15px}
+#index{position:fixed;inset:0 0 46px 0;background:rgba(255,255,255,.98);display:none;overflow:auto;padding:24px 30px;z-index:9}
+#index.on{display:block}
+#idxgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:12px}
+#idxgrid button{text-align:left;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:#fff;font-size:14px}
+#idxgrid button small{display:block;color:var(--muted);font-size:12px}
+#idxgrid button.cur{border-color:var(--blue);background:#eef4fb}
+#zoom{position:fixed;inset:0;background:rgba(10,16,24,.88);display:none;align-items:center;justify-content:center;z-index:20;cursor:zoom-out;padding:20px}
+#zoom.on{display:flex}
+#zoom img{max-width:100%;max-height:100%;border-radius:6px;background:#1e1e1e}
+#zoom p{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#e6eef8;font-size:14px}
+@media print{#bar,#prog,#notes,#index,#zoom,.cp{display:none!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="viewport"><div id="stage">
+
+<section class="slide" data-part="A" data-min="2" data-title="Portada"
+ data-notes="Bienvenida. Este laboratorio retoma lo que en S1 no llegó a verse bien: la interfaz de MLflow. El ejemplo es el de siempre, Online Retail II y el modelo registrado retencion-90d. Recuerde que la guía en texto permite seguir solo a quien se quede atrás.">
+<p class="kick">S3 · Laboratorio de MLflow</p><h1>MLflow: el <b>cuaderno de laboratorio</b> del modelo</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="col">
+  <p class="sub">En 45 minutos abres en tu Codespace el MLflow del proyecto: ves qué se entrenó, comparas los modelos, miras la firma, creas la versión 2 de «retencion-90d» y la cargas desde Python.</p>
+  <div class="card"><h3>Cómo seguirla</h3><ul class="list"><li>Cada orden lleva <b>⧉</b>: cópiala y pégala en el terminal del Codespace.</li><li>Las salidas de terminal son <b>reales</b> (en local, 20/11/2026) y las capturas, de un <b>Codespace del curso</b>. Clic en una captura para ampliarla; <b>Esc</b> la cierra.</li><li>El mismo recorrido en texto, para repetirlo solo: <span class="mono">laboratorio-mlflow/guia.md</span>.</li><li>Teclas: <b>← →</b> avanzar · <b>O</b> índice · <b>S</b> notas · <b>F</b> pantalla completa.</li></ul></div>
+ </div>
+ <div class="card"><h3>Palabras de hoy</h3><table class="tbl"><tr><th>Palabra</th><th>Qué es</th></tr><tr><td><b>Experimento</b></td><td>Carpeta de intentos de un mismo problema: <span class="mono">retencion-90d</span>.</td></tr><tr><td><b>Ejecución (run)</b></td><td>Un entrenamiento concreto, con sus parámetros y métricas.</td></tr><tr><td><b>Artefacto</b></td><td>Un archivo guardado por la ejecución: aquí, el modelo.</td></tr><tr><td><b>Firma</b></td><td>El contrato del modelo: nombre y tipo de cada entrada y de la salida.</td></tr><tr><td><b>Registro</b></td><td>Catálogo de modelos con <b>versiones</b> numeradas.</td></tr><tr><td><b>URI</b></td><td>Identificador de recurso: la «dirección» de la base o del modelo.</td></tr></table></div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="3" data-title="Por qué MLflow"
+ data-notes="La pregunta que resuelve MLflow es de trazabilidad: qué probé, qué salió y qué modelo está en uso. Parámetros son lo que se decide antes de entrenar; métricas, lo que se mide después. Relacione la firma con la API de S2: el servicio no arranca si el esquema no coincide con la firma.">
+<p class="kick">A · La idea</p><h1>Sin MLflow: «¿qué modelo era el bueno?»</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="card falla"><h3>Sin seguimiento</h3><ul class="list"><li>Entrenas tres modelos; el AUC queda en el terminal y se pierde.</li><li>Una semana después nadie sabe <b>con qué datos</b> se entrenó el que está en la API.</li><li>El archivo <span class="mono">modelo.joblib</span> se sobrescribe: no hay vuelta atrás.</li></ul></div>
+ </div>
+ <div class="col">
+  <div class="card mira"><h3>Con MLflow (lo hace train.py)</h3><ul class="list"><li><b>Seguimiento</b>: cada entrenamiento deja una ejecución con <b>parámetros</b> (lo decidido antes) y <b>métricas</b> (lo medido después).</li><li>La <span class="mono">huella_datos</span> en cada ejecución: con qué datos exactos se entrenó.</li><li><b>Registro</b>: el elegido se guarda como <span class="mono">retencion-90d</span> y cada entrenamiento crea una <b>versión</b> nueva; las anteriores no se borran.</li><li>La <b>firma</b> viaja con el modelo: la API comprueba con ella su contrato (S2).</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="2" data-title="Seguimiento y registro"
+ data-notes="Recorra el diagrama. Arriba el seguimiento: un experimento, cuatro ejecuciones por entrenamiento (los tres modelos y MEJOR-regresion_logistica). Abajo el registro: solo el mejor, como versión nueva de retencion-90d, con tres etiquetas. Los nombres son los de ia_mlops/modeling/train.py; la ejecución MEJOR-… solo lleva los parámetros modelo y huella_datos.">
+<p class="kick">A · El mapa</p><h1>Dos piezas: <b>seguimiento</b> y <b>registro</b></h1>
+
+<div class="card" style="padding:14px 16px"><svg viewBox="0 0 1140 300" role="img" aria-label="Seguimiento y registro de MLflow"><defs><marker id="fm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1f5fa8"/></marker></defs><rect x="10" y="95" width="190" height="80" rx="12" class="sv-n"/><text x="105.0" y="131.0" class="sv-t">train.py</text><text x="105.0" y="153.0" class="sv-s">pipeline_train</text><rect x="250" y="10" width="220" height="80" rx="12" class="sv-g"/><text x="360.0" y="46.0" class="sv-t">Experimento</text><text x="360.0" y="68.0" class="sv-s">retencion-90d</text><rect x="520" y="10" width="290" height="80" rx="12" class="sv-n"/><text x="665.0" y="46.0" class="sv-t">Ejecuciones (runs)</text><text x="665.0" y="68.0" class="sv-s">3 modelos + MEJOR-&lt;modelo&gt;</text><rect x="860" y="10" width="270" height="80" rx="12" class="sv-n"/><text x="995.0" y="46.0" class="sv-t">En cada una</text><text x="995.0" y="68.0" class="sv-s">parámetros · métricas</text><rect x="250" y="180" width="220" height="80" rx="12" class="sv-n"/><text x="360.0" y="216.0" class="sv-t">Modelo + firma</text><text x="360.0" y="238.0" class="sv-s">artefactos del MEJOR</text><rect x="520" y="180" width="290" height="80" rx="12" class="sv-g"/><text x="665.0" y="216.0" class="sv-t">Modelo registrado</text><text x="665.0" y="238.0" class="sv-s">retencion-90d</text><rect x="860" y="180" width="270" height="80" rx="12" class="sv-n"/><text x="995.0" y="216.0" class="sv-t">Versiones</text><text x="995.0" y="238.0" class="sv-s">1, 2, 3… (+ etiquetas)</text><path d="M200 120 L246 60" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><path d="M200 150 L246 210" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><path d="M470 50 L516 50" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><path d="M810 50 L856 50" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><path d="M470 220 L516 220" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><path d="M810 220 L856 220" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><text x="690" y="130" class="sv-s">SEGUIMIENTO (tracking): ¿qué probé y qué salió?</text><text x="690" y="290" class="sv-s">REGISTRO (Model Registry): ¿qué modelo uso y de dónde salió?</text></svg></div>
+<div class="grid3" style="margin-top:14px">
+ <div class="card"><h3>Parámetros (train.py)</h3><p class="small"><span class="mono">modelo</span>, <span class="mono">ventana_objetivo_dias</span>, <span class="mono">n_variables</span>, <span class="mono">huella_datos</span>.</p></div>
+ <div class="card"><h3>Métricas: partición_métrica</h3><p class="small"><span class="mono">train_ / valid_ / test_</span> + <span class="mono">auc</span>, <span class="mono">precision_media</span>, <span class="mono">tasa_base</span>, <span class="mono">aciertos_en_el_10_mejor</span>: 12 por ejecución.</p></div>
+ <div class="card"><h3>Etiquetas de cada versión</h3><p class="small"><span class="mono">modelo</span>, <span class="mono">huella_datos</span> y <span class="mono">valid_auc</span>.</p></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="4" data-title="Dónde vive"
+ data-notes="Este es el porqué de lo que falló en S1: la interfaz leía una base vacía creada por una ruta relativa. Insista: siempre desde 04-Proyecto-Base y siempre con python -m ia_mlops.mlflow_ui. mlflow.db es el backend store (metadatos) y mlartifacts el artifact store (archivos). En MLflow 3 el modelo guardado está en mlartifacts/models/m-&lt;identificador&gt;/artifacts.">
+<p class="kick">B · Dónde lo guarda el proyecto</p><h1>Dos sitios en <span class="mono">models/</span>, y <b>una ruta absoluta</b></h1>
+
+<div class="card" style="padding:12px 16px"><svg viewBox="0 0 1060 220" role="img" aria-label="Dónde guarda MLflow los datos del proyecto"><defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1f5fa8"/></marker></defs><rect x="10" y="65" width="300" height="90" rx="12" class="sv-n"/><text x="160" y="97" class="sv-t">train.py</text><text x="160" y="121" class="sv-s">escribe</text><text x="160" y="140" class="sv-s"></text><rect x="330" y="10" width="300" height="90" rx="12" class="sv-g"/><text x="480" y="42" class="sv-t">models/mlflow.db</text><text x="480" y="66" class="sv-s">SQLite: experimentos, runs,</text><text x="480" y="85" class="sv-s">parámetros, métricas, registro</text><rect x="330" y="120" width="300" height="90" rx="12" class="sv-g"/><text x="480" y="152" class="sv-t">models/mlartifacts/</text><text x="480" y="176" class="sv-s">archivos: MLmodel, model.pkl,</text><text x="480" y="195" class="sv-s">firma, requisitos</text><rect x="750" y="65" width="300" height="90" rx="12" class="sv-n"/><text x="900" y="97" class="sv-t">mlflow_ui</text><text x="900" y="121" class="sv-s">lee y enseña</text><text x="900" y="140" class="sv-s">(puerto 5000)</text><path d="M310 100 L326 60" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fa)"/><path d="M310 120 L326 160" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fa)"/><path d="M630 60 L746 100" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fa)"/><path d="M630 160 L746 120" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fa)"/></svg></div>
+<div class="split" style="grid-template-columns:1fr 1fr;margin-top:12px">
+ <div class="card"><h3>Por qué <span class="mono">python -m ia_mlops.mlflow_ui</span></h3><ul class="list"><li><span class="mono">mlflow ui --backend-store-uri sqlite:///models/mlflow.db</span> usa una ruta <b>relativa</b>: lanzado desde la raíz del repositorio, crea <b>otra base vacía</b> sin avisar.</li><li><span class="mono">mlflow_ui</span> calcula la ruta <b>absoluta</b> (<span class="mono">config.MODELOS</span>), comprueba que hay ejecuciones y solo entonces arranca la web.</li><li>Es la misma base en la que escribe <span class="mono">train.py</span>.</li></ul></div>
+ <div class="card"><h3>Ni hay que crearla ni se edita a mano</h3><ul class="list"><li>La crea el <b>primer entrenamiento</b> con MLflow (<span class="mono">python -m ia_mlops.pipeline</span>).</li><li>La web <b>lee la base cada vez</b>: tras entrenar basta con <b>F5</b>.</li><li>Empezar de cero: borrar <span class="mono">models/mlflow.db</span> <b>y</b> <span class="mono">models/mlartifacts/</span>, los dos.</li></ul></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="2" data-title="Comprobar el registro"
+ data-notes="No abre nada: solo lee la base y cuenta. Es la comprobación que evita la confusión de S1. Si alguien tiene «No existe todavía», que lance el pipeline ahora; tarda poco con la muestra. En el Codespace del profesor salió lo mismo: 4 ejecuciones y 1 versión.">
+<p class="kick">C · Paso 1 · terminal</p><h1>¿Qué hay en el registro? <b>--comprobar</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>Terminal del Codespace</em><button class="cp cpall" data-t="cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base
+conda activate env-ia-mlops
+python -m ia_mlops.mlflow_ui --comprobar">⧉ Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span><code>cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base</code><button class="cp" data-t="cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>conda activate env-ia-mlops</code><button class="cp" data-t="conda activate env-ia-mlops" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.mlflow_ui --comprobar</code><button class="cp" data-t="python -m ia_mlops.mlflow_ui --comprobar" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · Codespace del curso y local · 20/11/2026</div><pre>Registro de MLflow: …/04-Proyecto-Base/models/mlflow.db
+  Experimento «retencion-90d»: 4 ejecuciones · modelo registrado «retencion-90d»: 1 versiones</pre></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li>«No existe todavía»: entrena primero con <span class="mono">python -m ia_mlops.pipeline</span> (≈ 30 s de entrenamiento) y repite.</li><li><span class="mono">No module named ia_mlops</span>: no estás en <span class="mono">04-Proyecto-Base</span>.</li></ul></div>
+ </div>
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/m01-comprobar.webp" data-alt="Terminal: mlflow_ui --comprobar" title="Clic para ampliar"><img src="img/m01-comprobar.webp" alt="Terminal: mlflow_ui --comprobar" style="max-height:300px"></button><figcaption>Terminal: mlflow_ui --comprobar</figcaption></figure>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><b>4 ejecuciones</b> (3 modelos + <span class="mono">MEJOR-…</span>) y <b>1 versión</b>, si has entrenado una vez.</li><li>Si has entrenado más veces verás más: es normal.</li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="3" data-title="Arrancar la interfaz"
+ data-notes="Por dentro lanza mlflow ui con la ruta absoluta, con el mismo Python del entorno. Debajo de «Abriendo…» salen los mensajes del servidor de MLflow (se ven en la captura). Para parar: Ctrl+C en T1. Comprobado en el Codespace: el puerto 5000 reenviado funciona; la primera carga tarda unos diez segundos.">
+<p class="kick">C · Paso 2 · terminal T1</p><h1>La web de MLflow, en el <b>puerto 5000</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T1 · la interfaz (se queda ocupada: no la cierres)</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.mlflow_ui</code><button class="cp" data-t="python -m ia_mlops.mlflow_ui" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · Codespace del curso y local · 20/11/2026</div><pre>Registro de MLflow: …/04-Proyecto-Base/models/mlflow.db
+  Experimento «retencion-90d»: 4 ejecuciones · modelo registrado «retencion-90d»: 1 versiones
+Abriendo http://127.0.0.1:5000  ·  En la web elige «Model training» (arriba a la izquierda).  ·  Para parar: Ctrl+C</pre></div>
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Pestaña <b>Puertos</b> → fila <b>5000</b> → icono del globo.</li><li>Abre un <b>segundo terminal</b> (T2) para los pasos 8 y 9.</li></ul></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li>Página en blanco: la primera carga tarda unos <b>10 s</b>; espera y pulsa <b>F5</b>.</li><li>Puerto ocupado: <span class="mono">python -m ia_mlops.mlflow_ui --port 5001</span>.</li><li>«Invalid Host header» (no visto en el Codespace del curso): plan B en la guía, apartado «Si falla».</li></ul></div>
+ </div>
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/m02-arrancar.webp" data-alt="Terminal: la interfaz de MLflow arrancada" title="Clic para ampliar"><img src="img/m02-arrancar.webp" alt="Terminal: la interfaz de MLflow arrancada" style="max-height:330px"></button><figcaption>Terminal: la interfaz de MLflow arrancada</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="2" data-title="Model training"
+ data-notes="MLflow 3 abre en el modo de IA generativa, que no enseña entrenamientos clásicos. Es la segunda causa de «no se ve nada» en S1. Que todos pulsen Model training antes de seguir.">
+<p class="kick">C · Paso 3 · navegador</p><h1>Primero: pulsa <b>Model training</b></h1>
+
+<div class="split" style="grid-template-columns:1.2fr .8fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/m03-inicio.webp" data-alt="Página de inicio de MLflow: GenAI | Model training" title="Clic para ampliar"><img src="img/m03-inicio.webp" alt="Página de inicio de MLflow: GenAI | Model training" style="max-height:420px"></button><figcaption>Página de inicio de MLflow: GenAI | Model training</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Arriba a la izquierda, el conmutador <b>GenAI | Model training</b>: pulsa <b>Model training</b>.</li><li>El menú izquierdo cambia (según la captura): ahí están los experimentos y el registro de modelos.</li></ul></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li>Ves menús de IA generativa (trazas, prompts…): sigues en <b>GenAI</b>.</li><li>No hay experimentos: estás leyendo otra base. Ctrl+C en T1 y vuelve al paso 1 desde <span class="mono">04-Proyecto-Base</span>.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="3" data-title="El experimento"
+ data-notes="Los nombres de las ejecuciones son run_name de train.py: uno por modelo y MEJOR-&lt;modelo&gt; para el elegido. Haga notar la huella: si no coincide entre dos ejecuciones, compararlas no es justo.">
+<p class="kick">C · Paso 4 · navegador</p><h1>Experimento <b>retencion-90d</b>: una fila por ejecución</h1>
+
+<div class="split" style="grid-template-columns:1.2fr .8fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/m04-experimento.webp" data-alt="Experimento retencion-90d con la lista de ejecuciones" title="Clic para ampliar"><img src="img/m04-experimento.webp" alt="Experimento retencion-90d con la lista de ejecuciones" style="max-height:420px"></button><figcaption>Experimento retencion-90d con la lista de ejecuciones</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li><b>Experiments</b> → <span class="mono">retencion-90d</span> (el experimento <span class="mono">Default</span> lo crea MLflow solo y está vacío).</li><li>Con <b>Columns</b> añade <span class="mono">valid_auc</span>, <span class="mono">test_auc</span> y <span class="mono">huella_datos</span>.</li></ul></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Cuatro ejecuciones: <span class="mono">referencia_sin_aprender</span>, <span class="mono">regresion_logistica</span>, <span class="mono">gradient_boosting</span> y <span class="mono">MEJOR-regresion_logistica</span>.</li><li>La <span class="mono">MEJOR-…</span> es la que tiene el modelo registrado (según la captura, en su columna de modelos).</li><li>Todas con la misma <span class="mono">huella_datos</span>: se entrenaron con los mismos datos.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="3" data-title="Detalle de una ejecución"
+ data-notes="Lea un parámetro y una métrica en voz alta y diga de qué línea de train.py salen: log_param y log_metric con el prefijo de la partición. Los valores son los de la muestra del curso; con otros datos cambian.">
+<p class="kick">C · Paso 5 · navegador</p><h1>Dentro de una ejecución: <b>parámetros</b> y <b>métricas</b></h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/m05-run-detalle.webp" data-alt="Una ejecución: parámetros y métricas" title="Clic para ampliar"><img src="img/m05-run-detalle.webp" alt="Una ejecución: parámetros y métricas" style="max-height:420px"></button><figcaption>Una ejecución: parámetros y métricas</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Clic en <span class="mono">regresion_logistica</span>.</li></ul></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><b>Parámetros</b>: <span class="mono">modelo</span>, <span class="mono">ventana_objetivo_dias</span> = 90, <span class="mono">n_variables</span> = 13, <span class="mono">huella_datos</span>.</li><li><b>Métricas</b>: 12, <span class="mono">train_</span>, <span class="mono">valid_</span> y <span class="mono">test_</span> de <span class="mono">auc</span>, <span class="mono">precision_media</span>, <span class="mono">tasa_base</span> y <span class="mono">aciertos_en_el_10_mejor</span>.</li><li>Con la muestra: <span class="mono">valid_auc</span> 0,698 y <span class="mono">test_auc</span> 0,747.</li></ul></div>
+  <div class="card"><p class="small"><b>aciertos_en_el_10_mejor</b>: de los clientes con el 10 % de probabilidades más altas, cuántos compraron de verdad. <b>tasa_base</b>: la proporción de compradores, el listón.</p></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="4" data-title="Comparar ejecuciones"
+ data-notes="Esta es la diapositiva del porqué del modelo elegido. Pregunte al grupo: ¿por qué no elegimos por test? Porque dejaría de ser un examen sorpresa. ¿Qué indica train 1,000 y valid 0,663? Sobreajuste.">
+<p class="kick">C · Paso 6 · navegador</p><h1><b>Compare</b>: regresión logística frente a boosting</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/m06-comparar.webp" data-alt="Comparación de dos ejecuciones" title="Clic para ampliar"><img src="img/m06-comparar.webp" alt="Comparación de dos ejecuciones" style="max-height:300px"></button><figcaption>Comparación de dos ejecuciones</figcaption></figure>
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Vuelve a la lista, marca <span class="mono">regresion_logistica</span> y <span class="mono">gradient_boosting</span> y pulsa <b>Compare</b>.</li></ul></div></div>
+ <div class="col">
+  <div class="card"><h3>Valores reales (muestra del curso)</h3><table class="tbl"><tr><th>Ejecución</th><th>train_auc</th><th>valid_auc</th><th>test_auc</th><th>valid_precision_media</th></tr><tr><td>referencia_sin_aprender</td><td>0,500</td><td>0,500</td><td>0,500</td><td>0,456</td></tr><tr><td>regresion_logistica</td><td>0,803</td><td><b>0,698</b></td><td>0,747</td><td>0,736</td></tr><tr><td>gradient_boosting</td><td>1,000</td><td>0,663</td><td>0,735</td><td>0,704</td></tr></table></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>El boosting saca <b>1,000 en train</b> y 0,663 en valid: ha <b>memorizado</b> (sobreajuste).</li><li>Gana la regresión logística por <b>más AUC en valid</b>. Test se informa, no se usa para elegir.</li><li>La referencia (0,500) es el mínimo que hay que superar.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="3" data-title="Artefactos y firma"
+ data-notes="La firma es el contrato: las mismas 13 variables de config.FEATURES. La API de S2 la lee de models/modelo_mlflow y no arranca si no coincide con su esquema. La firma se infiere de 200 filas de train; por eso aparecen tipos long y double.">
+<p class="kick">C · Paso 7 · navegador</p><h1>El modelo guardado y su <b>firma</b></h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/m07-artefactos.webp" data-alt="Artefactos del modelo y su firma" title="Clic para ampliar"><img src="img/m07-artefactos.webp" alt="Artefactos del modelo y su firma" style="max-height:420px"></button><figcaption>Artefactos del modelo y su firma</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Abre <span class="mono">MEJOR-regresion_logistica</span> y, desde ella, el modelo <span class="mono">modelo</span> y sus <b>artefactos</b> (según la captura).</li></ul></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Archivos: <span class="mono">MLmodel</span>, <span class="mono">model.pkl</span>, <span class="mono">input_example.json</span>, <span class="mono">serving_input_example.json</span>, <span class="mono">conda.yaml</span>, <span class="mono">python_env.yaml</span>, <span class="mono">requirements.txt</span>.</li><li>Firma: <b>13 entradas</b> (<span class="mono">long</span> o <span class="mono">double</span>; <span class="mono">dias_medios_entre_compras</span> no obligatoria) y <b>1 salida</b> <span class="mono">float64</span>: la probabilidad.</li><li>En disco: <span class="mono">models/mlartifacts/models/m-&lt;id&gt;/artifacts/</span>.</li></ul></div>
+  <div class="card"><p class="small">En MLflow 3 el modelo no cuelga de la carpeta del run: es un «modelo registrado en la ejecución» con su propio identificador <span class="mono">m-…</span>.</p></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="2" data-title="El modelo registrado"
+ data-notes="El registro responde a otra pregunta que el seguimiento: no qué probé, sino qué modelo uso. Las etiquetas las pone train.py con set_model_version_tag. En S4 y S5 se añadirá un alias a una versión.">
+<p class="kick">C · Paso 8 · navegador</p><h1>Registro: <b>retencion-90d</b>, versión 1</h1>
+
+<div class="split" style="grid-template-columns:1.2fr .8fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/m08-modelos.webp" data-alt="Modelo registrado retencion-90d con sus versiones" title="Clic para ampliar"><img src="img/m08-modelos.webp" alt="Modelo registrado retencion-90d con sus versiones" style="max-height:420px"></button><figcaption>Modelo registrado retencion-90d con sus versiones</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Menú izquierdo: registro de modelos → <span class="mono">retencion-90d</span> (o <span class="mono">http://…:5000/#/models</span>).</li></ul></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Una fila por versión: <b>Version 1</b>.</li><li>Etiquetas de la versión: <span class="mono">modelo</span> = regresion_logistica, <span class="mono">huella_datos</span>, <span class="mono">valid_auc</span> = 0.6982.</li><li>Desde la versión se llega a la ejecución <span class="mono">MEJOR-…</span> de la que salió.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="3" data-title="Reentrenar: versión 2"
+ data-notes="Idempotencia: la huella de entrada no cambió, así que pipeline_train no repite el trabajo ni ensucia MLflow. --forzar entrena igualmente. Los resultados son idénticos a la versión 1 porque los datos y el código son los mismos: lo que cambia es que hay una versión nueva, enlazada a su propia ejecución.">
+<p class="kick">C · Paso 9 · terminal T2</p><h1>Reentrenar con <b>--forzar</b> → versión 2</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T2 · con la interfaz abierta en T1</em><button class="cp cpall" data-t="cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base
+python -m ia_mlops.pipeline_train
+python -m ia_mlops.pipeline_train --forzar
+python -m ia_mlops.mlflow_ui --comprobar">⧉ Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span><code>cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base</code><button class="cp" data-t="cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.pipeline_train</code><button class="cp" data-t="python -m ia_mlops.pipeline_train" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.pipeline_train --forzar</code><button class="cp" data-t="python -m ia_mlops.pipeline_train --forzar" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.mlflow_ui --comprobar</code><button class="cp" data-t="python -m ia_mlops.mlflow_ui --comprobar" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · Codespace del curso y local · 20/11/2026</div><pre>[pipeline_train] sin cambios: la entrada es la misma que en la ultima ejecucion (7108eeb2fa32). Usa --forzar para rehacerlo.</pre></div>
+  <div class="realbox pq"><div class="rk">Salida real · Codespace del curso y local · 20/11/2026</div><pre>[pipeline_train] ejecutando (huella de entrada 7108eeb2fa32)
+  referencia_sin_aprender    AUC valid 0.500 | test 0.500 | precision media test 0.404
+  regresion_logistica        AUC valid 0.698 | test 0.747 | precision media test 0.659
+  gradient_boosting          AUC valid 0.663 | test 0.735 | precision media test 0.648
+Registered model &#x27;retencion-90d&#x27; already exists. Creating a new version of this model...
+Created version &#x27;2&#x27; of model &#x27;retencion-90d&#x27;.
+  Mejor modelo: regresion_logistica. Guardado en …/models/modelo.joblib
+  Registrado en MLflow como «retencion-90d», version 2. Para verlo: python -m ia_mlops.mlflow_ui</pre></div>
+ </div>
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/m09-forzar.webp" data-alt="Terminal: pipeline_train --forzar crea la versión 2" title="Clic para ampliar"><img src="img/m09-forzar.webp" alt="Terminal: pipeline_train --forzar crea la versión 2" style="max-height:250px"></button><figcaption>Terminal: pipeline_train --forzar crea la versión 2</figcaption></figure>
+  <div class="realbox pq"><div class="rk">Salida real · Codespace del curso y local · 20/11/2026</div><pre>Registro de MLflow: …/04-Proyecto-Base/models/mlflow.db
+  Experimento «retencion-90d»: 8 ejecuciones · modelo registrado «retencion-90d»: 2 versiones</pre></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Sin <span class="mono">--forzar</span>: «sin cambios». El pipeline es <b>idempotente</b>: mismos datos y mismo código, no entrena.</li><li>Con <span class="mono">--forzar</span>: 4 ejecuciones más y la <b>versión 2</b> de <span class="mono">retencion-90d</span>.</li><li>Avisos <span class="mono">UserWarning</span> y <span class="mono">WARNING</span> de MLflow en medio: son normales, no errores.</li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="2" data-title="Versiones 1 y 2"
+ data-notes="La web lee la base en cada petición: basta con recargar. Pregunta: si la versión 2 fuera peor, ¿qué haríamos? Volver a la 1; en S4 y S5 eso se hace moviendo un alias, sin reentrenar.">
+<p class="kick">C · Paso 10 · navegador</p><h1>F5: <b>dos versiones</b> en el registro</h1>
+
+<div class="split" style="grid-template-columns:1.2fr .8fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/m10-version2.webp" data-alt="Versiones 1 y 2 en la interfaz" title="Clic para ampliar"><img src="img/m10-version2.webp" alt="Versiones 1 y 2 en la interfaz" style="max-height:420px"></button><figcaption>Versiones 1 y 2 en la interfaz</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>En el navegador, <b>F5</b> en <span class="mono">retencion-90d</span>. No hace falta reiniciar <span class="mono">mlflow_ui</span>.</li></ul></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><b>Version 1</b> y <b>Version 2</b>, con las mismas etiquetas (mismos datos, mismo resultado).</li><li>En el experimento: <b>8 ejecuciones</b>.</li><li>La versión 1 <b>no se borra</b>: se podría volver a ella.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="3" data-title="Cargar el modelo registrado"
+ data-notes="Explique tres líneas: set_tracking_uri con la ruta absoluta, la URI models:/nombre/versión y predict_proba. Se usa mlflow.sklearn.load_model a propósito: con mlflow.pyfunc, predict devolvería la clase 0 o 1, no la probabilidad. La API de S2 no lee el registro: carga la copia models/modelo_mlflow, que train.py exporta con la misma firma.">
+<p class="kick">C · Paso 11 · terminal T2</p><h1>Del registro a una <b>predicción</b>, desde Python</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="col"><div class="term"><div class="bar"><em>T2 · pega la orden entera (de python a EOF)</em><button class="cp cpall" data-t="python - &lt;&lt;&#x27;EOF&#x27;
+import json, warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+import mlflow, mlflow.sklearn
+import pandas as pd
+from ia_mlops import config, mlflow_ui
+
+mlflow.set_tracking_uri(mlflow_ui.uri())          # la base DEL PROYECTO, con ruta absoluta
+nombre = config.MODELO_REGISTRADO                 # &#x27;retencion-90d&#x27;
+versiones = mlflow.MlflowClient().search_model_versions(f&quot;name=&#x27;{nombre}&#x27;&quot;)
+ultima = max(int(v.version) for v in versiones)
+print(f&#x27;Modelo registrado {nombre}: versiones {sorted(int(v.version) for v in versiones)}; cargo la {ultima}&#x27;)
+
+uri = f&#x27;models:/{nombre}/{ultima}&#x27;
+firma = mlflow.models.get_model_info(uri).signature
+print(&#x27;Firma:&#x27;, len(firma.inputs.inputs), &#x27;entradas -&gt;&#x27;, firma.outputs.inputs[0].type)
+
+modelo = mlflow.sklearn.load_model(uri)
+cliente = json.load(open(&#x27;tests/datos/cliente_ejemplo.json&#x27;))
+fila = pd.DataFrame([cliente])[config.FEATURES]
+print(f&#x27;Probabilidad de recompra en 90 días (cliente de ejemplo): {modelo.predict_proba(fila)[0, 1]:.3f}&#x27;)
+EOF">⧉ Copiar la orden entera</button></div><pre class="code">python - &lt;&lt;&#x27;EOF&#x27;
+import json, warnings
+warnings.filterwarnings(&#x27;ignore&#x27;)
+import mlflow, mlflow.sklearn
+import pandas as pd
+from ia_mlops import config, mlflow_ui
+
+mlflow.set_tracking_uri(mlflow_ui.uri())          # la base DEL PROYECTO, con ruta absoluta
+nombre = config.MODELO_REGISTRADO                 # &#x27;retencion-90d&#x27;
+versiones = mlflow.MlflowClient().search_model_versions(f&quot;name=&#x27;{nombre}&#x27;&quot;)
+ultima = max(int(v.version) for v in versiones)
+print(f&#x27;Modelo registrado {nombre}: versiones {sorted(int(v.version) for v in versiones)}; cargo la {ultima}&#x27;)
+
+uri = f&#x27;models:/{nombre}/{ultima}&#x27;
+firma = mlflow.models.get_model_info(uri).signature
+print(&#x27;Firma:&#x27;, len(firma.inputs.inputs), &#x27;entradas -&gt;&#x27;, firma.outputs.inputs[0].type)
+
+modelo = mlflow.sklearn.load_model(uri)
+cliente = json.load(open(&#x27;tests/datos/cliente_ejemplo.json&#x27;))
+fila = pd.DataFrame([cliente])[config.FEATURES]
+print(f&#x27;Probabilidad de recompra en 90 días (cliente de ejemplo): {modelo.predict_proba(fila)[0, 1]:.3f}&#x27;)
+EOF</pre></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li>Se queda con <span class="mono">&gt;</span>: falta la última línea, <span class="mono">EOF</span>. «Modelo no encontrado»: no usas la base del proyecto (<span class="mono">mlflow_ui.uri()</span>).</li></ul></div></div>
+ <div class="col">
+  <div class="realbox"><div class="rk">Salida real · Codespace del curso y local · 20/11/2026</div><pre>Modelo registrado retencion-90d: versiones [1, 2]; cargo la 2
+Firma: 13 entradas -&gt; float64
+Probabilidad de recompra en 90 días (cliente de ejemplo): 0.828</pre></div>
+  <figure class="cap"><button class="capa" data-src="img/m11-cargar.webp" data-alt="Terminal: cargar el modelo registrado y predecir" title="Clic para ampliar"><img src="img/m11-cargar.webp" alt="Terminal: cargar el modelo registrado y predecir" style="max-height:170px"></button><figcaption>Terminal: cargar el modelo registrado y predecir</figcaption></figure>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Carga <span class="mono">models:/retencion-90d/2</span> con la URI de la base del proyecto (<span class="mono">mlflow_ui.uri()</span>).</li><li><b>0,828</b>: la misma probabilidad que da la API de S2 para <span class="mono">cliente_ejemplo.json</span> (0.8278889…).</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="2" data-title="Qué aporta en producción"
+ data-notes="Cierre conceptual. Lo que hoy hemos hecho a mano con un número de versión es lo que en S4 y S5 se hará con alias y despliegue de una versión concreta. No entre en detalle: es el anticipo.">
+<p class="kick">D · Hacia S4 y S5</p><h1>En producción: <b>qué versión</b> está sirviendo</h1>
+
+<div class="grid3">
+ <div class="card"><h3>Trazabilidad</h3><p class="small">Cada versión apunta a su ejecución: parámetros, métricas y <b>huella de los datos</b>. Ante una predicción rara se sabe qué modelo fue.</p></div>
+ <div class="card"><h3>Alias (S4 y S5)</h3><p class="small">Se pone un alias, por ejemplo <span class="mono">produccion</span>, a una versión. El despliegue carga el alias, no un número fijo.</p></div>
+ <div class="card"><h3>Vuelta atrás</h3><p class="small">Si la versión nueva falla, se mueve el alias a la anterior. No se reentrena ni se borra nada.</p></div>
+</div>
+<div class="callout" style="margin-top:14px">Hoy la API carga la carpeta <span class="mono">models/modelo_mlflow</span>; en S4 y S5 se desplegará una <b>versión concreta</b> del registro.</div>
+</section>
+
+<section class="slide" data-part="D" data-min="2" data-title="Autoevaluación"
+ data-notes="Lea cada pregunta y deje unos segundos antes de desplegar la respuesta. Para cerrar: Ctrl+C en T1 para parar la interfaz. La guía en texto queda para repetirlo en casa.">
+<p class="kick">Cierre</p><h1>Cuatro preguntas para llevarte</h1>
+
+<div class="grid2">
+<div class="card"><h3>1. ¿Qué diferencia hay entre un parámetro y una métrica?</h3><details><summary>Ver la respuesta</summary><p class="small">El parámetro se decide <b>antes</b> de entrenar (<span class="mono">modelo</span>, <span class="mono">n_variables</span>…); la métrica se mide <b>después</b> (<span class="mono">valid_auc</span>…).</p></details></div><div class="card"><h3>2. ¿Por qué <span class="mono">python -m ia_mlops.mlflow_ui</span> y no <span class="mono">mlflow ui</span> a pelo?</h3><details><summary>Ver la respuesta</summary><p class="small">Porque calcula la ruta <b>absoluta</b> de <span class="mono">models/mlflow.db</span>; con la relativa, desde otra carpeta, MLflow crea una base vacía sin avisar.</p></details></div><div class="card"><h3>3. ¿Por qué sin <span class="mono">--forzar</span> no se creó la versión 2?</h3><details><summary>Ver la respuesta</summary><p class="small">El pipeline es idempotente: mismos datos y mismo código → «sin cambios», no entrena.</p></details></div><div class="card"><h3>4. ¿Qué es la firma y quién la usa?</h3><details><summary>Ver la respuesta</summary><p class="small">El contrato de entrada y salida del modelo (13 entradas, 1 salida). La API la comprueba al arrancar.</p></details></div></div>
+</section>
+
+</div></div>
+
+<aside id="notes" aria-label="Notas del ponente"><h3>Notas del ponente</h3><div id="notetext"></div><p class="small" id="notemin"></p></aside>
+<div id="index" aria-label="Índice"><h2>Índice</h2><div id="idxgrid"></div></div>
+<div id="zoom" role="dialog" aria-label="Captura ampliada"><img alt=""><p></p></div>
+<nav id="bar" aria-label="Controles">
+  <button id="bprev" aria-label="Anterior">←</button><button id="bnext" aria-label="Siguiente">→</button>
+  <span id="count">1 / 1</span><span id="clockref" title="Minuto planificado"></span>
+  <button class="part" data-p="A">Qué es</button><button class="part" data-p="B">Dónde vive</button><button class="part" data-p="C">Práctica</button><button class="part" data-p="D">Cierre</button>
+  <span class="sp"></span>
+  <a id="bhome" href="../index.html" title="Volver al índice de la sesión S3">⌂ S3</a><button id="bidx">Índice (O)</button><button id="bnotes">Notas (S)</button><button id="bfull">Pantalla completa (F)</button>
+</nav>
+<noscript>Esta presentación necesita JavaScript. El mismo recorrido está en guia.md.</noscript>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PARTES={"A": "Qué es", "B": "Dónde vive", "C": "Práctica", "D": "Cierre"}, INICIO=0;
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();return true}catch(e2){return false}}}
+const slides=$$('.slide'), N=slides.length;
+slides.forEach((s,i)=>{const f=document.createElement('div');f.className='foot';
+  f.innerHTML=`<span>ML e IA · S3 · Laboratorio de MLflow</span><span><b>${esc(PARTES[s.dataset.part])}</b> · ${i+1} / ${N}</span>`;s.appendChild(f)});
+const cum=[];(()=>{let t=0;slides.forEach(s=>{cum.push(t);t+=+s.dataset.min||0})})();
+const TOTAL=cum[N-1]+(+slides[N-1].dataset.min||0);
+const hm=m=>Math.floor(m/60)+':'+String(m%60).padStart(2,'0');
+let cur=0;
+function go(i){i=Math.max(0,Math.min(N-1,i));cur=i;slides.forEach((s,k)=>s.classList.toggle('active',k===i));chrome();
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+function chrome(){const s=slides[cur];
+  $('#count').textContent=(cur+1)+' / '+N;
+  $('#clockref').textContent='min '+cum[cur]+' de '+TOTAL;
+  $('#prog').style.width=((cur+1)/N*100)+'%';
+  $$('#bar .part').forEach(b=>b.classList.toggle('on',b.dataset.p===s.dataset.part));
+  $('#notetext').innerHTML='<p>'+esc(s.dataset.notes||'')+'</p>';
+  $('#notemin').textContent='Previsto: '+(s.dataset.min||0)+' min · acumulado '+cum[cur]+' de '+TOTAL;
+  $$('#idxgrid button').forEach((b,k)=>b.classList.toggle('cur',k===cur))}
+function fit(){const v=$('#viewport');$('#stage').style.setProperty('--s',Math.min(v.clientWidth/1280,v.clientHeight/720).toFixed(4))}
+addEventListener('resize',fit);
+$('#idxgrid').innerHTML=slides.map((s,i)=>`<button data-i="${i}"><small>${esc(PARTES[s.dataset.part])} · ${s.dataset.min} min · min ${INICIO+cum[i]}</small>${i+1}. ${esc(s.dataset.title)}</button>`).join('');
+$('#idxgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tog('#index',false);go(+b.dataset.i)});
+function tog(sel,force){$(sel).classList.toggle('on',force)}
+$('#bprev').onclick=()=>go(cur-1); $('#bnext').onclick=()=>go(cur+1);
+$('#bidx').onclick=()=>tog('#index'); $('#bnotes').onclick=()=>tog('#notes');
+$('#bfull').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen()};
+$$('#bar .part').forEach(b=>b.onclick=()=>go(slides.findIndex(s=>s.dataset.part===b.dataset.p)));
+const zoom=$('#zoom');
+function cerrarZoom(){zoom.classList.remove('on');$('#zoom img').removeAttribute('src')}
+zoom.addEventListener('click',cerrarZoom);
+addEventListener('keydown',e=>{
+  const t=e.target; if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))return; if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const k=e.key;
+  if(k==='Escape'){if(zoom.classList.contains('on')){cerrarZoom();return}tog('#index',false);tog('#notes',false);return}
+  if(zoom.classList.contains('on'))return;
+  if(k==='ArrowRight'||k==='PageDown'||(k===' '&&!/^(BUTTON|A|SUMMARY)$/.test(t.tagName))){e.preventDefault();go(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(k==='Home'){e.preventDefault();go(0)} else if(k==='End'){e.preventDefault();go(N-1)}
+  else if(k==='o'||k==='O')tog('#index'); else if(k==='s'||k==='S')tog('#notes'); else if(k==='f'||k==='F')$('#bfull').click();
+});
+document.addEventListener('click',async e=>{
+  const z=e.target.closest('.capa'); if(z){$('#zoom img').src=z.dataset.src;$('#zoom img').alt=z.dataset.alt;$('#zoom p').textContent=z.dataset.alt+' · clic o Esc para cerrar';zoom.classList.add('on');return}
+  const b=e.target.closest('.cp'); if(!b)return; e.stopPropagation();
+  const ok=await copyText(b.dataset.t); const tx=b.textContent; b.classList.add('ok'); b.textContent=ok?'✓ Copiado':'✗'; setTimeout(()=>{b.classList.remove('ok');b.textContent=tx},1200)});
+fit(); const h=parseInt((location.hash||'').slice(1),10); go(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

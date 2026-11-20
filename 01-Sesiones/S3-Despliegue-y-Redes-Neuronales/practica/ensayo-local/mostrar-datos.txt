@@ -1,0 +1,50 @@
+MODO MOSTRAR, NO ES GCP: salida real del script sin opciones. No crea nada ni llama a gcloud, bq ni python (en esta prueba gcloud ni siquiera estaba en el PATH).
+Orden: bash deploy/gcp/datos.sh   (desde 04-Proyecto-Base; sin env.sh y sin variables CURSO_GCP_*, por eso salen los marcadores TU-...)
+Ejecutado el 20/11/2026 en local con bash 5.2. Codigo de salida: 0
+----------------------------------------------------------------------------------------------------
+### MODO MOSTRAR: solo se imprimen las ordenes, NO se ejecuta nada. Para ejecutarlas anade --ejecutar.
+
+== 0. Inventario y comprobacion previa (solo lecturas, locales)
++ python -m ia_mlops.migracion inventario --db data/processed/curso.db
+
+== 1. Bucket: region unica, acceso uniforme, sin acceso publico, etiqueta curso=ml-ia
++ gcloud storage buckets create gs://TU-PROYECTO-curso-ml-datos --project TU-PROYECTO --location TU-REGION --uniform-bucket-level-access --public-access-prevention
++ gcloud storage buckets update gs://TU-PROYECTO-curso-ml-datos --update-labels=curso=ml-ia
+
+== 2. Exportar a Parquet (con MANIFEST.sha256), subir y verificar la huella
++ python -m ia_mlops.migracion exportar --db data/processed/curso.db --salida /tmp/curso-gcp-parquet
++ gcloud storage rsync /tmp/curso-gcp-parquet gs://TU-PROYECTO-curso-ml-datos/parquet
++ gcloud storage rsync gs://TU-PROYECTO-curso-ml-datos/parquet /tmp/curso-gcp-parquet-descarga
++ python -m ia_mlops.migracion huella verificar /tmp/curso-gcp-parquet-descarga
+
+== 3. Dataset de BigQuery (misma ubicacion que el bucket, tablas con caducidad, etiqueta curso:ml-ia)
++ bq --project_id TU-PROYECTO --location TU-REGION mk --dataset --default_table_expiration 604800 --label curso:ml-ia --description Demo\ del\ curso:\ copia\ analitica\ validada TU-PROYECTO:curso_ml
+
+== 4. Cargar cada Parquet en su tabla
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.master_calidad gs://TU-PROYECTO-curso-ml-datos/parquet/master_calidad.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.master_calidad
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.master_clientes gs://TU-PROYECTO-curso-ml-datos/parquet/master_clientes.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.master_clientes
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.master_descartes gs://TU-PROYECTO-curso-ml-datos/parquet/master_descartes.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.master_descartes
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.master_facturas gs://TU-PROYECTO-curso-ml-datos/parquet/master_facturas.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.master_facturas
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.master_lineas gs://TU-PROYECTO-curso-ml-datos/parquet/master_lineas.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.master_lineas
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.master_productos gs://TU-PROYECTO-curso-ml-datos/parquet/master_productos.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.master_productos
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.fs_catalogo gs://TU-PROYECTO-curso-ml-datos/parquet/fs_catalogo.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.fs_catalogo
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.fs_cliente_corte gs://TU-PROYECTO-curso-ml-datos/parquet/fs_cliente_corte.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.fs_cliente_corte
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.ml_dataset gs://TU-PROYECTO-curso-ml-datos/parquet/ml_dataset.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.ml_dataset
++ bq --project_id TU-PROYECTO --location TU-REGION load --source_format=PARQUET --replace TU-PROYECTO:curso_ml.ml_particiones gs://TU-PROYECTO-curso-ml-datos/parquet/ml_particiones.parquet
++ bq --project_id TU-PROYECTO update --set_label curso:ml-ia TU-PROYECTO:curso_ml.ml_particiones
+
+== 5. Validar contra BigQuery (dry run + tope de bytes en cada consulta; sale con codigo distinto de 0 si algo difiere)
++ python -m ia_mlops.migracion validar --db data/processed/curso.db --bigquery TU-PROYECTO.curso_ml --ubicacion TU-REGION --max-bytes 1000000000 --json /tmp/curso-gcp-parquet/validacion-bigquery.json
+
+== Listados de comprobacion
++ gcloud storage ls gs://TU-PROYECTO-curso-ml-datos/parquet/
++ bq --project_id TU-PROYECTO --location TU-REGION ls TU-PROYECTO:curso_ml

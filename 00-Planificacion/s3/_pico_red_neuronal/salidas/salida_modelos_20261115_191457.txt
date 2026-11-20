@@ -1,0 +1,89 @@
+python 3.11.18  2026-11-15 19:14:57
+torch 2.15.0+cpu, hilos=2, {"sistema": "Windows-10-10.0.26200-SP0", "procesador": "Intel64 Family 6 Model 181 Stepping 0, GenuineIntel", "nucleos_logicos_visibles": 14}
+
+=== CIFAR-10 gato/perro: train=8000 val=2000 test=2000
+  cifar LR sobre pixeles: exactitud=0.5790  IC95=[0.557, 0.601]  n=2000
+  cifar MLP sklearn (256) sobre pixeles: exactitud=0.5740  IC95=[0.552, 0.595]  n=2000
+  CNN propia (32x32), 20 epocas
+    epoca  1/20  val=0.6100  t=20s
+    epoca  2/20  val=0.5810  t=60s
+    epoca  3/20  val=0.6515  t=106s
+    epoca  4/20  val=0.7020  t=150s
+    epoca  5/20  val=0.7450  t=192s
+    epoca  6/20  val=0.7535  t=216s
+    epoca  7/20  val=0.6635  t=232s
+    epoca  8/20  val=0.7775  t=253s
+    epoca  9/20  val=0.8165  t=277s
+    epoca 10/20  val=0.8180  t=301s
+    epoca 11/20  val=0.8135  t=333s
+    epoca 12/20  val=0.8265  t=374s
+    epoca 13/20  val=0.8085  t=400s
+    epoca 14/20  val=0.8235  t=413s
+    epoca 15/20  val=0.8460  t=425s
+    epoca 16/20  val=0.8505  t=439s
+    epoca 17/20  val=0.8520  t=467s
+    epoca 18/20  val=0.8490  t=497s
+    epoca 19/20  val=0.8565  t=533s
+    epoca 20/20  val=0.8520  t=566s
+  cifar CNN propia: exactitud=0.8640  IC95=[0.848, 0.8795]  n=2000
+  MobileNetV3-small congelada, entrada reescalada a 64
+Downloading: "https://download.pytorch.org/models/mobilenet_v3_small-047dcff4.pth" to C:\bk\HC-Cursos\curso-ml-ia-desarrollo-produccion\00-Planificacion\s3\_pico_red_neuronal\_trabajo\torch_home\hub\checkpoints\mobilenet_v3_small-047dcff4.pth
+    C=0.01  val=0.7355
+    C=0.1   val=0.7345
+    C=1.0   val=0.7275
+    C=10.0  val=0.7275
+  cifar mobilenet@64: exactitud=0.7400  IC95=[0.72, 0.7605]  n=2000
+  MobileNetV3-small congelada, entrada reescalada a 96
+    C=0.01  val=0.8135
+    C=0.1   val=0.8145
+    C=1.0   val=0.8060
+    C=10.0  val=0.8050
+  cifar mobilenet@96: exactitud=0.8140  IC95=[0.796, 0.831]  n=2000
+  MobileNetV3-small congelada, entrada reescalada a 128
+    C=0.01  val=0.8360
+    C=0.1   val=0.8330
+    C=1.0   val=0.8280
+    C=10.0  val=0.8290
+  cifar mobilenet@128: exactitud=0.8360  IC95=[0.82, 0.8515]  n=2000
+
+=== Oxford-IIIT Pet gato/perro equilibrado: train=3360 val=720 test=720
+  CNN propia (64x64 desde 128), 20 epocas
+    epoca  1/20  val=0.5000  t=39s
+    epoca  2/20  val=0.6181  t=83s
+    epoca  3/20  val=0.5000  t=129s
+    epoca  4/20  val=0.7194  t=164s
+    epoca  5/20  val=0.6639  t=187s
+    epoca  6/20  val=0.7153  t=221s
+    epoca  7/20  val=0.7375  t=263s
+    epoca  8/20  val=0.7792  t=306s
+    epoca  9/20  val=0.7542  t=350s
+    epoca 10/20  val=0.8222  t=384s
+    epoca 11/20  val=0.7667  t=431s
+    epoca 12/20  val=0.6347  t=495s
+    epoca 13/20  val=0.7681  t=544s
+    epoca 14/20  val=0.8542  t=578s
+    epoca 15/20  val=0.8458  t=608s
+    epoca 16/20  val=0.8500  t=625s
+    epoca 17/20  val=0.8361  t=643s
+    epoca 18/20  val=0.8764  t=661s
+    epoca 19/20  val=0.8833  t=681s
+    epoca 20/20  val=0.8833  t=713s
+  pets CNN propia 64: exactitud=0.8875  IC95=[0.8639, 0.9111]  n=720
+  MobileNetV3-small congelada, entrada 96
+    C=0.01  val=0.8847
+    C=0.1   val=0.8889
+    C=1.0   val=0.8750
+    C=10.0  val=0.8500
+  pets mobilenet@96: exactitud=0.8722  IC95=[0.8472, 0.8958]  n=720
+  MobileNetV3-small congelada, entrada 128
+    C=0.01  val=0.9306
+    C=0.1   val=0.9306
+    C=1.0   val=0.9333
+    C=10.0  val=0.9250
+  pets mobilenet@128: exactitud=0.9306  IC95=[0.9111, 0.9486]  n=720
+
+=== Modelos entrenados con CIFAR frente a fotos reales (pets test) reducidas a 32x32
+  cifar_cnn sobre fotos pets@32: exactitud=0.7903  IC95=[0.7597, 0.8194]  n=720
+  cifar_mnet_64 sobre fotos pets@32: exactitud=0.7194  IC95=[0.6861, 0.7528]  n=720
+  cifar_mnet_96 sobre fotos pets@32: exactitud=0.7750  IC95=[0.7444, 0.8056]  n=720
+  cifar_mnet_128 sobre fotos pets@32: exactitud=0.8083  IC95=[0.7792, 0.8347]  n=720

@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recap S2 · ML e IA: de desarrollo a producción</title>
+<style>
+:root{
+  --bg:#031a33;--bg2:#062a4d;--panel:#0a3560;--panel2:#0e4378;--line:#1a5fa3;
+  --blue:#2bb3ff;--gold:#fcd34d;--text:#eef6ff;--muted:#a9c8ea;
+  --ok:#34d399;--warn:#fbbf24;--bad:#fb7185;--opt:#b39cff;--r:16px;
+  --mono:ui-monospace,"Cascadia Code","SFMono-Regular",Consolas,Menlo,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden}
+#escenario{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center}
+.slide{position:absolute;inset:0;padding:46px 64px 54px;display:none;flex-direction:column;
+  background:radial-gradient(1200px 600px at 85% -10%,rgba(43,179,255,.14),transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg))}
+.slide.on{display:flex;animation:entra .35s ease}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kick{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+h1{font-size:40px;line-height:1.12;font-weight:800;margin-bottom:18px}
+h2{font-size:22px;font-weight:700;margin-bottom:8px}
+h3{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--gold)}
+p,li{font-size:19px;line-height:1.45;color:var(--text)}
+.muted{color:var(--muted)}
+.small{font-size:15px}
+.mono,code{font-family:var(--mono);font-size:.92em}
+code{background:rgba(43,179,255,.12);padding:1px 6px;border-radius:6px}
+.card{background:rgba(10,53,96,.72);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.fill{flex:1;min-height:0}
+.callout{border-left:4px solid var(--gold);background:rgba(252,211,77,.08);padding:12px 16px;border-radius:0 12px 12px 0;font-size:18px}
+.pie{position:absolute;left:64px;right:64px;bottom:18px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.chip{display:inline-block;font-family:var(--mono);font-size:14px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);margin:3px 4px 3px 0;background:rgba(43,179,255,.08)}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.gold{color:var(--gold)}.blue{color:var(--blue)}
+ul.lista{list-style:none}
+ul.lista li{padding-left:26px;position:relative;margin:6px 0}
+ul.lista li::before{content:"";position:absolute;left:4px;top:11px;width:10px;height:10px;border-radius:3px;background:var(--blue)}
+.term{background:#020f1f;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-family:var(--mono);font-size:16px;line-height:1.55;color:#d7ecff}
+.term .p{color:var(--ok)}
+.term .c{color:var(--muted)}
+.term.pre{white-space:pre;font-size:14px;line-height:1.5;padding:10px 14px}
+svg text{font-family:var(--sans)}
+/* elementos clicables: capas del Dockerfile y casos de la API */
+.sel{border-radius:12px;border:1px solid var(--line);background:rgba(10,53,96,.75);padding:9px 14px;cursor:pointer;transition:transform .15s,border-color .15s;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.sel:hover,.sel.on{transform:translateX(4px);border-color:var(--gold)}
+.sel .n{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:46px}
+.sel .t{font-size:16px;font-weight:700}
+.sel .cod{margin-left:auto;font-family:var(--mono);font-weight:800;font-size:15px;padding:2px 10px;border-radius:999px;border:1px solid currentColor}
+#detalleCaso,#detalleCapa{min-height:330px}
+/* autoevaluación */
+.preg{cursor:pointer;user-select:none}
+.preg .r{display:none;margin-top:8px;color:var(--ok);font-size:16px;line-height:1.4}
+.preg.abierta .r{display:block}
+.preg .q{font-size:17px;font-weight:600}
+.preg .q::before{content:"▸ ";color:var(--gold)}
+.preg.abierta .q::before{content:"▾ "}
+/* pasos numerados */
+ol.pasos{list-style:none;counter-reset:paso}
+ol.pasos li{counter-increment:paso;position:relative;padding-left:40px;margin:0 0 9px;font-size:17px;line-height:1.35}
+ol.pasos li::before{content:counter(paso);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#031a33;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+table.t{border-collapse:collapse;width:100%;font-size:15px}
+table.t th,table.t td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left}
+table.t th{color:var(--gold);font-weight:700}
+/* contadores de la diapositiva final */
+.cuenta{display:flex;align-items:center;gap:14px}
+.cuenta button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:22px;font-weight:800;cursor:pointer}
+.cuenta button:hover{border-color:var(--gold)}
+.cuenta .num{font-size:34px;font-weight:800;min-width:56px;text-align:center;color:var(--gold);font-family:var(--mono)}
+/* índice y notas */
+#indice{position:fixed;inset:0;background:rgba(3,26,51,.96);display:none;z-index:20;padding:40px 60px;overflow:auto}
+#indice.on{display:block}
+#indice h2{color:var(--gold);margin-bottom:16px}
+#indice ol{columns:2;column-gap:40px}
+#indice li{font-size:18px;margin:6px 0;cursor:pointer}
+#indice li:hover{color:var(--gold)}
+#notas{position:fixed;left:0;right:0;bottom:0;background:rgba(2,15,31,.96);border-top:2px solid var(--gold);padding:14px 22px;font-size:16px;line-height:1.45;display:none;z-index:15;max-height:34vh;overflow:auto}
+#notas.on{display:block}
+#barra{position:fixed;left:0;top:0;height:4px;background:var(--gold);z-index:10;transition:width .25s}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media print{
+  html,body{overflow:visible;height:auto}
+  #escenario{position:static;transform:none!important;width:1280px;height:auto}
+  .slide{display:flex!important;position:relative;height:720px;page-break-after:always;animation:none}
+  #barra,#notas,#indice{display:none!important}
+  .preg .r{display:block}
+}
+</style>
+</head>
+<body>
+<div id="barra"></div>
+<div id="escenario">
+
+<!-- 1 -->
+<section class="slide" data-title="Portada" data-notes="Cinco minutos al empezar S3 para recordar lo que S2 dejó construido, porque la demo de hoy parte de esa imagen. Pregunta de arranque: ¿quién llegó a ver su contenedor respondiendo en /listo? Material preparado antes de S2 (15/11/2026): se ajusta tras el miércoles 18/11.">
+  <div class="kick">Recap · antes de S3</div>
+  <h1 style="font-size:56px;margin-top:40px">S2 en 5 minutos:<br><span class="gold">del modelo guardado al servicio</span></h1>
+  <p class="muted" style="font-size:22px;max-width:960px">Mismo caso: <b>Online Retail II</b>. Pregunta: <i>¿volverá este cliente a comprar en los próximos 90 días?</i> Hoy el modelo ya no es un archivo: es un servicio que otra persona puede llamar.</p>
+  <svg viewBox="0 0 1150 150" width="1150" height="150" style="margin-top:40px" aria-label="Recorrido de S2: modelo, API, imagen, contenedor y workflow">
+    <defs><marker id="fl" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fcd34d"/></marker></defs>
+    <g font-size="18" font-weight="700" fill="#eef6ff" text-anchor="middle">
+      <g><rect x="0" y="40" width="190" height="64" rx="14" fill="#123d1f" stroke="#34d399"/><text x="95" y="70">Modelo + firma</text><text x="95" y="92" font-size="13" fill="#a9c8ea" font-weight="400">modelo_mlflow/</text></g>
+      <g><rect x="240" y="40" width="190" height="64" rx="14" fill="#0a3560" stroke="#1a5fa3"/><text x="335" y="70">API FastAPI</text><text x="335" y="92" font-size="13" fill="#a9c8ea" font-weight="400">contrato y errores</text></g>
+      <g><rect x="480" y="40" width="190" height="64" rx="14" fill="#0a3560" stroke="#1a5fa3"/><text x="575" y="70">Imagen Docker</text><text x="575" y="92" font-size="13" fill="#a9c8ea" font-weight="400">retencion-api</text></g>
+      <g><rect x="720" y="40" width="190" height="64" rx="14" fill="#0a3560" stroke="#1a5fa3"/><text x="815" y="70">Contenedor</text><text x="815" y="92" font-size="13" fill="#a9c8ea" font-weight="400">puerto 8080</text></g>
+      <g><rect x="960" y="40" width="190" height="64" rx="14" fill="#0a3560" stroke="#1a5fa3"/><text x="1055" y="70">Workflow</text><text x="1055" y="92" font-size="13" fill="#a9c8ea" font-weight="400">GitHub Actions</text></g>
+    </g>
+    <g stroke="#fcd34d" stroke-width="3" marker-end="url(#fl)"><line x1="192" y1="72" x2="236" y2="72"/><line x1="432" y1="72" x2="476" y2="72"/><line x1="672" y1="72" x2="716" y2="72"/><line x1="912" y1="72" x2="956" y2="72"/></g>
+  </svg>
+  <div class="pie"><span>Recap 02 · ML e IA: de desarrollo a producción</span><span>← → para avanzar · O índice · S notas · F pantalla completa</span></div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="Del modelo guardado al servicio" data-notes="Idea central de S2: el modelo es el mismo de S1; cambia lo que lo rodea. Un archivo en disco no es un servicio. Para que otra persona o programa lo use hace falta un contrato, validación, errores que se entiendan, registros, una imagen que se construya igual en cualquier sitio y una comprobación automática. Los cuatro caminos hacia el modelo se comparan más adelante.">
+  <div class="kick">La idea clave de S2</div>
+  <h1>Un archivo en disco <span class="gold">no es un servicio</span></h1>
+  <svg viewBox="0 0 1150 170" width="1150" height="170" aria-label="Lo que se añade alrededor del modelo guardado">
+    <defs><marker id="fl2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fcd34d"/></marker></defs>
+    <rect x="0" y="30" width="250" height="110" rx="16" fill="#123d1f" stroke="#34d399"/>
+    <text x="125" y="72" text-anchor="middle" font-size="20" font-weight="800" fill="#eef6ff">models/</text>
+    <text x="125" y="98" text-anchor="middle" font-size="16" fill="#eef6ff">modelo_mlflow/</text>
+    <text x="125" y="120" text-anchor="middle" font-size="14" fill="#a9c8ea">+ metadatos.json (S1)</text>
+    <line x1="254" y1="85" x2="336" y2="85" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl2)"/>
+    <rect x="340" y="10" width="810" height="150" rx="16" fill="rgba(10,53,96,.8)" stroke="#1a5fa3"/>
+    <text x="362" y="42" font-size="18" font-weight="800" fill="#fcd34d">Lo que S2 pone alrededor</text>
+    <g font-size="16" fill="#eef6ff">
+      <text x="362" y="76">Contrato de entrada y validación</text>
+      <text x="362" y="104">Errores que dicen quién se equivocó</text>
+      <text x="362" y="132">Registros: una línea JSON por petición</text>
+      <text x="772" y="76">Imagen que se construye igual en cualquier sitio</text>
+      <text x="772" y="104">Contenedor en un puerto, con datos aparte</text>
+      <text x="772" y="132">Comprobación automática en cada cambio</text>
+    </g>
+  </svg>
+  <div class="grid3" style="margin-top:14px">
+    <div class="card"><h3>La API</h3><p class="small">FastAPI carga el modelo y responde por HTTP. <code>/predecir</code> para un cliente, <code>/predecir/lote</code> para hasta 1 000.</p></div>
+    <div class="card"><h3>La imagen</h3><p class="small">Python, paquetes con versiones exactas, código y modelo. Se construye una vez y se ejecuta donde se quiera.</p></div>
+    <div class="card"><h3>El control</h3><p class="small">Un workflow de GitHub Actions reproduce el pipeline, pasa las pruebas, construye la imagen y la prueba.</p></div>
+  </div>
+  <p class="small muted" style="margin-top:14px">Las 13 variables de la capa FS son la entrada: un cliente en una fecha de corte, igual que en S1.</p>
+  <div class="pie"><span>Recap 02</span><span>2</span></div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-title="El contrato sale de la firma" data-notes="Idea central: el contrato no se escribe dos veces; viaja con el modelo. train.py guarda el modelo en formato MLflow con su firma. Al arrancar, Servicio.cargar compara la firma con metadatos.json y comprobar_esquema compara los campos de Cliente con la firma. Si algo no coincide, el servicio sigue vivo pero no queda listo: 503 con los campos que faltan o sobran. Es el caso de la tarea de S2: reentrenar con una variable nueva y no actualizar esquemas.py.">
+  <div class="kick">El contrato</div>
+  <h1>El contrato no se escribe dos veces: <span class="gold">viaja con el modelo</span></h1>
+  <svg viewBox="0 0 1150 190" width="1150" height="190" aria-label="Comparación al arrancar: firma del modelo, metadatos.json y esquema Cliente de la API">
+    <defs><marker id="fl3" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fcd34d"/></marker></defs>
+    <rect x="0" y="30" width="330" height="110" rx="16" fill="#123d1f" stroke="#34d399"/>
+    <text x="165" y="64" text-anchor="middle" font-size="19" font-weight="800" fill="#eef6ff">Firma del modelo</text>
+    <text x="165" y="90" text-anchor="middle" font-size="15" fill="#a9c8ea">nombre, tipo y obligatoriedad</text>
+    <text x="165" y="112" text-anchor="middle" font-size="15" fill="#a9c8ea">de cada una de las 13 variables</text>
+    <rect x="410" y="30" width="330" height="110" rx="16" fill="#0a3560" stroke="#1a5fa3"/>
+    <text x="575" y="64" text-anchor="middle" font-size="19" font-weight="800" fill="#eef6ff">models/metadatos.json</text>
+    <text x="575" y="90" text-anchor="middle" font-size="15" fill="#a9c8ea">nombres y orden de variables</text>
+    <rect x="820" y="30" width="330" height="110" rx="16" fill="#0a3560" stroke="#1a5fa3"/>
+    <text x="985" y="64" text-anchor="middle" font-size="19" font-weight="800" fill="#eef6ff">Esquema Cliente</text>
+    <text x="985" y="90" text-anchor="middle" font-size="15" fill="#a9c8ea">ia_mlops/api/esquemas.py</text>
+    <text x="985" y="112" text-anchor="middle" font-size="15" fill="#a9c8ea">(Pydantic: validación y /docs)</text>
+    <line x1="334" y1="85" x2="404" y2="85" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl3)"/>
+    <line x1="744" y1="85" x2="814" y2="85" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl3)"/>
+    <text x="369" y="72" text-anchor="middle" font-size="13" fill="#fcd34d">compara</text>
+    <text x="779" y="72" text-anchor="middle" font-size="13" fill="#fcd34d">compara</text>
+    <text x="575" y="176" text-anchor="middle" font-size="16" fill="#eef6ff">Al arrancar. Si algo no coincide: el servicio no queda listo</text>
+  </svg>
+  <div class="grid2" style="margin-top:8px">
+    <div class="card"><h3>Si no coincide: 503 con el motivo</h3><p class="small"><code>/listo</code> y <code>/predecir</code> responden 503 y nombran los campos que faltan o sobran. Es mejor fallar al desplegar que dar probabilidades con columnas cambiadas.</p></div>
+    <div class="card"><h3>Por qué no <code>joblib</code> solo</h3><p class="small">Con <code>joblib</code> el contrato viviría fuera del modelo y podría desincronizarse. En formato MLflow viaja con él.</p></div>
+  </div>
+  <div class="callout small" style="margin-top:14px"><b>La tarea de S2 lo provoca:</b> reentrenar con una variable nueva y no actualizar <code>esquemas.py</code> da un 503, no un 500. Las pruebas comprueban que el esquema coincide con la firma, y el límite de cada campo sale de <b>cómo se construye FS</b>, no de lo visto al entrenar.</div>
+  <div class="pie"><span>Recap 02</span><span>3</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="¿200, 422, 503 o 500?" data-notes="Pulsad cada caso y pedid que prediga el código antes de abrirlo. La pregunta que ordena todo: ¿quién se equivocó, quien llama o el servicio? 422: quien llama. 503: quien opera el servicio. 500: el desarrollador, con el id de la petición. Rechazar lo imposible o incoherente; avisar de lo posible sin respaldo en el entrenamiento: rechazarlo dejaría sin predicción a un cliente real, callarlo escondería que el modelo extrapola.">
+  <div class="kick">Errores · pulsa cada caso</div>
+  <h1>¿200, 422, 503 o 500? <span class="gold">¿Quién se equivocó?</span></h1>
+  <div class="grid2 fill" style="grid-template-columns:1fr 1.15fr;align-items:start">
+    <div id="casos">
+      <div class="sel" data-i="0" tabindex="0"><span class="t">Cuerpo que cumple el contrato</span><span class="cod ok">200</span></div>
+      <div class="sel" data-i="1" tabindex="0"><span class="t">recencia_dias = -1</span><span class="cod bad">422</span></div>
+      <div class="sel" data-i="2" tabindex="0"><span class="t">Llega un campo «y»</span><span class="cod bad">422</span></div>
+      <div class="sel" data-i="3" tabindex="0"><span class="t">Ticket medio de 5 000 libras</span><span class="cod ok">200</span></div>
+      <div class="sel" data-i="4" tabindex="0"><span class="t">Sin modelo, o firma distinta</span><span class="cod warn">503</span></div>
+      <div class="sel" data-i="5" tabindex="0"><span class="t">Fallo interno inesperado</span><span class="cod bad">500</span></div>
+    </div>
+    <div class="card" id="detalleCaso"></div>
+  </div>
+  <div class="pie"><span>Recap 02</span><span>4</span></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-title="Vivo, listo y registros" data-notes="Vivo no es lo mismo que listo. /salud pregunta si el proceso responde: un orquestador lo usa para decidir si lo reinicia. /listo pregunta si el modelo está cargado y coincide con su contrato: lo usa para decidir si le envía tráfico. Un servicio sin modelo está vivo y no está listo; reiniciarlo no lo arregla. Registros: una línea JSON por petición por stdout, con severity y message, que son los campos que reconoce Cloud Logging; nunca se registran los datos del cliente. La lección real: con TestClient se veían líneas, con uvicorn de verdad no salía ninguna.">
+  <div class="kick">Operar el servicio</div>
+  <h1>Vivo no es lo mismo que <span class="gold">listo</span></h1>
+  <div class="grid2">
+    <div class="card"><h3><code>/salud</code> · ¿estás vivo?</h3><p class="small">¿El proceso responde? No mira el modelo. Si no responde, el orquestador lo <b>reinicia</b>.</p><p class="small ok" style="margin-top:6px">200 <code>{"estado":"ok"}</code></p></div>
+    <div class="card"><h3><code>/listo</code> · ¿puedes atender?</h3><p class="small">¿El modelo está cargado y coincide con su contrato? Si no, <b>reiniciar no sirve</b>: hay que arreglar lo que falta.</p><p class="small warn" style="margin-top:6px">200, o 503 con el motivo</p></div>
+  </div>
+  <div class="callout small" style="margin-top:14px">Un servicio sin modelo arrancó (vivo) y no está listo. El orquestador usa <code>/salud</code> para <b>reiniciar</b> y <code>/listo</code> para decidir si <b>envía tráfico</b>.</div>
+  <h2 style="margin-top:16px">Los registros: una línea JSON por petición</h2>
+  <div class="term pre"><span class="c"># salida estándar del servicio: una línea por petición (aquí partida para leerla)</span>
+{"severity": "INFO", "message": "POST /predecir 200", "evento": "peticion", "id": "26ac527aa211",
+ "metodo": "POST", "ruta": "/predecir", "codigo": 200, "ms": 45.6}</div>
+  <div class="grid3" style="margin-top:12px">
+    <div class="card" style="padding:10px 14px"><p class="small"><code>severity</code> y <code>message</code> son los campos que Cloud Logging reconoce.</p></div>
+    <div class="card" style="padding:10px 14px"><p class="small"><code>X-Request-ID</code> une lo que vio quien llamó con el registro. En un 500, el traceback va al registro con ese id.</p></div>
+    <div class="card" style="padding:10px 14px"><p class="small"><b>Nunca</b> se registran los datos del cliente: solo método, ruta, código, duración e id.</p></div>
+  </div>
+  <div class="pie"><span>Recap 02</span><span>5</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-title="La imagen Docker, capa a capa" data-notes="Pulsad cada capa. Tres decisiones que hay que saber justificar: dependencias antes del código (caché), usuario no root, 0.0.0.0 dentro del contenedor. El HEALTHCHECK pregunta a /salud y no a /listo. El .dockerignore decide qué entra en el contexto: un patrón como *.pyc solo vale en la raíz, para cualquier carpeta hay que escribir **/*.pyc. Pregunta: ¿qué hay en el contexto que nunca debería estar?">
+  <div class="kick">Docker · pulsa cada capa</div>
+  <h1>Una receta en capas: <span class="gold">lo que cambia menos va primero</span></h1>
+  <div class="grid2 fill" style="grid-template-columns:1fr 1.15fr;align-items:start">
+    <div id="capas">
+      <div class="sel" data-i="0" tabindex="0"><span class="n">capa 1</span><span class="t">FROM python:3.11-slim</span></div>
+      <div class="sel" data-i="1" tabindex="0"><span class="n">capa 2</span><span class="t">requirements-api.lock + pip install</span></div>
+      <div class="sel" data-i="2" tabindex="0"><span class="n">capa 3</span><span class="t">ia_mlops/ y models/modelo_mlflow/</span></div>
+      <div class="sel" data-i="3" tabindex="0"><span class="n">capa 4</span><span class="t">USER 10001</span></div>
+      <div class="sel" data-i="4" tabindex="0"><span class="n">capa 5</span><span class="t">HEALTHCHECK sobre /salud</span></div>
+      <div class="sel" data-i="5" tabindex="0"><span class="n">fuera</span><span class="t">.dockerignore</span></div>
+    </div>
+    <div class="card" id="detalleCapa"></div>
+  </div>
+  <div class="pie"><span>Recap 02</span><span>6</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-title="Imagen, contenedor, puertos y volúmenes" data-notes="La imagen es una receta congelada; el contenedor es esa imagen en ejecución. Al borrar el contenedor se pierde lo que escribió dentro. Sin -p desde el equipo no se llega al contenedor. Dentro de un contenedor, 127.0.0.1 es el propio contenedor: por eso el CMD usa 0.0.0.0. Los datos van en un volumen, fuera de la imagen, y con :ro en solo lectura.">
+  <div class="kick">Imagen frente a contenedor</div>
+  <h1>Una imagen, <span class="gold">muchos contenedores</span></h1>
+  <svg viewBox="0 0 1150 180" width="1150" height="180" aria-label="Una imagen de solo lectura origina uno o varios contenedores; el puerto se publica con -p y los datos entran por un volumen">
+    <defs><marker id="fl4" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fcd34d"/></marker></defs>
+    <rect x="0" y="40" width="260" height="100" rx="16" fill="#0a3560" stroke="#1a5fa3"/>
+    <text x="130" y="78" text-anchor="middle" font-size="20" font-weight="800" fill="#eef6ff">Imagen</text>
+    <text x="130" y="102" text-anchor="middle" font-size="15" fill="#a9c8ea">retencion-api:local</text>
+    <text x="130" y="124" text-anchor="middle" font-size="14" fill="#a9c8ea">receta congelada</text>
+    <line x1="264" y1="90" x2="394" y2="90" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl4)"/>
+    <text x="329" y="78" text-anchor="middle" font-size="14" fill="#fcd34d">docker run</text>
+    <rect x="400" y="40" width="300" height="100" rx="16" fill="#123d1f" stroke="#34d399"/>
+    <text x="550" y="78" text-anchor="middle" font-size="20" font-weight="800" fill="#eef6ff">Contenedor</text>
+    <text x="550" y="102" text-anchor="middle" font-size="15" fill="#a9c8ea">la imagen en ejecución</text>
+    <text x="550" y="124" text-anchor="middle" font-size="14" fill="#a9c8ea">lo que escribe dentro se pierde al borrarlo</text>
+    <line x1="704" y1="90" x2="834" y2="90" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl4)"/>
+    <text x="769" y="78" text-anchor="middle" font-size="14" fill="#fcd34d">-p 8080:8080</text>
+    <rect x="840" y="40" width="310" height="100" rx="16" fill="rgba(10,53,96,.8)" stroke="#1a5fa3"/>
+    <text x="995" y="78" text-anchor="middle" font-size="20" font-weight="800" fill="#eef6ff">Tu equipo</text>
+    <text x="995" y="102" text-anchor="middle" font-size="15" fill="#a9c8ea">http://127.0.0.1:8080/docs</text>
+    <text x="995" y="124" text-anchor="middle" font-size="14" fill="#a9c8ea">sin -p no hay puerta</text>
+  </svg>
+  <div class="grid3" style="margin-top:8px">
+    <div class="card"><h3>Puerto</h3><p class="small"><code>-p equipo:contenedor</code> abre una puerta. Dentro del contenedor el servidor escucha en <code>0.0.0.0</code>; <code>127.0.0.1</code> allí es el propio contenedor.</p></div>
+    <div class="card"><h3>Volumen</h3><p class="small"><code>-v origen:destino:ro</code> monta una carpeta del equipo. Los datos quedan <b>fuera</b> de la imagen y, con <code>:ro</code>, no se pueden modificar.</p></div>
+    <div class="card"><h3>Variables de entorno</h3><p class="small"><code>-e</code> o <code>ENV</code>: la configuración llega desde fuera. El mismo código sirve en cualquier sitio.</p></div>
+  </div>
+  <div class="term" style="margin-top:14px;font-size:15px"><span class="p">$</span> docker build -f deploy/docker/Dockerfile -t retencion-api:local .<br><span class="p">$</span> docker run --rm -p 8080:8080 retencion-api:local</div>
+  <div class="pie"><span>Recap 02</span><span>7</span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-title="Un modelo, cuatro caminos, una probabilidad" data-notes="Las cifras de esta diapositiva salen de docs/api-y-contenedor.md y de la teoría de S2. La probabilidad del cliente de ejemplo es 0.8278889191932133 en local y en el contenedor, idéntica; otro sistema operativo puede cambiar los últimos decimales. La imagen construida en GitHub Actions ocupa 826 MB en disco y 183 MB de contenido según docker image ls. El usuario es 10001. La diferencia máxima 0.000e+00 es con la muestra y 200 filas de test. Valores medidos en GitHub Actions (Ubuntu), no en el Codespace del curso.">
+  <div class="kick">Comparar caminos · muestra del curso</div>
+  <h1>Si es el mismo modelo, <span class="gold">la misma probabilidad</span></h1>
+  <svg viewBox="0 0 1150 220" width="1150" height="220" aria-label="El paquete, el joblib, el formato MLflow, la API y el contenedor dan la misma probabilidad para el cliente de ejemplo">
+    <defs><marker id="fl5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 z" fill="#fcd34d"/></marker></defs>
+    <g font-size="17" font-weight="700" fill="#eef6ff" text-anchor="middle">
+      <rect x="0" y="0" width="300" height="38" rx="10" fill="#0a3560" stroke="#1a5fa3"/><text x="150" y="25">el paquete (ia_mlops)</text>
+      <rect x="0" y="45" width="300" height="38" rx="10" fill="#0a3560" stroke="#1a5fa3"/><text x="150" y="70">el archivo joblib</text>
+      <rect x="0" y="90" width="300" height="38" rx="10" fill="#0a3560" stroke="#1a5fa3"/><text x="150" y="115">el formato MLflow</text>
+      <rect x="0" y="135" width="300" height="38" rx="10" fill="#0a3560" stroke="#1a5fa3"/><text x="150" y="160">la API en local</text>
+      <rect x="0" y="180" width="300" height="38" rx="10" fill="#0a3560" stroke="#1a5fa3"/><text x="150" y="205">la API en el contenedor</text>
+    </g>
+    <g stroke="#fcd34d" stroke-width="3" marker-end="url(#fl5)"><line x1="304" y1="19" x2="470" y2="72"/><line x1="304" y1="64" x2="470" y2="91"/><line x1="304" y1="109" x2="470" y2="110"/><line x1="304" y1="154" x2="470" y2="129"/><line x1="304" y1="199" x2="470" y2="148"/></g>
+    <rect x="480" y="55" width="670" height="110" rx="16" fill="#123d1f" stroke="#34d399"/>
+    <text x="815" y="92" text-anchor="middle" font-size="16" fill="#a9c8ea">probabilidad del cliente de ejemplo</text>
+    <text x="815" y="136" text-anchor="middle" font-size="42" font-weight="800" fill="#eef6ff" font-family="ui-monospace,Consolas,monospace">0.8278889…</text>
+  </svg>
+  <div class="grid3" style="margin-top:10px">
+    <div class="card"><h3>826 MB</h3><p class="small">Tamaño de la imagen en disco, construida en GitHub Actions; 183 MB de «contenido» en <code>docker image ls</code>. Pesan pandas, scipy y scikit-learn.</p></div>
+    <div class="card"><h3>Usuario 10001</h3><p class="small"><code>docker exec … id -u</code> da <code>10001</code>: no corre como root. Si alguien explota la API, no es administrador del contenedor.</p></div>
+    <div class="card"><h3>Diferencia 0</h3><p class="small"><code>python -m ia_mlops.modeling.comparar</code>: con 200 filas de test, la diferencia máxima entre caminos fue 0.000e+00. Salida 0 = todo coincide.</p></div>
+  </div>
+  <p class="small muted" style="margin-top:12px">Valor completo: <code>0.8278889191932133</code>, igual en local y en el contenedor. Otro sistema operativo puede cambiar los últimos decimales.</p>
+  <div class="pie"><span>Recap 02 · cifras de docs/api-y-contenedor.md (GitHub Actions)</span><span>8</span></div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-title="La interfaz y los dos contenedores" data-notes="La API solo sabe de variables; la persona solo conoce el id de cliente. La interfaz traduce: calcula las 13 variables con el SQL de FS sobre curso.db, llama a la API y aplica la regla de tramos (config.SEGMENTOS_RECOMPRA). La API no se publica con -p: solo la interfaz, dentro de la red, puede llamarla. Los datos se montan en solo lectura. Error clásico: 127.0.0.1 dentro de un contenedor es el propio contenedor. Con la API parada, /salud de la interfaz da 200 y /listo da 503.">
+  <div class="kick">Interfaz de consulta · dos contenedores</div>
+  <h1>La persona pone un id; <span class="gold">la API solo habla de variables</span></h1>
+  <svg viewBox="0 0 1150 260" width="1150" height="260" aria-label="Persona, contenedor interfaz con puerto publicado, red retencion, contenedor API sin publicar y volumen de solo lectura">
+    <defs><marker id="fl6" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fcd34d"/></marker></defs>
+    <rect x="300" y="10" width="850" height="170" rx="18" fill="rgba(43,179,255,.06)" stroke="#2bb3ff" stroke-dasharray="6 6"/>
+    <text x="320" y="36" font-size="15" fill="#2bb3ff">red «retencion»: los contenedores se encuentran por su nombre</text>
+    <rect x="0" y="70" width="190" height="80" rx="14" fill="#0a3560" stroke="#1a5fa3"/>
+    <text x="95" y="104" text-anchor="middle" font-size="19" font-weight="800" fill="#eef6ff">Persona</text>
+    <text x="95" y="128" text-anchor="middle" font-size="14" fill="#a9c8ea">escribe ids de cliente</text>
+    <line x1="194" y1="110" x2="336" y2="110" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl6)"/>
+    <text x="265" y="100" text-anchor="middle" font-size="13" fill="#fcd34d">-p 8090:8090</text>
+    <rect x="340" y="60" width="270" height="100" rx="14" fill="#0a3560" stroke="#1a5fa3"/>
+    <text x="475" y="92" text-anchor="middle" font-size="19" font-weight="800" fill="#eef6ff">Contenedor interfaz</text>
+    <text x="475" y="116" text-anchor="middle" font-size="14" fill="#a9c8ea">:8090 · ids → variables → tramo</text>
+    <text x="475" y="138" text-anchor="middle" font-size="14" fill="#a9c8ea">usuario 10001 · sin modelo</text>
+    <line x1="614" y1="110" x2="796" y2="110" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl6)"/>
+    <text x="705" y="100" text-anchor="middle" font-size="13" fill="#fcd34d">http://api:8080</text>
+    <text x="705" y="130" text-anchor="middle" font-size="13" fill="#a9c8ea">13 variables</text>
+    <rect x="800" y="60" width="320" height="100" rx="14" fill="#123d1f" stroke="#34d399"/>
+    <text x="960" y="92" text-anchor="middle" font-size="19" font-weight="800" fill="#eef6ff">Contenedor API</text>
+    <text x="960" y="116" text-anchor="middle" font-size="14" fill="#a9c8ea">:8080 · sin -p, no se publica</text>
+    <text x="960" y="138" text-anchor="middle" font-size="14" fill="#a9c8ea">contrato = firma · lleva el modelo</text>
+    <rect x="340" y="206" width="270" height="48" rx="12" fill="#0a3560" stroke="#fbbf24"/>
+    <text x="475" y="226" text-anchor="middle" font-size="16" font-weight="700" fill="#eef6ff">curso.db en /datos</text>
+    <text x="475" y="245" text-anchor="middle" font-size="13" fill="#fbbf24">volumen de solo lectura (:ro)</text>
+    <line x1="475" y1="204" x2="475" y2="164" stroke="#fcd34d" stroke-width="3" marker-end="url(#fl6)"/>
+  </svg>
+  <div class="grid3" style="margin-top:6px">
+    <div class="card" style="padding:12px 16px"><h3>Dos imágenes</h3><p class="small">La interfaz ocupa 423 MB frente a los 826 MB de la API: no lleva scikit-learn ni mlflow, y la imagen del modelo no lleva datos de clientes.</p></div>
+    <div class="card" style="padding:12px 16px"><h3>Roturas útiles</h3><p class="small">Escribir en <code>/datos</code> da <i>Read-only file system</i>. Con la API parada, <code>/salud</code> 200 y <code>/listo</code> 503.</p></div>
+    <div class="card" style="padding:12px 16px"><h3>La recomendación es negocio</h3><p class="small">Tramos alta, media y baja (≥ 70 %, 40–70 %, &lt; 40 %): una regla de <code>config.py</code>, no del modelo.</p></div>
+  </div>
+  <div class="pie"><span>Recap 02 · 423 y 826 MB: del-ordenador-al-servicio.md, GitHub Actions 14/11/2026</span><span>9</span></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-title="Workflow y taller de punta a punta" data-notes="El workflow es la plantilla deploy/github-actions/ci.yml: se copia a .github/workflows/ci.yml. Permisos mínimos, sin secretos y sin publicar nada: publicar y desplegar llegan en S4. El taller: el laboratorio de S2 son 135 minutos en siete bloques, más el laboratorio extra de la ingesta a la explotación. El taller del café (CQI) repite el recorrido completo con otro caso. Ajustar tras el miércoles con lo que realmente pasó (T19).">
+  <div class="kick">GitHub Actions y el taller</div>
+  <h1>Cada cambio se prueba <span class="gold">solo</span></h1>
+  <div class="grid2 fill" style="align-items:start">
+    <div class="card">
+      <h3>El primer workflow (<code>ci.yml</code>)</h3>
+      <ol class="pasos" style="margin-top:8px">
+        <li>Instala las dependencias de <code>requirements-dev.txt</code></li>
+        <li>Ejecuta el pipeline completo</li>
+        <li>Pasa las pruebas</li>
+        <li>Construye la imagen</li>
+        <li>Arranca el contenedor: <code>/listo</code>, <code>/modelo</code>, una predicción y un <b>422</b> por campo fuera del contrato</li>
+        <li>Si algo falla, muestra el registro del contenedor</li>
+      </ol>
+      <p class="small muted">En cada <code>push</code> y <code>pull_request</code> a <code>develop</code> o <code>main</code>. Permisos <code>contents: read</code>, sin secretos y sin publicar nada: eso es S4.</p>
+    </div>
+    <div class="card">
+      <h3>El taller, de punta a punta</h3>
+      <table class="t" style="margin-top:6px">
+        <tr><th>Bloque del laboratorio de S2</th><th style="text-align:right">min</th></tr>
+        <tr><td>Preparar · arrancar la API</td><td style="text-align:right">10 · 25</td></tr>
+        <tr><td>Romperla a propósito</td><td style="text-align:right">30</td></tr>
+        <tr><td>Comparar caminos y romper reglas</td><td style="text-align:right">25</td></tr>
+        <tr><td>Docker en Codespaces</td><td style="text-align:right">25</td></tr>
+        <tr><td>El primer workflow</td><td style="text-align:right">10</td></tr>
+      </table>
+      <p class="small" style="margin-top:10px"><b>Extra:</b> de la ingesta a la explotación (lista de la campaña, deriva, datos nuevos y versión 2 del modelo).</p>
+      <p class="small muted" style="margin-top:8px">El taller del café (CQI) repite el mismo recorrido en otro caso: de <code>make verificar</code> a la versión 2, pasando por dos contenedores con Compose.</p>
+    </div>
+  </div>
+  <div class="pie"><span>Recap 02 · bloques: guía de laboratorio de S2 (135 min en total, con 10 de pausa)</span><span>10</span></div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-title="Autoevaluación" data-notes="Cinco minutos en parejas, o una por mano alzada si hay prisa. Pulsar cada pregunta para ver la respuesta. Si alguna no sale, volver a la diapositiva correspondiente: contrato (3), códigos (4), vivo y listo (5), capas (6), puertos y volúmenes (7, 9), caminos (8).">
+  <div class="kick">Autoevaluación · pulsa cada pregunta</div>
+  <h1>¿Lo tienes? Seis preguntas</h1>
+  <div class="grid2" id="preguntas">
+    <div class="card preg" tabindex="0"><div class="q">Reentrenas con una variable nueva y no tocas la API. ¿Qué responde?</div><div class="r">503, no 500: la firma del modelo no coincide con el esquema y <code>/listo</code> nombra la variable que falta. El servicio sigue vivo.</div></div>
+    <div class="card preg" tabindex="0"><div class="q">Llega <code>recencia_dias = -1</code>. ¿Qué código y quién actúa?</div><div class="r">422, y actúa quien llama: el valor es imposible. Rechazar evita un error dentro de scikit-learn o una probabilidad sin sentido.</div></div>
+    <div class="card preg" tabindex="0"><div class="q">Un cliente con un ticket medio nunca visto al entrenar. ¿Rechazar o avisar?</div><div class="r">Avisar: 200 con <code>advertencias</code>. Es posible pero sin respaldo; rechazarlo dejaría sin predicción a un cliente real.</div></div>
+    <div class="card preg" tabindex="0"><div class="q">¿Por qué las dependencias van antes que el código en el Dockerfile?</div><div class="r">Por la caché de capas: la de dependencias solo se reconstruye si cambia <code>requirements-api.lock</code>. Una línea de código no reinstala todo.</div></div>
+    <div class="card preg" tabindex="0"><div class="q">La interfaz llama a <code>http://api:8080</code>, no a <code>127.0.0.1</code>. ¿Por qué?</div><div class="r">Dentro de un contenedor, <code>127.0.0.1</code> es el propio contenedor. En la red <code>retencion</code>, Docker resuelve el nombre <code>api</code>.</div></div>
+    <div class="card preg" tabindex="0"><div class="q">La API se cae. ¿Qué dicen <code>/salud</code> y <code>/listo</code> de la interfaz?</div><div class="r"><code>/salud</code> 200 y <code>/listo</code> 503. Por eso el <code>HEALTHCHECK</code> mira <code>/salud</code>: reiniciar la interfaz no arregla la API.</div></div>
+  </div>
+  <div class="pie"><span>Recap 02</span><span>11</span></div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-title="Puente a S3 (1): mapa de local a GCP" data-notes="El mapa de equivalencias del apartado 9 de del-ordenador-al-servicio.md: cada pieza que hoy corre en el equipo o en el Codespace tiene un servicio gestionado en GCP. Esta es solo la vista general; el detalle, los comandos y las salidas reales vienen en la teoría y las demos de S3. Nada de GCP se ha ejecutado todavía al preparar este recap: lo que no se haya ejecutado se dirá «sin verificar». Sin cifras ni precios.">
+  <div class="kick">Lo que viene en S3</div>
+  <h1>Lo que corre en tu ordenador y en Docker, <span class="gold">ahora lo llevamos a la nube</span></h1>
+  <svg viewBox="0 0 1150 380" width="1150" height="380" aria-label="Mapa de equivalencias: pieza local y servicio de GCP">
+    <defs><marker id="fl7" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#fcd34d"/></marker></defs>
+    <text x="215" y="20" text-anchor="middle" font-size="15" font-weight="700" fill="#a9c8ea">HOY · local y Codespace</text>
+    <text x="935" y="20" text-anchor="middle" font-size="15" font-weight="700" fill="#34d399">S3 · GCP</text>
+    <g font-size="17" font-weight="700" fill="#eef6ff" text-anchor="middle">
+      <rect x="0" y="36" width="430" height="42" rx="12" fill="#0a3560" stroke="#1a5fa3"/><text x="215" y="63">Archivos originales (CSV, Excel)</text>
+      <rect x="0" y="92" width="430" height="42" rx="12" fill="#0a3560" stroke="#1a5fa3"/><text x="215" y="119">Tablas en SQLite (curso.db)</text>
+      <rect x="0" y="148" width="430" height="42" rx="12" fill="#0a3560" stroke="#1a5fa3"/><text x="215" y="175">Configuración y claves fuera del código</text>
+      <rect x="0" y="204" width="430" height="42" rx="12" fill="#0a3560" stroke="#1a5fa3"/><text x="215" y="231">Imagen retencion-api:local</text>
+      <rect x="0" y="260" width="430" height="42" rx="12" fill="#0a3560" stroke="#1a5fa3"/><text x="215" y="287">uvicorn · docker run</text>
+      <rect x="0" y="316" width="430" height="42" rx="12" fill="#0a3560" stroke="#1a5fa3"/><text x="215" y="343">docker logs · línea JSON por stdout</text>
+      <rect x="720" y="36" width="430" height="42" rx="12" fill="#123d1f" stroke="#34d399"/><text x="935" y="63">Cloud Storage</text>
+      <rect x="720" y="92" width="430" height="42" rx="12" fill="#123d1f" stroke="#34d399"/><text x="935" y="119">BigQuery</text>
+      <rect x="720" y="148" width="430" height="42" rx="12" fill="#123d1f" stroke="#34d399"/><text x="935" y="175">Secret Manager</text>
+      <rect x="720" y="204" width="430" height="42" rx="12" fill="#123d1f" stroke="#34d399"/><text x="935" y="231">Artifact Registry</text>
+      <rect x="720" y="260" width="430" height="42" rx="12" fill="#123d1f" stroke="#34d399"/><text x="935" y="287">Cloud Run</text>
+      <rect x="720" y="316" width="430" height="42" rx="12" fill="#123d1f" stroke="#34d399"/><text x="935" y="343">Cloud Logging</text>
+    </g>
+    <g stroke="#fcd34d" stroke-width="3" marker-end="url(#fl7)"><line x1="436" y1="57" x2="714" y2="57"/><line x1="436" y1="113" x2="714" y2="113"/><line x1="436" y1="169" x2="714" y2="169"/><line x1="436" y1="225" x2="714" y2="225"/><line x1="436" y1="281" x2="714" y2="281"/><line x1="436" y1="337" x2="714" y2="337"/></g>
+  </svg>
+  <p class="small muted" style="margin-top:8px">Mapa de la guía «del ordenador al servicio». Además, las personas y los permisos pasan a IAM, con una cuenta de servicio de mínimo privilegio.</p>
+  <div class="pie"><span>Recap 02</span><span>12</span></div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-title="Puente a S3 (2): qué cambia y qué no" data-notes="Mensaje: pasar a producción no cambia el código ni las imágenes; cambia dónde corren y lo que las rodea. La API lleva el modelo dentro de la imagen y no lee datos: quien lee datos es la interfaz. Por eso la demo de S3 despliega la imagen que construyeron en S2 y los datos migrados se validan aparte. Lo que no esté ejecutado de verdad se dice «sin verificar». Publicar desde el workflow es S4; el monitoreo, S5.">
+  <div class="kick">Lo que viene en S3</div>
+  <h1>El código no cambia: <span class="gold">cambia dónde corre</span></h1>
+  <div class="grid2" style="align-items:start">
+    <div class="card">
+      <h3 class="ok">Lo que se queda igual</h3>
+      <ul class="lista">
+        <li class="small">La imagen que construiste en S2 (es la que se despliega)</li>
+        <li class="small">El contrato, que sale de la firma del modelo</li>
+        <li class="small">Los códigos 200, 422, 503 y 500</li>
+        <li class="small"><code>/salud</code> y <code>/listo</code></li>
+        <li class="small">El registro JSON por stdout (<code>severity</code> y <code>message</code> ya son los campos de Cloud Logging)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="warn">Lo que cambia</h3>
+      <ul class="lista">
+        <li class="small">Quién ejecuta el contenedor: una plataforma gestionada, no tu sesión</li>
+        <li class="small">De dónde sale la imagen: un registro, no tu equipo</li>
+        <li class="small">Quién puede llamar: usuarios y servicios autenticados</li>
+        <li class="small">Dónde viven los datos y los secretos</li>
+        <li class="small">Qué se mide y qué cuesta: presupuesto, alertas y <b>borrar al terminar</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout small" style="margin-top:14px"><b>Una precisión de S2:</b> la API lleva el modelo dentro y no lee datos; quien lee datos es la interfaz, con la base en un volumen de solo lectura. Lo que no se haya ejecutado de verdad en GCP se marcará <b>«sin verificar»</b>. Publicar desde el workflow es S4; vigilar el modelo, S5.</div>
+  <div class="pie"><span>Recap 02</span><span>13</span></div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-title="¿Quién tiene…?" data-notes="Cinco minutos de diagnóstico a mano alzada. Contar con los botones + y − y anotar los números en la planificación. Quien no tenga proyecto de GCP con facturación o la imagen de S2 sigue en modo «solo mirar» y usa el plan B. Esta diapositiva se ajusta tras S2 con los datos reales del miércoles (T19). No pedir datos de tarjeta ni identificadores de proyecto en voz alta.">
+  <div class="kick">Diagnóstico · 5 minutos · mano alzada</div>
+  <h1>¿Quién tiene…?</h1>
+  <div class="grid3" style="align-items:stretch;min-height:340px">
+    <div class="card" style="display:flex;flex-direction:column">
+      <h3>1 · Cuenta y proyecto de GCP</h3>
+      <p class="small">Un proyecto propio con la <b>facturación activada</b> (vinculada al proyecto).</p>
+      <p class="small muted" style="margin-top:8px">Comprobación: lo ves en la consola de GCP, con la facturación enlazada.</p>
+      <div class="cuenta" style="margin-top:auto" data-c="0"><button type="button" aria-label="Restar">−</button><span class="num">0</span><button type="button" aria-label="Sumar">+</button></div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <h3>2 · La imagen de S2 construida</h3>
+      <p class="small"><code>retencion-api:local</code> construida en un Codespace, o al menos una ejecución del workflow en verde.</p>
+      <p class="small muted" style="margin-top:8px">Comprobación: <code>docker image ls</code> la lista; <code>docker run --rm -p 8080:8080 retencion-api:local</code> responde en <code>/listo</code>.</p>
+      <div class="cuenta" style="margin-top:auto" data-c="1"><button type="button" aria-label="Restar">−</button><span class="num">0</span><button type="button" aria-label="Sumar">+</button></div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column">
+      <h3>3 · Docker o un Codespace</h3>
+      <p class="small">Un Codespace que arranca, o Docker en tu equipo.</p>
+      <p class="small muted" style="margin-top:8px">Comprobación: <code>docker version</code> muestra <b>Client</b> y <b>Server</b>.</p>
+      <div class="cuenta" style="margin-top:auto" data-c="2"><button type="button" aria-label="Restar">−</button><span class="num">0</span><button type="button" aria-label="Sumar">+</button></div>
+    </div>
+  </div>
+  <div class="callout small" style="margin-top:14px">Quien no tenga alguna de las tres sigue en modo <b>«solo mirar»</b> con el plan B: la sesión no se detiene. Apunta cuántos son y quién necesita ayuda al terminar.</div>
+  <div class="pie"><span>Recap 02 · se ajusta tras S2 (T19)</span><span>14</span></div>
+</section>
+
+</div>
+
+<div id="indice" role="dialog" aria-label="Índice de diapositivas"><h2>Índice · Recap S2</h2><ol id="listaIndice"></ol><p class="small muted" style="margin-top:20px">Pulsa una diapositiva o O para cerrar.</p></div>
+<div id="notas" aria-live="polite"></div>
+
+<script>
+(function(){
+  'use strict';
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var actual = 0;
+  var escenario = document.getElementById('escenario');
+  var notas = document.getElementById('notas');
+  var indice = document.getElementById('indice');
+
+  /* Casos de la API (diapositiva 4) */
+  var CASOS = [
+    {t:'200 · el cuerpo cumple el contrato', q:'Nadie: la petición es correcta.', p:'Responde con <code>probabilidad</code>, <code>modelo</code>, <code>huella_datos</code> y <code>advertencias</code>.', x:'Ejemplo: <code>tests/datos/cliente_ejemplo.json</code>.', c:'ok'},
+    {t:'422 · valor imposible', q:'Quien llama.', p:'Falta una variable, el tipo no es el que toca, o el valor es imposible: <code>recencia_dias: -1</code>, <code>es_reino_unido: 2</code>, <code>frecuencia: 0</code>.', x:'El modelo aplica <code>log1p</code>: con <code>-5</code> no es un número. La validación lo convierte en un 422 que dice qué campo falló.', c:'bad'},
+    {t:'422 · campo que no es del contrato', q:'Quien llama.', p:'<code>y</code>, <code>cliente_id</code> o <code>fecha_corte</code> se <b>rechazan</b> en vez de ignorarse en silencio. También las combinaciones que FS nunca produce (más facturas en 90 días que en total).', x:'Rechazar lo imposible o incoherente.', c:'bad'},
+    {t:'200 con advertencias · posible, sin respaldo', q:'Nadie se equivocó, pero hay que mirar.', p:'El valor es posible pero el modelo <b>no lo vio</b> al entrenar: un ticket medio de 5 000 libras cuando solo vio hasta 1 295. Responde 200 con <code>advertencias</code>.', x:'Rechazarlo dejaría sin predicción a un cliente real; callarlo escondería que el modelo extrapola.', c:'ok'},
+    {t:'503 · el servicio no está listo', q:'Quien opera el servicio.', p:'No hay modelo, o su firma no coincide con <code>metadatos.json</code> o con el esquema. <code>/listo</code> explica por qué.', x:'Es mejor fallar al desplegar que devolver probabilidades con las columnas cambiadas.', c:'warn'},
+    {t:'500 · fallo interno inesperado', q:'El desarrollador, con el <code>id</code> de la petición.', p:'La respuesta <b>no cuenta nada interno</b>. El traceback va al registro con el mismo <code>id_peticion</code> que ve quien llamó.', x:'El modelo solo se llama si la validación pasó.', c:'bad'}
+  ];
+  function mostrarCaso(i){
+    var c = CASOS[i];
+    document.querySelectorAll('#casos .sel').forEach(function(el){ el.classList.toggle('on', +el.dataset.i === i); });
+    document.getElementById('detalleCaso').innerHTML =
+      '<h2 class="' + c.c + '">' + c.t + '</h2>' +
+      '<h3 style="margin-top:12px">¿Quién actúa?</h3><p class="small">' + c.q + '</p>' +
+      '<h3 style="margin-top:12px">Qué pasa</h3><p class="small">' + c.p + '</p>' +
+      '<h3 style="margin-top:12px">Por qué</h3><p class="small">' + c.x + '</p>';
+  }
+
+  /* Capas del Dockerfile (diapositiva 6) */
+  var CAPAS = [
+    {t:'FROM python:3.11-slim', a:'Parte de una base pequeña con Python.', p:'Es la misma versión de Python que <code>environment.yml</code>: lo que probaste en el entorno es lo que corre.', c:'blue'},
+    {t:'requirements-api.lock + pip install', a:'Primero las dependencias, después el código.', p:'Versiones <b>exactas</b> (53 paquetes), así dos construcciones dan lo mismo. Esta capa solo se reconstruye si cambia el archivo de versiones: <b>una línea de código no reinstala todo</b> (caché de capas). <code>mlflow-skinny</code> y no <code>mlflow</code>: basta para leer el modelo y su firma.', c:'gold'},
+    {t:'ia_mlops/ y models/modelo_mlflow/', a:'Solo lo que sirve el modelo.', p:'El código, el modelo y <code>metadatos.json</code>. Sin datos, sin SQL, sin cuadernos, sin pruebas, sin la base SQLite. El modelo se entrena <b>antes</b> (<code>make pipeline</code>): la imagen solo lo sirve.', c:'gold'},
+    {t:'USER 10001', a:'El proceso no corre como root.', p:'Si alguien explota la API, no es administrador del contenedor. Se comprueba con <code>docker exec … id -u</code>: <b>10001</b>. El servidor escucha en <code>0.0.0.0:8080</code> porque dentro del contenedor las llamadas llegan desde fuera.', c:'gold'},
+    {t:'HEALTHCHECK sobre /salud', a:'El motor de contenedores pregunta si el proceso responde.', p:'Mira <code>/salud</code> y no <code>/listo</code>: si el servicio está vivo pero no listo, reiniciarlo no arregla nada. <code>docker ps</code> muestra <code>(healthy)</code>.', c:'gold'},
+    {t:'.dockerignore · lo que no entra', a:'Decide qué viaja al construir.', p:'Deja fuera datos, cuadernos, pruebas, <code>.git</code> y los secretos habituales (<code>.env</code>, <code>*.key</code>). Ojo: un patrón como <code>*.pyc</code> solo vale en la raíz; para cualquier carpeta hay que escribir <code>**/*.pyc</code>.', c:'gold'}
+  ];
+  function mostrarCapa(i){
+    var c = CAPAS[i];
+    document.querySelectorAll('#capas .sel').forEach(function(el){ el.classList.toggle('on', +el.dataset.i === i); });
+    document.getElementById('detalleCapa').innerHTML =
+      '<h2 class="gold"><code style="font-size:.85em">' + c.t + '</code></h2>' +
+      '<h3 style="margin-top:12px">Qué hace</h3><p class="small">' + c.a + '</p>' +
+      '<h3 style="margin-top:12px">Por qué así</h3><p class="small">' + c.p + '</p>';
+  }
+
+  function activable(contenedor, accion){
+    document.querySelectorAll(contenedor + ' .sel').forEach(function(el){
+      el.addEventListener('click', function(){ accion(+el.dataset.i); });
+      el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); accion(+el.dataset.i); } });
+    });
+  }
+  activable('#casos', mostrarCaso); mostrarCaso(0);
+  activable('#capas', mostrarCapa); mostrarCapa(1);
+
+  document.querySelectorAll('.preg').forEach(function(el){
+    function alternar(){ el.classList.toggle('abierta'); }
+    el.addEventListener('click', alternar);
+    el.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); alternar(); } });
+  });
+
+  /* Contadores de la diapositiva final */
+  document.querySelectorAll('.cuenta').forEach(function(el){
+    var b = el.querySelectorAll('button'), n = el.querySelector('.num'), v = 0;
+    b[0].addEventListener('click', function(){ v = Math.max(0, v - 1); n.textContent = v; });
+    b[1].addEventListener('click', function(){ v = v + 1; n.textContent = v; });
+  });
+
+  var lista = document.getElementById('listaIndice');
+  slides.forEach(function(s, i){
+    var li = document.createElement('li');
+    li.textContent = s.dataset.title;
+    li.addEventListener('click', function(){ ir(i); indice.classList.remove('on'); });
+    lista.appendChild(li);
+  });
+
+  function escalar(){
+    var k = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    escenario.style.transform = 'translate(-50%,-50%) scale(' + k + ')';
+  }
+  function ir(i){
+    actual = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function(s, j){ s.classList.toggle('on', j === actual); });
+    document.getElementById('barra').style.width = ((actual + 1) / slides.length * 100) + '%';
+    notas.textContent = (actual + 1) + '/' + slides.length + ' · ' + (slides[actual].dataset.notes || '');
+    try { history.replaceState(null, '', '#' + (actual + 1)); } catch (e) {}
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.target.closest && e.target.closest('.sel, .preg, button') && (e.key === 'Enter' || e.key === ' ')) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); ir(actual + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); ir(actual - 1); }
+    else if (k === 'Home') ir(0);
+    else if (k === 'End') ir(slides.length - 1);
+    else if (k === 'o' || k === 'O') indice.classList.toggle('on');
+    else if (k === 's' || k === 'S') notas.classList.toggle('on');
+    else if (k === 'f' || k === 'F') {
+      if (!document.fullscreenElement) { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }
+      else { document.exitFullscreen && document.exitFullscreen(); }
+    }
+    else if (k === 'Escape') { indice.classList.remove('on'); }
+  });
+  window.addEventListener('resize', escalar);
+  escalar();
+  var h = parseInt((location.hash || '').slice(1), 10);
+  ir(isNaN(h) ? 0 : h - 1);
+})();
+</script>
+</body>
+</html>

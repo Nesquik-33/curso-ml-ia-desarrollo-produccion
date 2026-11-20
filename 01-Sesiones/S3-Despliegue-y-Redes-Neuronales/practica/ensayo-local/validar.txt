@@ -1,0 +1,65 @@
+ENSAYO LOCAL, NO ES GCP
+Validacion: curso.db (origen) frente a parquet (destino)
+  coincide  fs_catalogo               existe    esta en el destino
+  coincide  fs_catalogo               esquema   5 columnas, mismos nombres, orden y tipos
+  coincide  fs_catalogo               filas     13 = 13
+  coincide  fs_catalogo               agregados 5 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  fs_catalogo               muestra   13 filas (primeras y ultimas por clave)
+  coincide  fs_cliente_corte          existe    esta en el destino
+  coincide  fs_cliente_corte          esquema   15 columnas, mismos nombres, orden y tipos
+  coincide  fs_cliente_corte          filas     990 = 990
+  coincide  fs_cliente_corte          agregados 15 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  fs_cliente_corte          muestra   40 filas (primeras y ultimas por clave)
+  coincide  master_calidad            existe    esta en el destino
+  coincide  master_calidad            esquema   6 columnas, mismos nombres, orden y tipos
+  coincide  master_calidad            filas     13 = 13
+  coincide  master_calidad            agregados 6 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  master_calidad            muestra   13 filas (primeras y ultimas por clave)
+  coincide  master_clientes           existe    esta en el destino
+  coincide  master_clientes           esquema   4 columnas, mismos nombres, orden y tipos
+  coincide  master_clientes           filas     150 = 150
+  coincide  master_clientes           agregados 4 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  master_clientes           muestra   40 filas (primeras y ultimas por clave)
+  coincide  master_descartes          existe    esta en el destino
+  coincide  master_descartes          esquema   2 columnas, mismos nombres, orden y tipos
+  coincide  master_descartes          filas     953 = 953
+  coincide  master_descartes          agregados 2 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  master_descartes          muestra   40 filas (primeras y ultimas por clave)
+  coincide  master_facturas           existe    esta en el destino
+  coincide  master_facturas           esquema   5 columnas, mismos nombres, orden y tipos
+  coincide  master_facturas           filas     1430 = 1430
+  coincide  master_facturas           agregados 5 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  master_facturas           muestra   40 filas (primeras y ultimas por clave)
+  coincide  master_lineas             existe    esta en el destino
+  coincide  master_lineas             esquema   7 columnas, mismos nombres, orden y tipos
+  coincide  master_lineas             filas     22117 = 22117
+  coincide  master_lineas             agregados 7 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  master_lineas             muestra   40 filas (primeras y ultimas por clave)
+  coincide  master_productos          existe    esta en el destino
+  coincide  master_productos          esquema   3 columnas, mismos nombres, orden y tipos
+  coincide  master_productos          filas     3077 = 3077
+  coincide  master_productos          agregados 3 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  master_productos          muestra   40 filas (primeras y ultimas por clave)
+  coincide  ml_dataset                existe    esta en el destino
+  coincide  ml_dataset                esquema   17 columnas, mismos nombres, orden y tipos
+  coincide  ml_dataset                filas     990 = 990
+  coincide  ml_dataset                agregados 17 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  ml_dataset                muestra   40 filas (primeras y ultimas por clave)
+  coincide  ml_particiones            existe    esta en el destino
+  coincide  ml_particiones            esquema   4 columnas, mismos nombres, orden y tipos
+  coincide  ml_particiones            filas     10 = 10
+  coincide  ml_particiones            agregados 4 columnas: nulos, distintos, minimo, maximo, suma
+  coincide  ml_particiones            muestra   10 filas (primeras y ultimas por clave)
+  coincide  conteos.json              huella    huella igual
+  coincide  esquema.json              huella    huella igual
+  coincide  fs_catalogo.parquet       huella    huella igual
+  coincide  fs_cliente_corte.parquet  huella    huella igual
+  coincide  master_calidad.parquet    huella    huella igual
+  coincide  master_clientes.parquet   huella    huella igual
+  coincide  master_descartes.parquet  huella    huella igual
+  coincide  master_facturas.parquet   huella    huella igual
+  coincide  master_lineas.parquet     huella    huella igual
+  coincide  master_productos.parquet  huella    huella igual
+  coincide  ml_dataset.parquet        huella    huella igual
+  coincide  ml_particiones.parquet    huella    huella igual
+RESULTADO: coincide (62 comprobaciones)

@@ -1,0 +1,22 @@
+MODO MOSTRAR, NO ES GCP: salida real del script sin opciones. No crea nada ni llama a gcloud (en esta prueba gcloud ni siquiera estaba en el PATH).
+Orden: bash deploy/gcp/preparar_proyecto.sh   (desde 04-Proyecto-Base; sin env.sh y sin variables CURSO_GCP_*, por eso salen los marcadores TU-...)
+Ejecutado el 20/11/2026 en local con bash 5.2. Codigo de salida: 0
+----------------------------------------------------------------------------------------------------
+### MODO MOSTRAR: solo se imprimen las ordenes, NO se ejecuta nada. Para ejecutarlas anade --ejecutar.
+
+== 1. Comprobacion previa (solo lecturas)
++ gcloud version
++ gcloud auth list --filter=status:ACTIVE --format='value(account)'    (se cuenta; el correo NO se imprime)
++ gcloud projects describe TU-PROYECTO --format=value\(projectId\,lifecycleState\)
++ gcloud billing projects describe TU-PROYECTO --format='value(billingEnabled)'    (debe decir True)
++ gcloud services list --enabled --project TU-PROYECTO --format=value\(config.name\)
+
+== 2. Habilitar las APIs necesarias (--ejecutar)
++ gcloud services enable storage.googleapis.com bigquery.googleapis.com artifactregistry.googleapis.com run.googleapis.com secretmanager.googleapis.com iam.googleapis.com cloudbilling.googleapis.com billingbudgets.googleapis.com --project TU-PROYECTO
+
+== 3. Presupuesto y alerta, ANTES de crear ningun recurso (--ejecutar)
++ gcloud billing budgets create --billing-account TU-CUENTA-DE-FACTURACION --display-name curso-ml-presupuesto --budget-amount TU-IMPORTE --filter-projects projects/TU-PROYECTO --threshold-rule percent=0.5 --threshold-rule percent=0.9 --threshold-rule percent=1.0
+   (un presupuesto avisa, NO corta el gasto: comprobarlo en la documentacion vigente; los presupuestos no admiten la etiqueta curso=ml-ia (se localiza por el nombre curso-ml-presupuesto))
+
+== Comprobacion posterior
++ gcloud billing budgets list --billing-account TU-CUENTA-DE-FACTURACION

@@ -1,0 +1,28 @@
+ENSAYO LOCAL, NO ES GCP
+Exportadas 10 tablas de curso.db a Parquet en 1.137 s
+tabla                    filas  cols  bytes parquet       s
+fs_catalogo                 13     5           2668   0.895
+fs_cliente_corte           990    15          31002   0.018
+master_calidad              13     6           2918   0.005
+master_clientes            150     4           5555   0.005
+master_descartes           953     2           5914   0.006
+master_facturas           1430     5          26023   0.013
+master_lineas            22117     7         270390   0.126
+master_productos          3077     3          67217   0.018
+ml_dataset                 990    17          31693   0.021
+ml_particiones              10     4           1476   0.006
+TOTAL: 29743 filas, 444856 bytes de Parquet
+
+MANIFEST.sha256 (SHA-256 de cada archivo):
+82439ab151e825ae13ce74717c1fed697af4945df159e14d805319aae8cc6052  conteos.json
+e592a4e32b5383f24365042ba6146780cf34f3098f2503980d6813a00d330906  esquema.json
+c34bc8f1f1870d0f86f2d8a2a7d8a387d5bd3e4a6112f2a239f40b972a066293  fs_catalogo.parquet
+4f95349c42303bc5d47341fd883ae4cc3ca80de36b38e29c1a3f99256466fd75  fs_cliente_corte.parquet
+a35d00524f5f4b3073b32719bce47a481e7d350ff5ab967b038d9549059d9f59  master_calidad.parquet
+84bfe42699ec8ed6d4664ac00f1ba2d0d5434cb8ab1a00b131a39e0b999cd27c  master_clientes.parquet
+c982b8d306288ffe6948085351ebfc3844fb024605f77001e901742834a3cda5  master_descartes.parquet
+5a4b6686cad200a84febd25ff9cda4d73a4d2c055f9304cb20efb61d56329107  master_facturas.parquet
+cd37064dcca60ff7e7edb76934a98812b042bb8d1a9f295a57c998a74f732b8a  master_lineas.parquet
+89d2765b8d2e466317958957a57ed4058941898b408032c41d0c64122d139b2d  master_productos.parquet
+c9207ba5b74322574893b3ab95e32b4c15d8d41edb054925309829253c403448  ml_dataset.parquet
+55b448d618e4c7c002d64c11c952a7932bfba9337271009aa874cfae227b191a  ml_particiones.parquet

@@ -1,0 +1,19 @@
+MODO MOSTRAR, NO ES GCP: salida real del script sin opciones. No crea nada ni llama a gcloud ni a docker (en esta prueba gcloud ni siquiera estaba en el PATH).
+Orden: bash deploy/gcp/imagen.sh   (desde 04-Proyecto-Base; sin env.sh y sin variables CURSO_GCP_*, por eso salen los marcadores TU-...)
+Ejecutado el 20/11/2026 en local con bash 5.2. Codigo de salida: 0
+----------------------------------------------------------------------------------------------------
+### MODO MOSTRAR: solo se imprimen las ordenes, NO se ejecuta nada. Para ejecutarlas anade --ejecutar.
+
+== 1. Repositorio de Artifact Registry
++ gcloud artifacts repositories create curso-ml-imagenes --project TU-PROYECTO --repository-format=docker --location TU-REGION --labels=curso=ml-ia --description Imagenes\ de\ la\ demo\ del\ curso
+
+== 2. Docker usa las credenciales de gcloud (sin claves en disco)
++ gcloud auth configure-docker TU-REGION-docker.pkg.dev --quiet
+
+== 3. build, tag y push con etiqueta fija (s3-1)
++ docker build -f deploy/docker/Dockerfile -t retencion-api:s3-1 .
++ docker tag retencion-api:s3-1 TU-REGION-docker.pkg.dev/TU-PROYECTO/curso-ml-imagenes/retencion-api:s3-1
++ docker push TU-REGION-docker.pkg.dev/TU-PROYECTO/curso-ml-imagenes/retencion-api:s3-1
+
+== Listado de comprobacion (con resumen/digest)
++ gcloud artifacts docker images list TU-REGION-docker.pkg.dev/TU-PROYECTO/curso-ml-imagenes --include-tags

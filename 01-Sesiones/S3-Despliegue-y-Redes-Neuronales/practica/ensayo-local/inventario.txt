@@ -1,0 +1,22 @@
+ENSAYO LOCAL, NO ES GCP
+Inventario de curso.db (7520256 bytes)
+Tablas a migrar: 10 (29743 filas en total)
+tabla                 capa        filas  cols  clave
+fs_catalogo           fs_            13     5  feature
+fs_cliente_corte      fs_           990    15  cliente_id, fecha_corte
+master_calidad        master_        13     6  regla
+master_clientes       master_       150     4  cliente_id
+master_descartes      master_       953     2  raw_id
+master_facturas       master_      1430     5  factura_id
+master_lineas         master_     22117     7  linea_id
+master_productos      master_      3077     3  codigo_producto
+ml_dataset            ml_           990    17  cliente_id, fecha_corte
+ml_particiones        ml_            10     4  fecha_corte
+Tablas que NO se migran: 7
+  control_pipelines            4 filas  (no empieza por un prefijo elegido)
+  raw_carga                    4 filas  (no empieza por un prefijo elegido)
+  raw_clientes               150 filas  (no empieza por un prefijo elegido)
+  raw_facturas              1430 filas  (no empieza por un prefijo elegido)
+  raw_lineas_factura       23070 filas  (no empieza por un prefijo elegido)
+  raw_online_retail_ii     23070 filas  (no empieza por un prefijo elegido)
+  raw_productos             3080 filas  (no empieza por un prefijo elegido)

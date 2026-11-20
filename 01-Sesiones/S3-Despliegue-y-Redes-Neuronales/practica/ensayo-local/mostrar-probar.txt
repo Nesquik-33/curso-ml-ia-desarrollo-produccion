@@ -1,0 +1,22 @@
+MODO MOSTRAR, NO ES GCP: salida real del script sin opciones. No abre el proxy, no hace peticiones ni lee registros (en esta prueba gcloud ni siquiera estaba en el PATH).
+Orden: bash deploy/cloud-run/probar.sh   (desde 04-Proyecto-Base; sin env.sh y sin variables CURSO_GCP_*, por eso salen los marcadores TU-...)
+Ejecutado el 20/11/2026 en local con bash 5.2. Codigo de salida: 0
+El numero de prueba-s3-NNNNNNNNNN cambia en cada ejecucion (son los segundos de la fecha actual).
+----------------------------------------------------------------------------------------------------
+### MODO MOSTRAR: solo se imprimen las ordenes, NO se ejecuta nada. Para ejecutarlas anade --ejecutar.
+
+== 1. Proxy local hacia el servicio privado (segundo plano)
++ gcloud run services proxy retencion-api --project TU-PROYECTO --region TU-REGION --port 8081 &
+
+== 2. Vivo, listo, modelo y una prediccion
++ curl -fsS http://127.0.0.1:8081/salud
++ curl -fsS http://127.0.0.1:8081/listo
++ curl -fsS http://127.0.0.1:8081/modelo
++ curl -fsS -X POST http://127.0.0.1:8081/predecir -H Content-Type:\ application/json -H X-Request-ID:\ prueba-s3-1795172874 -d @tests/datos/cliente_ejemplo.json
+
+== 3. Comparacion de S2 contra el servicio (diferencias cero, o explicadas)
++ python -m ia_mlops.modeling.comparar --url http://127.0.0.1:8081
+
+== 4. Registros (busca prueba-s3-1795172874; ninguna linea debe llevar datos del cliente)
++ gcloud run services logs read retencion-api --project TU-PROYECTO --region TU-REGION --limit 50
++ gcloud logging read resource.type=cloud_run_revision\ AND\ resource.labels.service_name=retencion-api --project TU-PROYECTO --limit 20 --format json

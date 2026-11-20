@@ -1,0 +1,520 @@
+{
+  "versiones": {
+    "mlflow": "3.18.0",
+    "onnxruntime": "1.32.0",
+    "onnx": "1.23.2",
+    "torch": "2.15.0+cpu"
+  },
+  "limpio": {
+    "site_packages_total_MB": 331.2,
+    "mayores_MB": {
+      "pandas": 69.6,
+      "onnxruntime": 55.0,
+      "mlflow": 36.5,
+      "numpy": 34.6,
+      "numpy.libs": 21.0,
+      "databricks": 16.7,
+      "PIL": 16.3,
+      "pip": 14.4,
+      "cryptography": 11.0,
+      "setuptools": 8.9
+    }
+  },
+  "modelos": {
+    "cifar_cnn": {
+      "exactitud_torch_test": {
+        "exactitud": 0.864,
+        "ic95": [
+          0.848,
+          0.8795
+        ],
+        "n_test": 2000
+      },
+      "exportador": "exportador clasico (dynamo=False), opset 17",
+      "tamano_onnx_MB": 0.563,
+      "tamano_pt_MB": 0.58,
+      "firma": {
+        "entrada": "['imagen': Tensor('uint8', (-1, 32, 32, 3))]",
+        "salida": "['probabilidades': Tensor('float32', (-1, 2))]"
+      },
+      "uri_registro": "models:/m-85aa601a99ce472199b70f034b8b0c6e",
+      "tamano_carpeta_mlflow_MB": 0.741,
+      "ficheros_carpeta_mlflow": [
+        "MLmodel",
+        "c5917d95-e124-11f1-837c-ac3dcbd70da6.data",
+        "conda.yaml",
+        "input_example.json",
+        "model.onnx",
+        "python_env.yaml",
+        "requirements.txt",
+        "serving_input_example.json"
+      ],
+      "requirements_txt": [
+        "mlflow-skinny==3.18.0",
+        "onnxruntime==1.32.0",
+        "numpy==2.4.6"
+      ],
+      "limpio_info": {
+        "mlflow": "3.18.0",
+        "python": "3.11.18",
+        "torch_cargado": false,
+        "sklearn_cargado": false,
+        "pandas_cargado": true,
+        "segundos_import_mlflow": 5.48,
+        "segundos_carga_modelo": 2.27,
+        "segundos_prediccion_lote": 0.75,
+        "n": 2000
+      },
+      "comparacion_con_torch": {
+        "onnxruntime_directo": {
+          "max_dif_abs_prob": 6.556510925292969e-07,
+          "predicciones_distintas": 0,
+          "n": 2000
+        },
+        "mlflow.pyfunc (carpeta, mlflow completo)": {
+          "max_dif_abs_prob": 6.556510925292969e-07,
+          "predicciones_distintas": 0,
+          "n": 2000
+        },
+        "mlflow.pyfunc (models:/ del registro)": {
+          "max_dif_abs_prob": 6.556510925292969e-07,
+          "predicciones_distintas": 0,
+          "n": 2000
+        },
+        "mlflow.pyfunc (venv limpio con mlflow-skinny)": {
+          "max_dif_abs_prob": 6.556510925292969e-07,
+          "predicciones_distintas": 0,
+          "n": 2000
+        }
+      },
+      "entradas_invalidas_pyfunc": {
+        "float32 en vez de uint8": "MlflowException: Failed to enforce schema of data '[[[[158. 112.  49.]\n   [159. 111.  47.]\n   [165. 116.  51.]\n   ...\n   [137.  95.  36.]\n   [126.  91.  36.]\n   [116.  85.  33.]",
+        "forma equivocada (sin canal)": "MlflowException: Failed to enforce schema of data '[[[158 159 165 ... 137 126 116]\n  [152 151 159 ... 136 125 119]\n  [151 151 158 ... 139 130 120]\n  ...\n  [ 68  42  31 ...  38  ",
+        "lado distinto (+1 pixel)": "MlflowException: Failed to enforce schema of data '[[[[158 112  49]\n   [159 111  47]\n   [165 116  51]\n   ...\n   [126  91  36]\n   [116  85  33]\n   [  0   0   0]]\n\n  [[152 112  51",
+        "una sola imagen sin lote": "MlflowException: Failed to enforce schema of data '[[[158 112  49]\n  [159 111  47]\n  [165 116  51]\n  ...\n  [137  95  36]\n  [126  91  36]\n  [116  85  33]]\n\n [[152 112  51]\n  [151"
+      },
+      "inferencia_1_imagen_ms": {
+        "onnxruntime": {
+          "mediana_ms": 0.6,
+          "p95_ms": 0.68
+        },
+        "mlflow.pyfunc": {
+          "mediana_ms": 0.5,
+          "p95_ms": 2.95
+        },
+        "torch_eager": {
+          "mediana_ms": 2.0,
+          "p95_ms": 4.47
+        }
+      },
+      "modelo_bytes": {
+        "n": 600,
+        "png_max_dif_abs_prob_vs_torch": 4.76837158203125e-07,
+        "png_predicciones_distintas": 0,
+        "tamano_carpeta_MB": 0.579,
+        "limpio_info": {
+          "mlflow": "3.18.0",
+          "python": "3.11.18",
+          "torch_cargado": false,
+          "sklearn_cargado": false,
+          "pandas_cargado": true,
+          "segundos_import_mlflow": 2.38,
+          "segundos_carga_modelo": 0.75,
+          "segundos_prediccion_lote": 0.304,
+          "n": 600
+        },
+        "limpio_png_max_dif_abs_prob_vs_torch": 4.76837158203125e-07,
+        "jpeg_q95": {
+          "predicciones_distintas_vs_png": 31,
+          "max_dif_abs_prob": 0.4916,
+          "exactitud": {
+            "exactitud": 0.8567,
+            "ic95": [
+              0.83,
+              0.8833
+            ],
+            "n_test": 600
+          }
+        },
+        "jpeg_q85": {
+          "predicciones_distintas_vs_png": 44,
+          "max_dif_abs_prob": 0.7066,
+          "exactitud": {
+            "exactitud": 0.8383,
+            "ic95": [
+              0.8083,
+              0.8667
+            ],
+            "n_test": 600
+          }
+        },
+        "jpeg_q70": {
+          "predicciones_distintas_vs_png": 54,
+          "max_dif_abs_prob": 0.8368,
+          "exactitud": {
+            "exactitud": 0.825,
+            "ic95": [
+              0.7933,
+              0.8533
+            ],
+            "n_test": 600
+          }
+        },
+        "exactitud_png_mismas_filas": {
+          "exactitud": 0.8683,
+          "ic95": [
+            0.8417,
+            0.8933
+          ],
+          "n_test": 600
+        },
+        "foto_real": {
+          "bytes": 153697,
+          "dimensiones": [
+            375,
+            500
+          ],
+          "probabilidades_[gato,perro]": [
+            0.9957,
+            0.0043
+          ],
+          "etiqueta_real": "gato (nombre de fichero)",
+          "tiempo_ms_pyfunc_bytes": {
+            "mediana_ms": 3.65,
+            "p95_ms": 4.91
+          }
+        }
+      }
+    },
+    "cifar_mnet_128": {
+      "exactitud_torch_test": {
+        "exactitud": 0.836,
+        "ic95": [
+          0.82,
+          0.8515
+        ],
+        "n_test": 2000
+      },
+      "exportador": "exportador clasico (dynamo=False), opset 17",
+      "tamano_onnx_MB": 3.728,
+      "tamano_pt_MB": 3.881,
+      "firma": {
+        "entrada": "['imagen': Tensor('uint8', (-1, 32, 32, 3))]",
+        "salida": "['probabilidades': Tensor('float32', (-1, 2))]"
+      },
+      "uri_registro": "models:/m-0679f552990347d284c0a89bfc1eb3a2",
+      "tamano_carpeta_mlflow_MB": 3.911,
+      "ficheros_carpeta_mlflow": [
+        "MLmodel",
+        "conda.yaml",
+        "d4dcfe55-e124-11f1-bdc9-ac3dcbd70da6.data",
+        "input_example.json",
+        "model.onnx",
+        "python_env.yaml",
+        "requirements.txt",
+        "serving_input_example.json"
+      ],
+      "requirements_txt": [
+        "mlflow-skinny==3.18.0",
+        "onnxruntime==1.32.0",
+        "numpy==2.4.6"
+      ],
+      "limpio_info": {
+        "mlflow": "3.18.0",
+        "python": "3.11.18",
+        "torch_cargado": false,
+        "sklearn_cargado": false,
+        "pandas_cargado": true,
+        "segundos_import_mlflow": 2.02,
+        "segundos_carga_modelo": 0.73,
+        "segundos_prediccion_lote": 1.207,
+        "n": 2000
+      },
+      "comparacion_con_torch": {
+        "onnxruntime_directo": {
+          "max_dif_abs_prob": 1.0371208190917969e-05,
+          "predicciones_distintas": 0,
+          "n": 2000
+        },
+        "mlflow.pyfunc (carpeta, mlflow completo)": {
+          "max_dif_abs_prob": 1.0371208190917969e-05,
+          "predicciones_distintas": 0,
+          "n": 2000
+        },
+        "mlflow.pyfunc (models:/ del registro)": {
+          "max_dif_abs_prob": 1.0371208190917969e-05,
+          "predicciones_distintas": 0,
+          "n": 2000
+        },
+        "mlflow.pyfunc (venv limpio con mlflow-skinny)": {
+          "max_dif_abs_prob": 1.0371208190917969e-05,
+          "predicciones_distintas": 0,
+          "n": 2000
+        }
+      },
+      "entradas_invalidas_pyfunc": {
+        "float32 en vez de uint8": "MlflowException: Failed to enforce schema of data '[[[[158. 112.  49.]\n   [159. 111.  47.]\n   [165. 116.  51.]\n   ...\n   [137.  95.  36.]\n   [126.  91.  36.]\n   [116.  85.  33.]",
+        "forma equivocada (sin canal)": "MlflowException: Failed to enforce schema of data '[[[158 159 165 ... 137 126 116]\n  [152 151 159 ... 136 125 119]\n  [151 151 158 ... 139 130 120]\n  ...\n  [ 68  42  31 ...  38  ",
+        "lado distinto (+1 pixel)": "MlflowException: Failed to enforce schema of data '[[[[158 112  49]\n   [159 111  47]\n   [165 116  51]\n   ...\n   [126  91  36]\n   [116  85  33]\n   [  0   0   0]]\n\n  [[152 112  51",
+        "una sola imagen sin lote": "MlflowException: Failed to enforce schema of data '[[[158 112  49]\n  [159 111  47]\n  [165 116  51]\n  ...\n  [137  95  36]\n  [126  91  36]\n  [116  85  33]]\n\n [[152 112  51]\n  [151"
+      },
+      "inferencia_1_imagen_ms": {
+        "onnxruntime": {
+          "mediana_ms": 0.85,
+          "p95_ms": 1.09
+        },
+        "mlflow.pyfunc": {
+          "mediana_ms": 0.91,
+          "p95_ms": 1.67
+        },
+        "torch_eager": {
+          "mediana_ms": 4.55,
+          "p95_ms": 6.28
+        }
+      },
+      "modelo_bytes": {
+        "n": 600,
+        "png_max_dif_abs_prob_vs_torch": 5.841255187988281e-06,
+        "png_predicciones_distintas": 0,
+        "tamano_carpeta_MB": 3.744,
+        "limpio_info": {
+          "mlflow": "3.18.0",
+          "python": "3.11.18",
+          "torch_cargado": false,
+          "sklearn_cargado": false,
+          "pandas_cargado": true,
+          "segundos_import_mlflow": 1.82,
+          "segundos_carga_modelo": 0.65,
+          "segundos_prediccion_lote": 0.471,
+          "n": 600
+        },
+        "limpio_png_max_dif_abs_prob_vs_torch": 5.841255187988281e-06,
+        "jpeg_q95": {
+          "predicciones_distintas_vs_png": 25,
+          "max_dif_abs_prob": 0.3839,
+          "exactitud": {
+            "exactitud": 0.8167,
+            "ic95": [
+              0.7833,
+              0.8467
+            ],
+            "n_test": 600
+          }
+        },
+        "jpeg_q85": {
+          "predicciones_distintas_vs_png": 47,
+          "max_dif_abs_prob": 0.7721,
+          "exactitud": {
+            "exactitud": 0.8033,
+            "ic95": [
+              0.77,
+              0.8334
+            ],
+            "n_test": 600
+          }
+        },
+        "jpeg_q70": {
+          "predicciones_distintas_vs_png": 75,
+          "max_dif_abs_prob": 0.8305,
+          "exactitud": {
+            "exactitud": 0.7733,
+            "ic95": [
+              0.7383,
+              0.8067
+            ],
+            "n_test": 600
+          }
+        },
+        "exactitud_png_mismas_filas": {
+          "exactitud": 0.825,
+          "ic95": [
+            0.7933,
+            0.855
+          ],
+          "n_test": 600
+        },
+        "foto_real": {
+          "bytes": 153697,
+          "dimensiones": [
+            375,
+            500
+          ],
+          "probabilidades_[gato,perro]": [
+            0.9304,
+            0.0696
+          ],
+          "etiqueta_real": "gato (nombre de fichero)",
+          "tiempo_ms_pyfunc_bytes": {
+            "mediana_ms": 4.59,
+            "p95_ms": 5.03
+          }
+        }
+      }
+    },
+    "pets_mnet_128": {
+      "exactitud_torch_test": {
+        "exactitud": 0.9306,
+        "ic95": [
+          0.9111,
+          0.9486
+        ],
+        "n_test": 720
+      },
+      "exportador": "exportador clasico (dynamo=False), opset 17",
+      "tamano_onnx_MB": 3.727,
+      "tamano_pt_MB": 3.881,
+      "firma": {
+        "entrada": "['imagen': Tensor('uint8', (-1, 128, 128, 3))]",
+        "salida": "['probabilidades': Tensor('float32', (-1, 2))]"
+      },
+      "uri_registro": "models:/m-57438f5ef3294fa8b6cc30c5200aceec",
+      "tamano_carpeta_mlflow_MB": 6.463,
+      "ficheros_carpeta_mlflow": [
+        "MLmodel",
+        "conda.yaml",
+        "df84e8f2-e124-11f1-8c1f-ac3dcbd70da6.data",
+        "input_example.json",
+        "model.onnx",
+        "python_env.yaml",
+        "requirements.txt",
+        "serving_input_example.json"
+      ],
+      "requirements_txt": [
+        "mlflow-skinny==3.18.0",
+        "onnxruntime==1.32.0",
+        "numpy==2.4.6"
+      ],
+      "limpio_info": {
+        "mlflow": "3.18.0",
+        "python": "3.11.18",
+        "torch_cargado": false,
+        "sklearn_cargado": false,
+        "pandas_cargado": true,
+        "segundos_import_mlflow": 1.83,
+        "segundos_carga_modelo": 0.69,
+        "segundos_prediccion_lote": 0.199,
+        "n": 720
+      },
+      "comparacion_con_torch": {
+        "onnxruntime_directo": {
+          "max_dif_abs_prob": 1.2487173080444336e-05,
+          "predicciones_distintas": 0,
+          "n": 720
+        },
+        "mlflow.pyfunc (carpeta, mlflow completo)": {
+          "max_dif_abs_prob": 1.2487173080444336e-05,
+          "predicciones_distintas": 0,
+          "n": 720
+        },
+        "mlflow.pyfunc (models:/ del registro)": {
+          "max_dif_abs_prob": 1.2487173080444336e-05,
+          "predicciones_distintas": 0,
+          "n": 720
+        },
+        "mlflow.pyfunc (venv limpio con mlflow-skinny)": {
+          "max_dif_abs_prob": 1.2487173080444336e-05,
+          "predicciones_distintas": 0,
+          "n": 720
+        }
+      },
+      "entradas_invalidas_pyfunc": {
+        "float32 en vez de uint8": "MlflowException: Failed to enforce schema of data '[[[[ 46.  56.  65.]\n   [ 43.  53.  62.]\n   [ 39.  49.  58.]\n   ...\n   [ 53.  64.  78.]\n   [ 54.  66.  80.]\n   [ 53.  65.  79.]",
+        "forma equivocada (sin canal)": "MlflowException: Failed to enforce schema of data '[[[ 46  43  39 ...  53  54  53]\n  [ 44  48  47 ...  52  46  42]\n  [ 40  38  39 ...  50  50  46]\n  ...\n  [ 66  62  56 ...  15  ",
+        "lado distinto (+1 pixel)": "MlflowException: Failed to enforce schema of data '[[[[ 46  56  65]\n   [ 43  53  62]\n   [ 39  49  58]\n   ...\n   [ 54  66  80]\n   [ 53  65  79]\n   [  0   0   0]]\n\n  [[ 44  54  63",
+        "una sola imagen sin lote": "MlflowException: Failed to enforce schema of data '[[[46 56 65]\n  [43 53 62]\n  [39 49 58]\n  ...\n  [53 64 78]\n  [54 66 80]\n  [53 65 79]]\n\n [[44 54 63]\n  [48 58 67]\n  [47 57 66]\n "
+      },
+      "inferencia_1_imagen_ms": {
+        "onnxruntime": {
+          "mediana_ms": 0.61,
+          "p95_ms": 0.73
+        },
+        "mlflow.pyfunc": {
+          "mediana_ms": 0.77,
+          "p95_ms": 0.93
+        },
+        "torch_eager": {
+          "mediana_ms": 3.56,
+          "p95_ms": 4.54
+        }
+      },
+      "modelo_bytes": {
+        "n": 600,
+        "png_max_dif_abs_prob_vs_torch": 1.2487173080444336e-05,
+        "png_predicciones_distintas": 0,
+        "tamano_carpeta_MB": 3.818,
+        "limpio_info": {
+          "mlflow": "3.18.0",
+          "python": "3.11.18",
+          "torch_cargado": false,
+          "sklearn_cargado": false,
+          "pandas_cargado": true,
+          "segundos_import_mlflow": 1.67,
+          "segundos_carga_modelo": 0.58,
+          "segundos_prediccion_lote": 0.661,
+          "n": 600
+        },
+        "limpio_png_max_dif_abs_prob_vs_torch": 1.2487173080444336e-05,
+        "jpeg_q95": {
+          "predicciones_distintas_vs_png": 10,
+          "max_dif_abs_prob": 0.6137,
+          "exactitud": {
+            "exactitud": 0.93,
+            "ic95": [
+              0.9083,
+              0.95
+            ],
+            "n_test": 600
+          }
+        },
+        "jpeg_q85": {
+          "predicciones_distintas_vs_png": 13,
+          "max_dif_abs_prob": 0.6797,
+          "exactitud": {
+            "exactitud": 0.935,
+            "ic95": [
+              0.915,
+              0.9533
+            ],
+            "n_test": 600
+          }
+        },
+        "jpeg_q70": {
+          "predicciones_distintas_vs_png": 19,
+          "max_dif_abs_prob": 0.7081,
+          "exactitud": {
+            "exactitud": 0.925,
+            "ic95": [
+              0.9017,
+              0.945
+            ],
+            "n_test": 600
+          }
+        },
+        "exactitud_png_mismas_filas": {
+          "exactitud": 0.9367,
+          "ic95": [
+            0.9167,
+            0.955
+          ],
+          "n_test": 600
+        },
+        "foto_real": {
+          "bytes": 153697,
+          "dimensiones": [
+            375,
+            500
+          ],
+          "probabilidades_[gato,perro]": [
+            0.9486,
+            0.0514
+          ],
+          "etiqueta_real": "gato (nombre de fichero)",
+          "tiempo_ms_pyfunc_bytes": {
+            "mediana_ms": 3.92,
+            "p95_ms": 5.49
+          }
+        }
+      }
+    }
+  }
+}

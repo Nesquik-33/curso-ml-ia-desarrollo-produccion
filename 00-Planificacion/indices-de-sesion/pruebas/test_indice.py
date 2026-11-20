@@ -224,3 +224,11 @@ def test_sin_el_archivo_pdf_no_se_muestra_el_boton(monkeypatch, tmp_path):
 
 def test_una_fuente_que_no_esta_en_el_manifiesto_no_tiene_pdf():
     assert G.ruta_pdf_de('03-Entorno/conda/verificar_s1.py') is None
+
+
+def test_s3_lista_la_guia_del_sdk_de_google_cloud():
+    """T35: la guia del SDK existe y esta en el contenido de S3 (el HTML se regenera aparte)."""
+    ruta = '03-Entorno/guias/sdk-google-cloud-vscode-y-codespaces.md'
+    assert (RAIZ / ruta).exists()
+    s3 = next(s for s in C.SESIONES if s['id'] == 'S3')
+    assert any(ruta in str(x) for x in s3['enlaces']), 'falta la guia del SDK en los enlaces de S3'

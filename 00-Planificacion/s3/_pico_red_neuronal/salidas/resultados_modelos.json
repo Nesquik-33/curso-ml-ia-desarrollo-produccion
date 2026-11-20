@@ -1,0 +1,262 @@
+{
+  "equipo": {
+    "sistema": "Windows-10-10.0.26200-SP0",
+    "procesador": "Intel64 Family 6 Model 181 Stepping 0, GenuineIntel",
+    "nucleos_logicos_visibles": 14
+  },
+  "torch": "2.15.0+cpu",
+  "hilos": 2,
+  "modelos": {
+    "cifar_lr_pixeles": {
+      "segundos_entrenamiento": 5.7,
+      "val": 0.6055,
+      "test": {
+        "exactitud": 0.579,
+        "ic95": [
+          0.557,
+          0.601
+        ],
+        "n_test": 2000
+      }
+    },
+    "cifar_mlp_pixeles": {
+      "segundos_entrenamiento": 170.0,
+      "val": 0.5715,
+      "parametros": 786945,
+      "test": {
+        "exactitud": 0.574,
+        "ic95": [
+          0.552,
+          0.595
+        ],
+        "n_test": 2000
+      }
+    },
+    "cifar_cnn": {
+      "parametros": 140002,
+      "epocas": 20,
+      "segundos_entrenamiento": 565.9,
+      "val_por_epoca": [
+        0.61,
+        0.581,
+        0.6515,
+        0.702,
+        0.745,
+        0.7535,
+        0.6635,
+        0.7775,
+        0.8165,
+        0.818,
+        0.8135,
+        0.8265,
+        0.8085,
+        0.8235,
+        0.846,
+        0.8505,
+        0.852,
+        0.849,
+        0.8565,
+        0.852
+      ],
+      "mejor_val": 0.8565,
+      "test": {
+        "exactitud": 0.864,
+        "ic95": [
+          0.848,
+          0.8795
+        ],
+        "n_test": 2000
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 3.11,
+        "p95_ms": 4.79
+      },
+      "tamano_pt_MB": 0.58
+    },
+    "cifar_mnet_64": {
+      "segundos_rasgos_train_val": 3.9,
+      "segundos_ajuste_cabeza": 1.6,
+      "segundos_entrenamiento": 5.5,
+      "C": 0.01,
+      "mejor_val": 0.7355,
+      "parametros_totales": 928162,
+      "lado_entrada_red": 64,
+      "test": {
+        "exactitud": 0.74,
+        "ic95": [
+          0.72,
+          0.7605
+        ],
+        "n_test": 2000
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 4.42,
+        "p95_ms": 6.15
+      },
+      "tamano_pt_MB": 3.88
+    },
+    "cifar_mnet_96": {
+      "segundos_rasgos_train_val": 7.3,
+      "segundos_ajuste_cabeza": 1.1,
+      "segundos_entrenamiento": 8.4,
+      "C": 0.1,
+      "mejor_val": 0.8145,
+      "parametros_totales": 928162,
+      "lado_entrada_red": 96,
+      "test": {
+        "exactitud": 0.814,
+        "ic95": [
+          0.796,
+          0.831
+        ],
+        "n_test": 2000
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 3.66,
+        "p95_ms": 5.28
+      },
+      "tamano_pt_MB": 3.88
+    },
+    "cifar_mnet_128": {
+      "segundos_rasgos_train_val": 12.4,
+      "segundos_ajuste_cabeza": 1.0,
+      "segundos_entrenamiento": 13.4,
+      "C": 0.01,
+      "mejor_val": 0.836,
+      "parametros_totales": 928162,
+      "lado_entrada_red": 128,
+      "test": {
+        "exactitud": 0.836,
+        "ic95": [
+          0.82,
+          0.8515
+        ],
+        "n_test": 2000
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 6.3,
+        "p95_ms": 8.67
+      },
+      "tamano_pt_MB": 3.88
+    },
+    "pets_cnn": {
+      "parametros": 287714,
+      "epocas": 20,
+      "segundos_entrenamiento": 713.4,
+      "val_por_epoca": [
+        0.5,
+        0.6181,
+        0.5,
+        0.7194,
+        0.6639,
+        0.7153,
+        0.7375,
+        0.7792,
+        0.7542,
+        0.8222,
+        0.7667,
+        0.6347,
+        0.7681,
+        0.8542,
+        0.8458,
+        0.85,
+        0.8361,
+        0.8764,
+        0.8833,
+        0.8833
+      ],
+      "mejor_val": 0.8833,
+      "test": {
+        "exactitud": 0.8875,
+        "ic95": [
+          0.8639,
+          0.9111
+        ],
+        "n_test": 720
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 4.63,
+        "p95_ms": 6.35
+      },
+      "tamano_pt_MB": 1.17
+    },
+    "pets_mnet_96": {
+      "segundos_rasgos_train_val": 5.2,
+      "segundos_ajuste_cabeza": 0.6,
+      "segundos_entrenamiento": 5.8,
+      "C": 0.1,
+      "mejor_val": 0.8889,
+      "parametros_totales": 928162,
+      "lado_entrada_red": 96,
+      "test": {
+        "exactitud": 0.8722,
+        "ic95": [
+          0.8472,
+          0.8958
+        ],
+        "n_test": 720
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 5.65,
+        "p95_ms": 6.68
+      },
+      "tamano_pt_MB": 3.88
+    },
+    "pets_mnet_128": {
+      "segundos_rasgos_train_val": 5.9,
+      "segundos_ajuste_cabeza": 0.4,
+      "segundos_entrenamiento": 6.3,
+      "C": 1.0,
+      "mejor_val": 0.9333,
+      "parametros_totales": 928162,
+      "lado_entrada_red": 128,
+      "test": {
+        "exactitud": 0.9306,
+        "ic95": [
+          0.9111,
+          0.9486
+        ],
+        "n_test": 720
+      },
+      "inferencia_1_imagen_torch": {
+        "mediana_ms": 5.97,
+        "p95_ms": 7.21
+      },
+      "tamano_pt_MB": 3.88
+    }
+  },
+  "desplazamiento_cifar_a_fotos_32": {
+    "cifar_cnn": {
+      "exactitud": 0.7903,
+      "ic95": [
+        0.7597,
+        0.8194
+      ],
+      "n_test": 720
+    },
+    "cifar_mnet_64": {
+      "exactitud": 0.7194,
+      "ic95": [
+        0.6861,
+        0.7528
+      ],
+      "n_test": 720
+    },
+    "cifar_mnet_96": {
+      "exactitud": 0.775,
+      "ic95": [
+        0.7444,
+        0.8056
+      ],
+      "n_test": 720
+    },
+    "cifar_mnet_128": {
+      "exactitud": 0.8083,
+      "ic95": [
+        0.7792,
+        0.8347
+      ],
+      "n_test": 720
+    }
+  }
+}

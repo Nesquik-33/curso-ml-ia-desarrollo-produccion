@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio-recap de S2 · S3 · ML e IA: de desarrollo a producción</title>
+<!-- Generado por generar.py: no se edita a mano. -->
+<style>
+:root{--bg:#ffffff;--text:#1d2733;--muted:#5b6673;--line:#d6dde6;--panel:#f6f8fb;--blue:#1f5fa8;--gold:#9a6a00;
+  --ok:#1d7a4f;--bad:#b4323c;--code:#0f1b2a;--codetx:#e6eef8;
+  --mono:ui-monospace,"Cascadia Code","SFMono-Regular",Consolas,Menlo,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+a{color:var(--blue)}
+.mono,code,pre{font-family:var(--mono);font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+#viewport{position:fixed;left:0;right:0;top:0;bottom:46px;overflow:hidden;background:var(--bg)}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center}
+.slide{position:absolute;inset:0;padding:40px 60px 52px;display:none;background:var(--bg);overflow:hidden}
+.slide.active{display:block}
+.slide::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--blue)}
+.kick{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:6px}
+h1{font-size:34px;line-height:1.15;margin-bottom:18px;font-weight:750}
+h1 .mono{font-size:30px}
+h3{font-size:17px;margin-bottom:6px;color:var(--text)}
+p{font-size:17px;line-height:1.45}
+.sub{font-size:22px;line-height:1.4;color:var(--muted)}
+.small{font-size:15px;line-height:1.4}
+.foot{position:absolute;left:60px;right:60px;bottom:16px;display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.foot b{color:var(--blue)}
+.split{display:grid;gap:18px}
+.col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.card p{font-size:16px}
+.callout{border-left:4px solid var(--blue);background:#eef4fb;padding:10px 14px;border-radius:8px;font-size:17px}
+.mira{border-color:#9fd1b7;background:#f1faf5}.mira h3{color:var(--ok)}
+.falla{border-color:#ebb7bb;background:#fdf3f4}.falla h3{color:var(--bad)}
+.list{list-style:none}.list li{position:relative;padding-left:16px;font-size:15.5px;line-height:1.4;margin:3px 0}
+.list li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.mira .list li::before{background:var(--ok)}.falla .list li::before{background:var(--bad)}
+.tbl{border-collapse:collapse;width:100%;font-size:14.5px}
+.tbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:2px solid var(--line);padding:5px 8px}
+.tbl td{border-bottom:1px solid var(--line);padding:5px 8px;vertical-align:top;line-height:1.3}
+.tbl .mono{font-size:13px}
+.term{background:var(--code);border-radius:10px;overflow:hidden;border:1px solid #23344a}
+.term .bar{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1a2a3e;color:#b8c7d9;font-size:12.5px}
+.term .bar em{flex:1;font-style:normal}
+.tls{padding:6px 8px 8px;font-family:var(--mono);font-size:13.5px;line-height:1.45}
+.tln{display:flex;align-items:flex-start;gap:6px;padding:2px 4px}
+.tln code{flex:1;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--codetx)}
+.tln.c{color:#8fa3b8;font-style:italic}
+.ps{color:#7fd4a8}
+pre.code{margin:0;padding:8px 12px 10px;font-family:var(--mono);font-size:12.2px;line-height:1.4;color:var(--codetx);white-space:pre-wrap;overflow-wrap:anywhere}
+.cp{flex:none;min-width:26px;height:24px;border-radius:6px;border:1px solid #55708f;font-size:13px;color:#d8e4f2;background:#22364e}
+.cp.ok{border-color:#7fd4a8;color:#7fd4a8}
+.cpall{padding:0 10px;font-family:var(--sans);font-size:12px}
+.realbox{border:1px solid #9fd1b7;border-radius:10px;padding:7px 11px;background:#fbfdfc}
+.realbox .rk{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ok);font-weight:700;margin-bottom:3px}
+.realbox pre{font-family:var(--mono);font-size:12.2px;line-height:1.38;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text)}
+.realbox.pq pre{font-size:11.6px}
+.capcol{gap:10px}
+.cap{margin:0;display:flex;flex-direction:column;gap:4px;min-width:0}
+.cap figcaption{font-size:12.5px;color:var(--muted)}
+.capa{display:block;cursor:zoom-in;padding:0;text-align:left}
+.capa img{display:block;max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#1e1e1e}
+.falta{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;min-height:120px;border:2px dashed #b9c3cf;border-radius:8px;background:#f8fafc;color:var(--muted);text-align:center;padding:10px}
+.falta b{color:var(--text);font-size:16px}.falta small{font-size:12.5px}
+details summary{cursor:pointer;color:var(--blue);font-size:14.5px;margin-top:4px}
+details p{margin-top:6px}
+svg text.sv-t{font:700 16px var(--sans);fill:var(--text);text-anchor:middle}
+svg text.sv-s{font:13px var(--sans);fill:var(--muted);text-anchor:middle}
+svg .sv-n{fill:#f6f8fb;stroke:#9fb3c8;stroke-width:1.5}svg .sv-g{fill:#eef4fb;stroke:var(--blue);stroke-width:2}
+#bar{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:6px;padding:0 10px;background:#f3f5f8;border-top:1px solid var(--line);font-size:13.5px}
+#bar button,#bar a{padding:5px 10px;border-radius:7px;border:1px solid var(--line);background:#fff;text-decoration:none;color:var(--text)}
+#bar .part.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+#bar .sp{flex:1}
+#count,#clockref{color:var(--muted);padding:0 6px}
+#prog{position:fixed;left:0;top:0;height:3px;background:var(--blue);z-index:5}
+#notes{position:fixed;right:12px;bottom:56px;width:min(460px,92vw);max-height:60vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.15);display:none;z-index:10}
+#notes.on{display:block}#notes p{font-size:15px}
+#index{position:fixed;inset:0 0 46px 0;background:rgba(255,255,255,.98);display:none;overflow:auto;padding:24px 30px;z-index:9}
+#index.on{display:block}
+#idxgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:12px}
+#idxgrid button{text-align:left;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:#fff;font-size:14px}
+#idxgrid button small{display:block;color:var(--muted);font-size:12px}
+#idxgrid button.cur{border-color:var(--blue);background:#eef4fb}
+#zoom{position:fixed;inset:0;background:rgba(10,16,24,.88);display:none;align-items:center;justify-content:center;z-index:20;cursor:zoom-out;padding:20px}
+#zoom.on{display:flex}
+#zoom img{max-width:100%;max-height:100%;border-radius:6px;background:#1e1e1e}
+#zoom p{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#e6eef8;font-size:14px}
+@media print{#bar,#prog,#notes,#index,#zoom,.cp{display:none!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="viewport"><div id="stage">
+
+<section class="slide" data-part="A" data-min="2" data-title="Portada"
+ data-notes="Bienvenida al bloque. Hoy no hay teoría nueva: es S2 otra vez, pero cada persona lo monta en su Codespace. Tres demostraciones: inferencia con la API, cálculo al vuelo de las variables de FS e interfaz. Insista en que la guía en texto existe para quien se quede atrás: puede seguir solo y alcanzarnos. GCP no entra hoy.">
+<p class="kick">S3 · Bloque 1 · Laboratorio-recap de S2</p><h1>S2 otra vez, pero <b>lo haces tú</b></h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="col">
+  <p class="sub">En 90 minutos vuelves a montar en tu Codespace lo que vimos en S2: la API que sirve el modelo, el cálculo al vuelo de las variables y la interfaz de consulta.</p>
+  <div class="card"><h3>Cómo seguirla</h3><ul class="list"><li>Cada orden lleva <b>⧉</b>: cópiala y pégala en el terminal del Codespace.</li><li>Las salidas son <b>reales</b> (en local, 20/11/2026) y las capturas, de un <b>Codespace del curso</b>. Haz clic en una captura para ampliarla; <b>Esc</b> la cierra.</li><li>El mismo recorrido en texto, para repetirlo solo: <span class="mono">laboratorio-recap-s2/guia.md</span>.</li><li>Teclas: <b>← →</b> avanzar · <b>O</b> índice · <b>S</b> notas · <b>F</b> pantalla completa.</li></ul></div>
+ </div>
+ <div class="card"><h3>Siglas de hoy</h3><table class="tbl"><tr><th>Sigla</th><th>Qué es</th></tr><tr><td><b>API</b></td><td>Interfaz de programación: el modelo atiende peticiones HTTP (Protocolo de Transferencia de Hipertexto) con JSON.</td></tr><tr><td><b>FS</b></td><td>Capa de variables (*feature store*): las 13 variables de cada cliente en una fecha de corte.</td></tr><tr><td><b>UI</b></td><td>Interfaz de usuario: la página web de consulta.</td></tr><tr><td><b>JSON</b></td><td>Notación de objetos de JavaScript: el formato de texto de las peticiones.</td></tr><tr><td><b>SQL</b></td><td>Lenguaje de consulta estructurado: el que calcula las variables.</td></tr></table></div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="4" data-title="El mapa"
+ data-notes="Este es el mapa de todo el bloque. Recórralo de izquierda a derecha. Diga en voz alta en qué parte se ve cada pieza: B la API, C el cálculo al vuelo y D la interfaz. Pregunta para el grupo: ¿por qué la API no busca ella misma las variables por id? Respuesta de S2: así la imagen del modelo no lleva datos de clientes.">
+<p class="kick">Lo que vamos a recorrer</p><h1>Del <b>id</b> a la <b>recomendación</b>, en cinco piezas</h1>
+
+<div class="card" style="padding:14px 16px"><svg viewBox="0 0 1140 165" role="img" aria-label="Del id a la recomendación"><defs><marker id="fm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#1f5fa8"/></marker></defs><rect x="8" y="20" width="196" height="84" rx="12" class="sv-n"/><text x="106" y="56" class="sv-t">Persona</text><text x="106" y="80" class="sv-s">conoce el id</text><rect x="234" y="20" width="196" height="84" rx="12" class="sv-g"/><text x="332" y="56" class="sv-t">Interfaz (UI)</text><text x="332" y="80" class="sv-s">puerto 8090</text><path d="M206 62 L230 62" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><rect x="460" y="20" width="196" height="84" rx="12" class="sv-n"/><text x="558" y="56" class="sv-t">Variables en el corte</text><text x="558" y="80" class="sv-s">SQL de FS sobre curso.db</text><path d="M432 62 L456 62" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><rect x="686" y="20" width="196" height="84" rx="12" class="sv-n"/><text x="784" y="56" class="sv-t">API del modelo</text><text x="784" y="80" class="sv-s">puerto 8080 · 13 variables</text><path d="M658 62 L682 62" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><rect x="912" y="20" width="196" height="84" rx="12" class="sv-g"/><text x="1010" y="56" class="sv-t">Probabilidad → tramo</text><text x="1010" y="80" class="sv-s">regla de negocio</text><path d="M884 62 L908 62" stroke="#1f5fa8" stroke-width="2.5" fill="none" marker-end="url(#fm)"/><text x="332" y="134" class="sv-s">D · la interfaz</text><text x="558" y="134" class="sv-s">C · FS al vuelo</text><text x="558" y="152" class="sv-s">(el mismo cálculo que al entrenar)</text><text x="784" y="134" class="sv-s">B · inferencia</text><text x="784" y="152" class="sv-s">(/predecir · /predecir/lote)</text></svg></div>
+<div class="grid3" style="margin-top:14px">
+ <div class="card"><h3>La API no sabe qué es un id</h3><p>Pide las <b>13 variables</b> del contrato y devuelve una probabilidad. No lee datos de clientes.</p></div>
+ <div class="card"><h3>La persona no conoce las variables</h3><p>Solo tiene el <b>id del cliente</b> y quiere saber <b>qué hacer</b> con él.</p></div>
+ <div class="card"><h3>La interfaz hace de puente</h3><p>Calcula las variables con el <b>mismo SQL de FS</b> que al entrenar, llama a la API y aplica la regla de tramos.</p></div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="2" data-title="Plan y terminales"
+ data-notes="Que todos dividan el terminal en tres ahora, antes de empezar. Así nadie para la API sin querer al lanzar la interfaz. El reloj de abajo dice el minuto planificado: el bloque va de 0:10 a 1:40 de la sesión.">
+<p class="kick">Cómo trabajamos</p><h1>Tres terminales y cuatro partes</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="card"><h3>Tres terminales en el Codespace</h3><table class="tbl"><tr><th>Terminal</th><th>Qué corre</th><th>Puerto</th></tr><tr><td><b>T1</b></td><td>la API del modelo (<span class="mono">uvicorn</span>)</td><td>8080</td></tr><tr><td><b>T2</b></td><td>la interfaz de consulta</td><td>8090</td></tr><tr><td><b>T3</b></td><td>las comprobaciones (<span class="mono">curl</span>, Python)</td><td>—</td></tr></table>
+  <p class="small" style="margin-top:10px">Divide el terminal con <b>Ctrl+Shift+5</b> o con el icono ◫ del panel. Todas, desde <span class="mono">04-Proyecto-Base</span> y con <span class="mono">env-ia-mlops</span> activado.</p></div>
+ <div class="card"><h3>El bloque, minuto a minuto</h3><table class="tbl"><tr><th>Parte</th><th>Qué</th><th>Min</th></tr><tr><td><b>A</b></td><td>Preparar el Codespace</td><td>14</td></tr><tr><td><b>B</b></td><td>Inferencia: API, contrato, una predicción y un lote</td><td>29</td></tr><tr><td><b>C</b></td><td>Las variables de FS, calculadas al vuelo</td><td>17</td></tr><tr><td><b>D</b></td><td>La interfaz: 13599, variables, ejemplo, corte, vivo y listo</td><td>25</td></tr><tr><td><b>E</b></td><td>Opcional con Docker y cierre</td><td>5</td></tr></table></div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="6" data-title="Preparar el Codespace"
+ data-notes="Un Codespace nuevo no trae retail.db: por eso primero operacional. El pipeline ejecuta los cuatro pasos y entrena; en local tardó unos 85 segundos. Que nadie se asuste por los avisos UserWarning y WARNING de MLflow: no son errores. Lo que importa es «Mejor modelo: regresion_logistica» y la versión registrada en MLflow. Si ya lo tenían de S2, el pipeline dice «sin cambios» en cada paso y termina enseguida.">
+<p class="kick">A · Paso 1 · solo en un Codespace nuevo</p><h1>Datos y modelo: <b>operacional</b> y <b>pipeline</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T1 · terminal del Codespace</em><button class="cp cpall" data-t="cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base
+conda activate env-ia-mlops
+pwd &amp;&amp; python --version &amp;&amp; ls
+python -m ia_mlops.operacional &amp;&amp; python -m ia_mlops.pipeline">⧉ Copiar todo</button></div><div class="tls"><div class="tln c"># si el terminal no está ya ahí</div><div class="tln"><span class="ps">$</span><code>cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base</code><button class="cp" data-t="cd /workspaces/curso-ml-ia-desarrollo-produccion/04-Proyecto-Base" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>conda activate env-ia-mlops</code><button class="cp" data-t="conda activate env-ia-mlops" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>pwd &amp;&amp; python --version &amp;&amp; ls</code><button class="cp" data-t="pwd &amp;&amp; python --version &amp;&amp; ls" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln c"># crea retail.db y ejecuta RAW → MASTER → FS → ML → modelo (≈ 2 min)</div><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.operacional &amp;&amp; python -m ia_mlops.pipeline</code><button class="cp" data-t="python -m ia_mlops.operacional &amp;&amp; python -m ia_mlops.pipeline" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>[pipeline_ml] ejecutando (huella de entrada 16577f644dbe)
+  FS: corte 2010-06-01: 69 clientes   …   FS: corte 2011-09-01: 131 clientes
+  ML: train     626 filas | tasa de recompra 50.8 %
+[pipeline_train] ejecutando (huella de entrada 7108eeb2fa32)
+  referencia_sin_aprender    AUC valid 0.500 | test 0.500 | precision media test 0.404
+  regresion_logistica        AUC valid 0.698 | test 0.747 | precision media test 0.659
+  gradient_boosting          AUC valid 0.663 | test 0.735 | precision media test 0.648
+Successfully registered model &#x27;retencion-90d&#x27;.
+  Mejor modelo: regresion_logistica. Guardado en …/models/modelo.joblib
+  Registrado en MLflow como «retencion-90d», version 1. Para verlo: python -m ia_mlops.mlflow_ui</pre></div>
+ </div>
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/r01-codespace.webp" data-alt="Codespace abierto con el terminal" title="Clic para ampliar"><img src="img/r01-codespace.webp" alt="Codespace abierto con el terminal" style="max-height:190px"></button><figcaption>Codespace abierto con el terminal</figcaption></figure><figure class="cap"><button class="capa" data-src="img/r02-pipeline.webp" data-alt="Final de operacional y pipeline" title="Clic para ampliar"><img src="img/r02-pipeline.webp" alt="Final de operacional y pipeline" style="max-height:190px"></button><figcaption>Final de operacional y pipeline</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="5" data-title="Arrancar la API"
+ data-notes="El proceso se queda escuchando: el terminal T1 queda ocupado, y es normal. Fíjense en la línea JSON «modelo cargado» con la huella de los datos: es el registro estructurado de S2. En la pestaña Puertos aparece el 8080 con la etiqueta «API ia-mlops (S2)»: GitHub lo reenvía de forma privada, solo para su cuenta.">
+<p class="kick">B · Paso 2 · terminal T1</p><h1>La API del modelo, escuchando en el <b>8080</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T1 · la API (se queda ocupada: no la cierres)</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>python -m uvicorn ia_mlops.api.app:app --host 127.0.0.1 --port 8080</code><button class="cp" data-t="python -m uvicorn ia_mlops.api.app:app --host 127.0.0.1 --port 8080" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>INFO:     Waiting for application startup.
+{&quot;severity&quot;: &quot;INFO&quot;, &quot;message&quot;: &quot;modelo cargado&quot;, &quot;evento&quot;: &quot;modelo_cargado&quot;, &quot;huella_datos&quot;: &quot;35a94deb4e04ab4a&quot;}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)</pre></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li><span class="mono">address already in use</span>: ya hay algo en el 8080 (¿un contenedor de S2?). <span class="mono">docker ps</span> y <span class="mono">docker rm -f &lt;nombre&gt;</span>.</li><li><span class="mono">modelo no cargado</span> en la línea JSON: falta <span class="mono">models/</span>; vuelve al paso 1.</li></ul></div>
+ </div>
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/r03-api-arrancada.webp" data-alt="uvicorn escuchando en el puerto 8080" title="Clic para ampliar"><img src="img/r03-api-arrancada.webp" alt="uvicorn escuchando en el puerto 8080" style="max-height:200px"></button><figcaption>uvicorn escuchando en el puerto 8080</figcaption></figure><figure class="cap"><button class="capa" data-src="img/r04-puertos.webp" data-alt="Pestaña Puertos con el 8080 y el 8090" title="Clic para ampliar"><img src="img/r04-puertos.webp" alt="Pestaña Puertos con el 8080 y el 8090" style="max-height:170px"></button><figcaption>Pestaña Puertos con el 8080 y el 8090</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="5" data-title="Vivo, listo y modelo"
+ data-notes="Tres preguntas distintas a la API. /salud: vivo. /listo: listo. /modelo: trazabilidad, qué modelo es y con qué datos se entrenó. La huella vuelve a aparecer en cada predicción: así se puede saber qué modelo decidió qué. python -m json.tool solo da formato al JSON.">
+<p class="kick">B · Paso 3 · terminal T3</p><h1>¿Responde? ¿Está lista? ¿<b>Qué modelo</b> es?</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T3 · comprobaciones</em><button class="cp cpall" data-t="curl -s http://127.0.0.1:8080/salud; echo
+curl -s http://127.0.0.1:8080/listo; echo
+curl -s http://127.0.0.1:8080/modelo | python -m json.tool | head -n 25">⧉ Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span><code>curl -s http://127.0.0.1:8080/salud; echo</code><button class="cp" data-t="curl -s http://127.0.0.1:8080/salud; echo" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>curl -s http://127.0.0.1:8080/listo; echo</code><button class="cp" data-t="curl -s http://127.0.0.1:8080/listo; echo" title="Copiar" aria-label="Copiar la orden">⧉</button></div><div class="tln"><span class="ps">$</span><code>curl -s http://127.0.0.1:8080/modelo | python -m json.tool | head -n 25</code><button class="cp" data-t="curl -s http://127.0.0.1:8080/modelo | python -m json.tool | head -n 25" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{&quot;estado&quot;:&quot;ok&quot;}
+{&quot;estado&quot;:&quot;listo&quot;}</pre></div>
+  <div class="card"><h3>Vivo no es lo mismo que listo</h3><p><b>/salud</b>: ¿el proceso responde? <b>/listo</b>: ¿tiene el modelo cargado? Si falta el modelo, /salud da 200 y /listo 503 con el motivo.</p></div>
+ </div>
+ <div class="col"><div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{
+    &quot;modelo&quot;: &quot;regresion_logistica&quot;,
+    &quot;objetivo&quot;: &quot;el cliente compra al menos una vez en los siguientes 90 dias&quot;,
+    &quot;huella_datos&quot;: &quot;35a94deb4e04ab4a&quot;,
+    &quot;entrenado_en&quot;: &quot;2026-11-20T12:22:53&quot;,
+    &quot;variables&quot;: [
+        &quot;recencia_dias&quot;,
+        … (las 13 variables del contrato) …
+        &quot;es_reino_unido&quot;
+    ],
+    &quot;filas&quot;: {
+        &quot;train&quot;: 626,
+        &quot;valid&quot;: 114,
+        &quot;test&quot;: 250
+    },</pre></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">huella_datos</span>: qué datos entrenaron el modelo. Debe ser la misma en <span class="mono">/modelo</span>, en el registro y en cada predicción.</li><li><span class="mono">filas</span>: 626 de entrenamiento, 114 de validación y 250 de prueba.</li><li>Tu huella puede ser otra si tus datos son otros: compárala con la de tu registro de T1.</li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="4" data-title="La página /docs"
+ data-notes="FastAPI genera esta página a partir del contrato (los esquemas de Pydantic). Es la documentación viva: si cambia el contrato, cambia la página. Que prueben Try it out con el ejemplo y vean el mismo 0,8278… que con curl en el paso siguiente.">
+<p class="kick">B · Paso 4 · navegador</p><h1>El contrato, en el navegador: <b>/docs</b></h1>
+
+<div class="split" style="grid-template-columns:1.15fr .85fr">
+ <div class="capcol"><figure class="cap"><button class="capa" data-src="img/r05-docs.webp" data-alt="Página /docs de la API" title="Clic para ampliar"><img src="img/r05-docs.webp" alt="Página /docs de la API" style="max-height:400px"></button><figcaption>Página /docs de la API</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Cómo abrirla</h3><ul class="list"><li>Pestaña <b>Puertos</b> → fila <b>8080</b> → icono del globo («Abrir en el navegador»).</li><li>Añade <span class="mono">/docs</span> al final de la dirección.</li><li>Despliega <b>POST /predecir</b> → <b>Try it out</b>: el ejemplo ya trae las 13 variables.</li></ul></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Los cinco puntos de acceso: <span class="mono">/salud</span>, <span class="mono">/listo</span>, <span class="mono">/modelo</span>, <span class="mono">/predecir</span>, <span class="mono">/predecir/lote</span>.</li><li>En <b>Schemas</b>, <span class="mono">Cliente</span>: los 13 campos con su tipo. Es el <b>contrato</b> que sale de la firma del modelo.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="6" data-title="Una predicción"
+ data-notes="El valor 0,8278889 es el mismo de S2: mismo modelo, mismos datos de entrenamiento, mismo resultado. Si a alguien le sale otro número en las últimas cifras, es normal (operaciones en coma flotante); si cambia en la segunda o tercera cifra, algo es distinto: otros datos u otro modelo. Que miren el registro de T1: cada petición deja una línea, sin las variables del cliente.">
+<p class="kick">B · Paso 5 · terminal T3</p><h1>Una predicción con <span class="mono">curl</span> y <b>cliente_ejemplo.json</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T3 · un cliente</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>curl -s -X POST http://127.0.0.1:8080/predecir -H &quot;Content-Type: application/json&quot; -d @tests/datos/cliente_ejemplo.json; echo</code><button class="cp" data-t="curl -s -X POST http://127.0.0.1:8080/predecir -H &quot;Content-Type: application/json&quot; -d @tests/datos/cliente_ejemplo.json; echo" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{&quot;probabilidad&quot;:0.8278889191932138,&quot;modelo&quot;:&quot;regresion_logistica&quot;,&quot;huella_datos&quot;:&quot;35a94deb4e04ab4a&quot;,&quot;advertencias&quot;:[]}</pre></div>
+  <div class="card"><h3>El cuerpo de la petición</h3><p class="small"><span class="mono">tests/datos/cliente_ejemplo.json</span>: recencia 35 días, 6 compras, 1250,40 £, 410 unidades, 38 productos, 310 días de antigüedad… las 13 variables. <span class="mono">-d @archivo</span> envía el archivo tal cual.</p></div>
+ </div>
+ <div class="col"><figure class="cap"><button class="capa" data-src="img/r06-predecir.webp" data-alt="curl a /predecir y su respuesta" title="Clic para ampliar"><img src="img/r06-predecir.webp" alt="curl a /predecir y su respuesta" style="max-height:230px"></button><figcaption>curl a /predecir y su respuesta</figcaption></figure>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">probabilidad</span> ≈ <b>0,828</b>: el mismo valor que en S2 (<span class="mono">0.8278889…</span>), en local y en el contenedor.</li><li><span class="mono">advertencias</span> vacía: todas las variables están dentro de lo visto al entrenar.</li><li>En T1 aparece una línea JSON <span class="mono">POST /predecir 200</span> con su <span class="mono">id</span> y los milisegundos; <b>sin datos del cliente</b>.</li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="5" data-title="Un lote"
+ data-notes="El lote acepta hasta 1000 clientes y devuelve las predicciones en el mismo orden. El segundo cliente es un caso real: con una sola compra no hay días medios entre compras. La API no falla: usa la mediana del entrenamiento y lo dice en advertencias. Rechazar frente a avisar: rechaza lo que rompe el contrato y avisa de lo que es válido pero raro.">
+<p class="kick">B · Paso 6 · terminal T3</p><h1>Varios clientes de una vez: <b>/predecir/lote</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T3 · dos clientes</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>curl -s -X POST http://127.0.0.1:8080/predecir/lote -H &quot;Content-Type: application/json&quot; -d @tests/datos/lote_ejemplo.json; echo</code><button class="cp" data-t="curl -s -X POST http://127.0.0.1:8080/predecir/lote -H &quot;Content-Type: application/json&quot; -d @tests/datos/lote_ejemplo.json; echo" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{&quot;predicciones&quot;:[
+ {&quot;probabilidad&quot;:0.8278889191932137, … ,&quot;advertencias&quot;:[]},
+ {&quot;probabilidad&quot;:0.3061291959896073, … ,&quot;advertencias&quot;:[&quot;dias_medios_entre_compras no informado: el modelo usa la mediana del entrenamiento.&quot;]}]}</pre></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Dos predicciones, <b>en el mismo orden</b> que los clientes del archivo.</li><li>El primero es el de antes: la misma probabilidad.</li><li>El segundo tiene <span class="mono">dias_medios_entre_compras: null</span> (una sola compra): <b>avisa</b>, no rechaza.</li></ul></div>
+ </div>
+ <div class="col"><figure class="cap"><button class="capa" data-src="img/r07-lote.webp" data-alt="curl a /predecir/lote" title="Clic para ampliar"><img src="img/r07-lote.webp" alt="curl a /predecir/lote" style="max-height:240px"></button><figcaption>curl a /predecir/lote</figcaption></figure>
+  <div class="card"><h3>¿Por qué un lote?</h3><p class="small">Una campaña puntúa a cientos de clientes: una sola petición (hasta <b>1000</b>) en lugar de cientos. La interfaz usa este punto de acceso.</p></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="4" data-title="Romper el contrato"
+ data-notes="Repaso rápido del contrato. Un 422 es culpa de quien llama, y el mensaje dice exactamente qué campo falta. La salida mostrada se recortó: son doce entradas, una por cada variable que falta. Si sobra tiempo, que prueben &quot;frecuencia&quot;: &quot;seis&quot; y vean el tipo de error.">
+<p class="kick">B · Paso 7 · terminal T3</p><h1>Si falta una variable: <b>422</b>, y dice cuál</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T3 · una petición con una sola variable</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>curl -s -w &#x27; [%{http_code}]\n&#x27; -X POST http://127.0.0.1:8080/predecir -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;recencia_dias&quot;: 35}&#x27;</code><button class="cp" data-t="curl -s -w &#x27; [%{http_code}]\n&#x27; -X POST http://127.0.0.1:8080/predecir -H &quot;Content-Type: application/json&quot; -d &#x27;{&quot;recencia_dias&quot;: 35}&#x27;" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{&quot;detail&quot;:[{&quot;type&quot;:&quot;missing&quot;,&quot;loc&quot;:[&quot;body&quot;,&quot;frecuencia&quot;],&quot;msg&quot;:&quot;Field required&quot;, …},
+            … 12 campos que faltan …]} [422]</pre></div>
+ </div>
+ <div class="col">
+  <div class="card"><h3>Los códigos de S2</h3><table class="tbl"><tr><th>Código</th><th>Significa</th><th>Quién se equivocó</th></tr><tr><td><b>200</b></td><td>bien</td><td>nadie</td></tr><tr><td><b>422</b></td><td>el cuerpo no cumple el contrato</td><td>quien llama</td></tr><tr><td><b>503</b></td><td>ahora no puedo (sin modelo)</td><td>el servicio, y lo explica</td></tr><tr><td><b>500</b></td><td>error interno, sin detalles</td><td>el servicio</td></tr></table></div>
+  <div class="card"><p class="small">La API no adivina: con una sola variable devuelve la lista de las <b>12 que faltan</b> (<span class="mono">"type":"missing"</span>). Prueba también a enviar un texto donde va un número.</p></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="4" data-title="¿Por qué al vuelo?"
+ data-notes="Esta es la idea central de la parte C. Lo que está guardado en la capa FS son los cortes con los que se entrenó y evaluó. Para usar el modelo hoy hacen falta las variables de hoy, y se calculan en el momento con el mismo SQL. La tabla temporal es un truco de SQLite: un nombre sin esquema se busca primero en temp, así el INSERT del SQL escribe en la copia temporal. Lo comprobaremos: en el corte de entrenamiento debe dar lo mismo que la tabla.">
+<p class="kick">C · La idea</p><h1>La capa FS guarda <b>cortes del pasado</b>; la campaña es <b>hoy</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="card"><h3>Lo que hay en la base</h3><p>La tabla <span class="mono">fs_cliente_corte</span> tiene las variables de cada cliente en los <b>10 cortes</b> de entrenamiento, validación y prueba (de 2010-06-01 a 2011-09-01).</p></div>
+  <div class="card"><h3>Lo que pide la campaña</h3><p>El corte de <b>hoy</b> del dato: el día siguiente a la última factura, <span class="mono">2011-12-10</span>. <b>No está guardado</b>: hay que calcularlo.</p></div>
+ </div>
+ <div class="col">
+  <div class="card"><h3>Cómo se calcula: <span class="mono">explotacion.variables_en_corte</span></h3><ul class="list"><li>Ejecuta el <b>mismo SQL</b> de la capa FS: <span class="mono">sql/fs/02_poblar_fs.sql</span>.</li><li>Escribe en una tabla <b>temporal</b>: la capa FS del proyecto no se toca.</li><li>Regla de oro: solo datos <b>anteriores al corte</b> (<span class="mono">fecha_factura &lt; :corte</span>).</li><li>Lo usan la interfaz y <span class="mono">python -m ia_mlops.explotacion</span>.</li></ul></div>
+  <div class="callout">Mismo cálculo al entrenar y al predecir: si no, el modelo recibiría variables distintas de las que aprendió.</div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="8" data-title="El fragmento de FS al vuelo"
+ data-notes="Que lo peguen entero: python - lee el programa hasta la línea EOF. Explique el código en tres partes: el bucle calcula las variables al vuelo en dos cortes, el del último entrenamiento (2010-12-01) y el de hoy (el día siguiente a la última factura); la consulta lee la fila guardada en la tabla FS para el corte entrenado; y al final se comparan. No necesita la API: es solo el dato.">
+<p class="kick">C · Paso 8 · terminal T3 (no necesita la API)</p><h1>Las variables del <b>13599</b>, en dos cortes</h1>
+
+<div class="split" style="grid-template-columns:1.05fr .95fr">
+ <div class="col"><div class="term"><div class="bar"><em>T3 · pega la orden entera (de python a EOF)</em><button class="cp cpall" data-t="python - &lt;&lt;&#x27;EOF&#x27;
+import pandas as pd
+from ia_mlops import config, db, explotacion as ex
+con = db.conectar(); cid = 13599; t = {}
+for corte in [&#x27;2010-12-01&#x27;, ex.corte_por_defecto(con)]:
+    v = ex.variables_en_corte(con, corte)
+    t[f&#x27;al vuelo {corte}&#x27;] = v.loc[v.cliente_id == cid, config.FEATURES].iloc[0]
+fs = pd.read_sql(&quot;SELECT * FROM fs_cliente_corte WHERE cliente_id = ? AND fecha_corte = &#x27;2010-12-01&#x27;&quot;, con, params=[cid])
+t[&#x27;tabla fs 2010-12-01&#x27;] = fs[config.FEATURES].iloc[0]
+t = pd.DataFrame(t); print(t.to_string())
+a, b = t.iloc[:, 0], t.iloc[:, 2]
+print(&#x27;Iguales en el corte entrenado:&#x27;, bool(((a == b) | (a.isna() &amp; b.isna())).all()))
+print(&#x27;Cortes guardados en fs_cliente_corte:&#x27;, [r[0] for r in con.execute(&#x27;SELECT DISTINCT fecha_corte FROM fs_cliente_corte ORDER BY 1&#x27;)])
+EOF">⧉ Copiar la orden entera</button></div><pre class="code">python - &lt;&lt;&#x27;EOF&#x27;
+import pandas as pd
+from ia_mlops import config, db, explotacion as ex
+con = db.conectar(); cid = 13599; t = {}
+for corte in [&#x27;2010-12-01&#x27;, ex.corte_por_defecto(con)]:
+    v = ex.variables_en_corte(con, corte)
+    t[f&#x27;al vuelo {corte}&#x27;] = v.loc[v.cliente_id == cid, config.FEATURES].iloc[0]
+fs = pd.read_sql(&quot;SELECT * FROM fs_cliente_corte WHERE cliente_id = ? AND fecha_corte = &#x27;2010-12-01&#x27;&quot;, con, params=[cid])
+t[&#x27;tabla fs 2010-12-01&#x27;] = fs[config.FEATURES].iloc[0]
+t = pd.DataFrame(t); print(t.to_string())
+a, b = t.iloc[:, 0], t.iloc[:, 2]
+print(&#x27;Iguales en el corte entrenado:&#x27;, bool(((a == b) | (a.isna() &amp; b.isna())).all()))
+print(&#x27;Cortes guardados en fs_cliente_corte:&#x27;, [r[0] for r in con.execute(&#x27;SELECT DISTINCT fecha_corte FROM fs_cliente_corte ORDER BY 1&#x27;)])
+EOF</pre></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li><span class="mono">No existe la capa FS</span>: falta el pipeline (paso 1).</li><li><span class="mono">ModuleNotFoundError: ia_mlops</span>: no estás en <span class="mono">04-Proyecto-Base</span>.</li><li>Se queda esperando con <span class="mono">&gt;</span>: no se copió la última línea, <span class="mono">EOF</span>. Escríbela y pulsa Intro.</li></ul></div></div>
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/r08-fs-al-vuelo.webp" data-alt="El fragmento de FS al vuelo en el terminal" title="Clic para ampliar"><img src="img/r08-fs-al-vuelo.webp" alt="El fragmento de FS al vuelo en el terminal" style="max-height:380px"></button><figcaption>El fragmento de FS al vuelo en el terminal</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="5" data-title="Leer el resultado"
+ data-notes="Lea la tabla con el grupo. La primera y la tercera columna coinciden fila a fila: el cálculo al vuelo es el mismo que el que se guardó al entrenar. La segunda columna es el cliente hoy: más compras, más gasto, y una antigüedad que el modelo nunca vio. Esto prepara el aviso «revisar» de la interfaz. Con el corte de hoy, 132 de los 148 clientes salen con advertencias (salida en local).">
+<p class="kick">C · Paso 8 · qué debes ver</p><h1>Mismos valores en el corte entrenado; <b>otros</b> hoy</h1>
+
+<div class="split" style="grid-template-columns:1.2fr .8fr">
+ <div class="col"><div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>                           al vuelo 2010-12-01  al vuelo 2011-12-10  tabla fs 2010-12-01
+recencia_dias                            21.00                 1.00                21.00
+frecuencia                               12.00                33.00                12.00
+monto_total                            4661.12              9811.04              4661.12
+ticket_medio                            388.43               297.30               388.43
+unidades_total                         2955.00              6248.00              2955.00
+productos_distintos                     100.00               235.00               100.00
+antiguedad_dias                         364.00               738.00               364.00
+frecuencia_90d                            6.00                13.00                 6.00
+monto_90d                              1752.00              2836.08              1752.00
+frecuencia_180d                           6.00                14.00                 6.00
+dias_medios_entre_compras                31.20                23.00                31.20
+devoluciones                              7.00                19.00                 7.00
+es_reino_unido                            1.00                 1.00                 1.00
+Iguales en el corte entrenado: True
+Cortes guardados en fs_cliente_corte: [&#x27;2010-06-01&#x27;, &#x27;2010-07-01&#x27;, &#x27;2010-08-01&#x27;, &#x27;2010-09-01&#x27;, &#x27;2010-10-01&#x27;, &#x27;2010-11-01&#x27;, &#x27;2010-12-01&#x27;, &#x27;2011-03-01&#x27;, &#x27;2011-06-01&#x27;, &#x27;2011-09-01&#x27;]</pre></div></div>
+ <div class="col">
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Columnas 1 y 3 <b>iguales</b>: <span class="mono">Iguales en el corte entrenado: True</span>.</li><li>Hoy (2011-12-10) el 13599 lleva 33 compras y 738 días de antigüedad; en 2010-12-01, 12 y 364.</li><li><span class="mono">2011-12-10</span> <b>no está</b> entre los cortes guardados: por eso se calcula al vuelo.</li></ul></div>
+  <div class="card"><h3>Para pensar</h3><p class="small">El modelo vio antigüedades de <b>1 a 364 días</b>. Hoy el 13599 tiene <b>738</b>. ¿Qué dirá la API? Lo veremos en la interfaz: el aviso «revisar» (deriva, S5).</p></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="4" data-title="Arrancar la interfaz"
+ data-notes="Segundo servicio: la interfaz es servidor para el navegador y cliente de la API. Su /listo comprueba las dos cosas que necesita: la base con MASTER y FS, y que la API responda a /listo. Que abran la página desde Puertos.">
+<p class="kick">D · Paso 9 · terminal T2</p><h1>La interfaz, en el <b>8090</b>, llamando a la API</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="term"><div class="bar"><em>T2 · la interfaz (con la API en marcha en T1)</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>python -m ia_mlops.interfaz --url http://127.0.0.1:8080</code><button class="cp" data-t="python -m ia_mlops.interfaz --url http://127.0.0.1:8080" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>Interfaz en http://127.0.0.1:8090 · predicciones: http://127.0.0.1:8080
+INFO:     Uvicorn running on http://127.0.0.1:8090 (Press CTRL+C to quit)</pre></div>
+  <div class="term"><div class="bar"><em>T3 · ¿está lista?</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>curl -s http://127.0.0.1:8090/listo; echo</code><button class="cp" data-t="curl -s http://127.0.0.1:8090/listo; echo" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox pq"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{&quot;estado&quot;:&quot;listo&quot;,&quot;datos&quot;:&quot;ok&quot;,&quot;modelo&quot;:&quot;http://127.0.0.1:8080&quot;}</pre></div>
+ </div>
+ <div class="col">
+  <div class="card"><h3>Abrir la página</h3><ul class="list"><li>Pestaña <b>Puertos</b> → fila <b>8090</b> («Interfaz de consulta (S2)») → icono del globo.</li><li>Debajo del formulario: «predicciones: <b>http://127.0.0.1:8080</b>».</li></ul></div>
+  <div class="card falla"><h3>Si falla</h3><ul class="list"><li><span class="mono">/listo</span> 503 «no responde»: la API de T1 no está en marcha.</li><li>No sale el 8090 en Puertos: pulsa <b>Reenviar un puerto</b> y escribe 8090.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="6" data-title="Consultar el 13599"
+ data-notes="Conecte con la parte C: las variables que enseña la interfaz son exactamente las que calculamos a mano en el paso 8 para el corte de hoy. La interfaz no hace magia: variables_en_corte, después /predecir/lote y después la regla de tramos. Puesto y decil son entre los 148 clientes del corte.">
+<p class="kick">D · Paso 10 · navegador</p><h1>Un id → probabilidad, tramo y <b>las 13 variables</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/r09-interfaz-13599.webp" data-alt="La interfaz con el cliente 13599" title="Clic para ampliar"><img src="img/r09-interfaz-13599.webp" alt="La interfaz con el cliente 13599" style="max-height:230px"></button><figcaption>La interfaz con el cliente 13599</figcaption></figure><figure class="cap"><button class="capa" data-src="img/r10-interfaz-variables.webp" data-alt="Las 13 variables del 13599 en la interfaz" title="Clic para ampliar"><img src="img/r10-interfaz-variables.webp" alt="Las 13 variables del 13599 en la interfaz" style="max-height:230px"></button><figcaption>Las 13 variables del 13599 en la interfaz</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><ul class="list"><li>Escribe <span class="mono">13599</span> en <b>Ids de cliente</b> y pulsa <b>Predecir</b> (la primera vez tarda unos segundos: puntúa a los 148).</li><li>En su fila, despliega <b>Variables</b>.</li></ul></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>corte 2011-12-10 · 148 clientes en el corte
+13599  probabilidad 0.9977  alta  puesto 1  decil 1  revisar
+aviso: antiguedad_dias=738 esta fuera del rango visto al entrenar [1, 364]; la prediccion no tiene respaldo ahi.</pre></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><b>99,8 %</b>, tramo <span class="mono">alta</span>, puesto <b>1 de 148</b>.</li><li>Las variables son la columna <span class="mono">2011-12-10</span> del paso 8: recencia 1, frecuencia 33, antigüedad 738.</li><li>«Revisar»: la antigüedad está fuera de lo visto al entrenar.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="5" data-title="El botón Ejemplo"
+ data-notes="Ejemplo elige el primero, el último y tres intermedios del ranking, más un id inventado. Así se ven los tres tramos y el caso «sin predicción». Pregunte: ¿a quién va el incentivo? Al tramo medio, el indeciso. Los umbrales son una decisión de negocio en config.py, no del modelo.">
+<p class="kick">D · Paso 11 · navegador</p><h1><b>Ejemplo</b>: los tres tramos y un id que no existe</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/r11-interfaz-ejemplo.webp" data-alt="El botón Ejemplo: tres tramos y un id que no existe" title="Clic para ampliar"><img src="img/r11-interfaz-ejemplo.webp" alt="El botón Ejemplo: tres tramos y un id que no existe" style="max-height:400px"></button><figcaption>El botón Ejemplo: tres tramos y un id que no existe</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><p>Pulsa <b>Ejemplo</b> (rellena cinco ids repartidos por el ranking y el <span class="mono">99999</span>) y después <b>Predecir</b>.</p></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>13599  0.9977  alta   puesto 1
+14859  0.7273  alta   puesto 38
+18108  0.4159  media  puesto 75
+14752  0.2249  baja   puesto 111
+13306  0.128   baja   puesto 148
+99999  no existe en MASTER</pre></div>
+  <div class="card"><h3>La regla de negocio</h3><table class="tbl"><tr><th>Tramo</th><th>Desde</th><th>Qué hacer</th></tr><tr><td>alta</td><td>70 %</td><td>no gastar el incentivo</td></tr><tr><td>media</td><td>40 %</td><td>prioridad de la campaña</td></tr><tr><td>baja</td><td>0 %</td><td>contacto de bajo coste</td></tr></table>
+  <p class="small" style="margin-top:6px">En <span class="mono">config.SEGMENTOS_RECOMPRA</span>: no sale del modelo, se acuerda con negocio.</p></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="5" data-title="Cambiar la fecha de corte"
+ data-notes="Pregunta para el grupo: ¿por qué cambian las variables? Porque todas se calculan con lo anterior al corte: en marzo de 2011 el cliente tenía menos historia. Y hay menos clientes en el corte. La interfaz acepta cortes entre la primera factura y el día siguiente a la última; fuera de ese tramo da 422.">
+<p class="kick">D · Paso 12 · navegador</p><h1>Otra <b>fecha de corte</b>, otras variables</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col capcol"><figure class="cap"><button class="capa" data-src="img/r12-interfaz-corte.webp" data-alt="La interfaz con la fecha de corte cambiada" title="Clic para ampliar"><img src="img/r12-interfaz-corte.webp" alt="La interfaz con la fecha de corte cambiada" style="max-height:400px"></button><figcaption>La interfaz con la fecha de corte cambiada</figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><p><b>Limpiar</b>, escribe <span class="mono">13599</span>, pon <b>Fecha de corte</b> = 01/03/2011 y pulsa <b>Predecir</b>.</p></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>corte 2011-03-01 · 114 clientes en el corte
+13599  probabilidad 0.9942  alta  puesto 3
+recencia_dias 53 · frecuencia 15 · monto_total 5383.1 · antiguedad_dias 454 · devoluciones 11</pre></div>
+  <div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Solo <b>114</b> clientes en el corte: los que habían comprado antes del 1/3/2011.</li><li>El 13599 baja al puesto <b>3</b>: con 15 compras y 53 días sin comprar.</li><li>Es el corte de <b>validación</b>: está guardado en FS, y el cálculo al vuelo da lo mismo.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="5" data-title="Vivo frente a listo"
+ data-notes="Vivo frente a listo, la idea de operación de S2. Reiniciar la interfaz no sirve: la API es la que falta. Al terminar, que vuelvan a arrancar la API en T1 si quieren seguir probando, o que paren las dos con Ctrl+C.">
+<p class="kick">D · Paso 13 · T1 y T3</p><h1>Para la API: la interfaz sigue <b>viva</b>, pero no <b>lista</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="card"><h3>Haz esto</h3><p>En <b>T1</b>, <b>Ctrl+C</b>: se para la API. Después, en T3:</p></div>
+  <div class="term"><div class="bar"><em>T3 · la interfaz con la API parada</em></div><div class="tls"><div class="tln"><span class="ps">$</span><code>curl -s -w &#x27; [%{http_code}]\n&#x27; http://127.0.0.1:8090/salud; curl -s -w &#x27; [%{http_code}]\n&#x27; http://127.0.0.1:8090/listo</code><button class="cp" data-t="curl -s -w &#x27; [%{http_code}]\n&#x27; http://127.0.0.1:8090/salud; curl -s -w &#x27; [%{http_code}]\n&#x27; http://127.0.0.1:8090/listo" title="Copiar" aria-label="Copiar la orden">⧉</button></div></div></div>
+  <div class="realbox"><div class="rk">Salida real · en local (Windows) · 20/11/2026</div><pre>{&quot;estado&quot;:&quot;ok&quot;} [200]
+{&quot;detalle&quot;:&quot;La API del modelo en http://127.0.0.1:8080 no responde ([WinError 10061] …). ¿Está arrancada y /listo responde?&quot;} [503]</pre></div>
+  <p class="small">En Linux (Codespace) el motivo es del tipo <span class="mono">[Errno 111] Connection refused</span>.</p>
+ </div>
+ <div class="col"><figure class="cap"><button class="capa" data-src="img/r13-listo-503.webp" data-alt="API parada: /salud 200 y /listo 503" title="Clic para ampliar"><img src="img/r13-listo-503.webp" alt="API parada: /salud 200 y /listo 503" style="max-height:250px"></button><figcaption>API parada: /salud 200 y /listo 503</figcaption></figure>
+  <div class="card"><h3>Por qué importa</h3><p class="small">Si el chequeo de salud mirara <span class="mono">/listo</span>, la plataforma reiniciaría la interfaz… y no arreglaría nada: lo que falta es la API. El 503 dice <b>qué</b> falta.</p></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="E" data-min="3" data-title="Opcional: dos contenedores"
+ data-notes="No se hace en clase: queda como opcional. Quien quiera, que siga la parte B de la práctica de S2. La única condición: parar antes la API y la interfaz de hoy para liberar los puertos. Recuerde: GCP no entra hoy; pasa a S4.">
+<p class="kick">E · Opcional · para casa</p><h1>Lo mismo en <b>dos contenedores</b> (Docker)</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="card"><h3>Qué cambia</h3><table class="tbl"><tr><th></th><th>Hoy (procesos)</th><th>Contenedores (S2, parte B)</th></tr><tr><td>La interfaz llama a</td><td><span class="mono">http://127.0.0.1:8080</span></td><td><span class="mono">http://api:8080</span> (por nombre, en una red)</td></tr><tr><td>Los datos</td><td>tu carpeta</td><td>volumen de <b>solo lectura</b></td></tr><tr><td>La API</td><td>en el 8080 del Codespace</td><td>sin <span class="mono">-p</span>: no se publica</td></tr></table></div>
+ <div class="card"><h3>Dónde está</h3><ul class="list"><li>Recorrido: <span class="mono">01-Sesiones/S2-API-y-Docker/practica/interfaz-de-consulta.md</span>, parte B.</li><li>Con Compose: <span class="mono">docker compose -f deploy/docker/compose.yaml up --build -d</span>.</li><li>Antes, <b>para T1 y T2</b> (liberan el 8080 y el 8090).</li><li><b>Los números deben ser los mismos</b>: solo cambia dónde corren las piezas.</li></ul></div>
+</div>
+</section>
+
+<section class="slide" data-part="E" data-min="2" data-title="Autoevaluación y cierre"
+ data-notes="Lea cada pregunta y deje unos segundos antes de desplegar la respuesta. Recuerde que la guía en texto queda para repetirlo en casa. Después de la pausa viene el laboratorio de GitHub Actions.">
+<p class="kick">Cierre</p><h1>Cuatro preguntas para llevarte</h1>
+
+<div class="grid2">
+<div class="card"><h3>1. ¿Por qué la API pide variables y no un id?</h3><details><summary>Ver la respuesta</summary><p class="small">Para que la imagen del modelo no lleve datos de clientes: el dato lo pone la interfaz.</p></details></div><div class="card"><h3>2. ¿Qué garantiza que las variables de hoy sean «como las de entrenar»?</h3><details><summary>Ver la respuesta</summary><p class="small">El mismo SQL de FS (<span class="mono">02_poblar_fs.sql</span>); en el corte entrenado, el cálculo al vuelo da los mismos valores que la tabla.</p></details></div><div class="card"><h3>3. ¿Qué significa «revisar» en el 13599?</h3><details><summary>Ver la respuesta</summary><p class="small">Una variable (antigüedad 738) está fuera de lo visto al entrenar (1 a 364): la probabilidad no tiene respaldo ahí.</p></details></div><div class="card"><h3>4. API parada: ¿qué dan <span class="mono">/salud</span> y <span class="mono">/listo</span> de la interfaz?</h3><details><summary>Ver la respuesta</summary><p class="small"><span class="mono">/salud</span> 200 (vivo) y <span class="mono">/listo</span> 503 con el motivo (no lista).</p></details></div></div>
+</section>
+
+</div></div>
+
+<aside id="notes" aria-label="Notas del ponente"><h3>Notas del ponente</h3><div id="notetext"></div><p class="small" id="notemin"></p></aside>
+<div id="index" aria-label="Índice"><h2>Índice</h2><div id="idxgrid"></div></div>
+<div id="zoom" role="dialog" aria-label="Captura ampliada"><img alt=""><p></p></div>
+<nav id="bar" aria-label="Controles">
+  <button id="bprev" aria-label="Anterior">←</button><button id="bnext" aria-label="Siguiente">→</button>
+  <span id="count">1 / 1</span><span id="clockref" title="Minuto planificado"></span>
+  <button class="part" data-p="A">Preparar</button><button class="part" data-p="B">Inferencia (API)</button><button class="part" data-p="C">FS al vuelo</button><button class="part" data-p="D">Interfaz</button><button class="part" data-p="E">Cierre</button>
+  <span class="sp"></span>
+  <a id="bhome" href="../index.html" title="Volver al índice de la sesión S3">⌂ S3</a><button id="bidx">Índice (O)</button><button id="bnotes">Notas (S)</button><button id="bfull">Pantalla completa (F)</button>
+</nav>
+<noscript>Esta presentación necesita JavaScript. El mismo recorrido está en guia.md.</noscript>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PARTES={"A": "Preparar", "B": "Inferencia (API)", "C": "FS al vuelo", "D": "Interfaz", "E": "Cierre"}, INICIO=10;
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();return true}catch(e2){return false}}}
+const slides=$$('.slide'), N=slides.length;
+slides.forEach((s,i)=>{const f=document.createElement('div');f.className='foot';
+  f.innerHTML=`<span>ML e IA · S3 · Laboratorio-recap de S2</span><span><b>${esc(PARTES[s.dataset.part])}</b> · ${i+1} / ${N}</span>`;s.appendChild(f)});
+const cum=[];(()=>{let t=0;slides.forEach(s=>{cum.push(t);t+=+s.dataset.min||0})})();
+const TOTAL=cum[N-1]+(+slides[N-1].dataset.min||0);
+const hm=m=>Math.floor(m/60)+':'+String(m%60).padStart(2,'0');
+let cur=0;
+function go(i){i=Math.max(0,Math.min(N-1,i));cur=i;slides.forEach((s,k)=>s.classList.toggle('active',k===i));chrome();
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+function chrome(){const s=slides[cur];
+  $('#count').textContent=(cur+1)+' / '+N;
+  $('#clockref').textContent='min '+cum[cur]+' de '+TOTAL+' · sesión '+hm(INICIO+cum[cur]);
+  $('#prog').style.width=((cur+1)/N*100)+'%';
+  $$('#bar .part').forEach(b=>b.classList.toggle('on',b.dataset.p===s.dataset.part));
+  $('#notetext').innerHTML='<p>'+esc(s.dataset.notes||'')+'</p>';
+  $('#notemin').textContent='Previsto: '+(s.dataset.min||0)+' min · acumulado '+cum[cur]+' de '+TOTAL+' (sesión '+hm(INICIO+cum[cur])+')';
+  $$('#idxgrid button').forEach((b,k)=>b.classList.toggle('cur',k===cur))}
+function fit(){const v=$('#viewport');$('#stage').style.setProperty('--s',Math.min(v.clientWidth/1280,v.clientHeight/720).toFixed(4))}
+addEventListener('resize',fit);
+$('#idxgrid').innerHTML=slides.map((s,i)=>`<button data-i="${i}"><small>${esc(PARTES[s.dataset.part])} · ${s.dataset.min} min · sesión ${hm(INICIO+cum[i])}</small>${i+1}. ${esc(s.dataset.title)}</button>`).join('');
+$('#idxgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;tog('#index',false);go(+b.dataset.i)});
+function tog(sel,force){$(sel).classList.toggle('on',force)}
+$('#bprev').onclick=()=>go(cur-1); $('#bnext').onclick=()=>go(cur+1);
+$('#bidx').onclick=()=>tog('#index'); $('#bnotes').onclick=()=>tog('#notes');
+$('#bfull').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen()};
+$$('#bar .part').forEach(b=>b.onclick=()=>go(slides.findIndex(s=>s.dataset.part===b.dataset.p)));
+const zoom=$('#zoom');
+function cerrarZoom(){zoom.classList.remove('on');$('#zoom img').removeAttribute('src')}
+zoom.addEventListener('click',cerrarZoom);
+addEventListener('keydown',e=>{
+  const t=e.target; if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))return; if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const k=e.key;
+  if(k==='Escape'){if(zoom.classList.contains('on')){cerrarZoom();return}tog('#index',false);tog('#notes',false);return}
+  if(zoom.classList.contains('on'))return;
+  if(k==='ArrowRight'||k==='PageDown'||(k===' '&&!/^(BUTTON|A|SUMMARY)$/.test(t.tagName))){e.preventDefault();go(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(k==='Home'){e.preventDefault();go(0)} else if(k==='End'){e.preventDefault();go(N-1)}
+  else if(k==='o'||k==='O')tog('#index'); else if(k==='s'||k==='S')tog('#notes'); else if(k==='f'||k==='F')$('#bfull').click();
+});
+document.addEventListener('click',async e=>{
+  const z=e.target.closest('.capa'); if(z){$('#zoom img').src=z.dataset.src;$('#zoom img').alt=z.dataset.alt;$('#zoom p').textContent=z.dataset.alt+' · clic o Esc para cerrar';zoom.classList.add('on');return}
+  const b=e.target.closest('.cp'); if(!b)return; e.stopPropagation();
+  const ok=await copyText(b.dataset.t); const tx=b.textContent; b.classList.add('ok'); b.textContent=ok?'✓ Copiado':'✗'; setTimeout(()=>{b.classList.remove('ok');b.textContent=tx},1200)});
+fit(); const h=parseInt((location.hash||'').slice(1),10); go(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>

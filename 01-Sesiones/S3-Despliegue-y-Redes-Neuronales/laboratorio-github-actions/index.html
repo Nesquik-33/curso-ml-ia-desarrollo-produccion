@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio de GitHub Actions · S3 · ML e IA: de desarrollo a producción</title>
+<!-- Generado por generar.py: no se edita a mano. -->
+<style>
+:root{--tinta:#1f2937;--suave:#5b6472;--linea:#d6dde6;--fondo:#ffffff;--gris:#f4f6f9;--acento:#0b5cad;--ok:#15803d;--mal:#b91c1c;--aviso:#92400e;
+ --mono:Consolas,"Cascadia Mono","DejaVu Sans Mono",Menlo,monospace;--sans:"Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#e8ecf1;color:var(--tinta);font-family:var(--sans)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+#viewport{position:fixed;inset:0 0 48px 0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#stage{width:1280px;height:720px;flex:none;position:relative;transform:scale(var(--s,1));background:var(--fondo);box-shadow:0 2px 14px rgba(0,0,0,.12)}
+.slide{position:absolute;inset:0;padding:34px 52px 46px;display:none;flex-direction:column;gap:12px;overflow:hidden}
+.slide.active{display:flex}
+.kick{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--acento);font-weight:700}
+h1{font-size:34px;line-height:1.15;font-weight:700;margin-bottom:6px}
+h3{font-size:18px;margin-bottom:6px}
+.sub{font-size:22px;line-height:1.4;color:var(--suave);max-width:1050px}
+.cover{display:flex;flex-direction:column;justify-content:center;flex:1}
+.chips{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.tag{display:inline-block;font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--linea);background:var(--gris);color:var(--tinta)}
+.tag.ok{border-color:#86c79c;background:#ecf8f0;color:var(--ok)}.tag.warn{border-color:#e2b56b;background:#fdf6e9;color:var(--aviso)}
+.card{border:1px solid var(--linea);border-radius:12px;padding:12px 16px;background:#fff}
+.callout{border-left:4px solid var(--acento);background:#eef5fc;padding:10px 14px;border-radius:0 10px 10px 0;font-size:17px;line-height:1.4}
+.small{font-size:15.5px;line-height:1.45}
+.mono{font-family:var(--mono);font-size:.92em;background:var(--gris);padding:0 4px;border-radius:4px}
+.okc{color:var(--ok)}.malc{color:var(--mal)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.split{display:grid;gap:18px;min-height:0}.col,.capcol{display:flex;flex-direction:column;gap:10px;min-width:0}
+.list{list-style:none;display:flex;flex-direction:column;gap:5px}.list li{font-size:15.5px;line-height:1.4;padding-left:16px;position:relative}
+.list li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--acento)}
+.ol{padding-left:24px;display:flex;flex-direction:column;gap:6px;font-size:17px}
+.mira h3{color:var(--acento);font-size:16px}.mira .list li{font-size:14.5px}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}.tbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--suave);border-bottom:2px solid var(--linea);padding:5px 8px}
+.tbl td{border-bottom:1px solid var(--linea);padding:6px 8px;line-height:1.35;vertical-align:top}
+.term{border:1px solid var(--linea);border-radius:10px;background:var(--gris);overflow:hidden}
+.term .bar{display:flex;align-items:center;gap:8px;padding:5px 10px;border-bottom:1px solid var(--linea);background:#eaeef3}
+.term .bar em{flex:1;font-style:normal;font-size:12.5px;color:var(--suave)}
+.tls{padding:6px 8px;font-family:var(--mono);font-size:13.5px;line-height:1.45}
+.tln{display:flex;align-items:flex-start;gap:6px;padding:2px 4px}
+.tln code{flex:1;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono)}
+.tln.c{color:var(--suave);font-style:italic}
+.ps{color:var(--ok);font-weight:700}
+.cp{flex:none;min-width:26px;height:24px;border-radius:6px;border:1px solid #b9c3cf;background:#fff;font-size:13px;color:var(--suave)}
+.cp.ok{border-color:var(--ok);color:var(--ok)}.cpall{padding:0 10px;font-size:12px;font-family:var(--sans)}
+.yml2{display:grid;grid-template-columns:.8fr 1.2fr}
+.yml{font-family:var(--mono);font-size:13.5px;line-height:1.42;padding:10px 12px;overflow:hidden}
+.yl{display:block;white-space:normal;overflow-wrap:anywhere}
+.yml+.yml{border-left:1px solid var(--linea)}
+.realbox{border:1px solid #86c79c;background:#f3fbf5;border-radius:10px;padding:8px 12px}
+.realbox .rk{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ok);font-weight:700;margin-bottom:3px}
+.realbox pre{font-family:var(--mono);font-size:13px;line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere}
+.rot{margin:-6px 0 0}
+.cap{display:flex;flex-direction:column;gap:4px;min-width:0}
+.cap figcaption{font-size:12.5px;color:var(--suave)}
+.zoom{display:block;position:relative;cursor:zoom-in;text-align:left}
+.zoom img{display:block;max-width:100%;height:auto;border:1px solid var(--linea);border-radius:8px}
+.lupa{position:absolute;right:6px;bottom:6px;font-size:11.5px;background:rgba(255,255,255,.92);border:1px solid var(--linea);border-radius:6px;padding:1px 6px;display:flex;align-items:center;gap:4px;color:var(--suave)}
+.pend{border:2px dashed #c9a65e;background:#fdf9f0;border-radius:10px;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px;text-align:center;font-size:13.5px;color:var(--aviso)}
+.pend b{font-size:16px}
+svg .nodo{fill:#f4f8fc;stroke:#8fb2d6;stroke-width:1.5}svg .nodo.job{fill:#fff}svg .nodo.ok{fill:#ecf8f0;stroke:var(--ok)}svg .nodo.mal{fill:#fdeeee;stroke:var(--mal)}
+svg .paso{fill:var(--gris);stroke:var(--linea)}svg .fl{stroke:var(--acento);stroke-width:2;fill:none}
+svg .t1{font:700 15px var(--sans);fill:var(--tinta);text-anchor:middle}svg .t2{font:13px var(--sans);fill:var(--suave);text-anchor:middle}
+svg .tok{fill:var(--ok)}svg .tmal{fill:var(--mal)}
+.card svg{display:block;width:100%;height:auto}
+.foot{position:absolute;left:52px;right:52px;bottom:14px;display:flex;justify-content:space-between;font-size:12px;color:var(--suave);border-top:1px solid var(--linea);padding-top:6px}
+#prog{position:fixed;left:0;top:0;height:3px;background:var(--acento);z-index:5}
+#bar{position:fixed;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#fff;border-top:1px solid var(--linea);font-size:13px;z-index:6}
+#bar button,#bar a{border:1px solid var(--linea);border-radius:8px;padding:4px 10px;background:#fff;color:var(--tinta);text-decoration:none;font-size:13px}
+#bar .part.on{border-color:var(--acento);color:var(--acento);font-weight:700}
+#bar .sp{flex:1}#count,#clockref{color:var(--suave);padding:0 6px}
+#notes{position:fixed;right:0;top:0;bottom:48px;width:400px;background:#fff;border-left:1px solid var(--linea);padding:18px;overflow:auto;display:none;z-index:7;font-size:15px;line-height:1.5}
+#notes.on{display:block}#notes h3{margin-bottom:8px}
+#index{position:fixed;inset:0 0 48px 0;background:rgba(255,255,255,.98);display:none;z-index:8;padding:28px;overflow:auto}
+#index.on{display:block}#index .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+#index button{border:1px solid var(--linea);border-radius:10px;padding:10px;text-align:left;font-size:14px;background:#fff}
+#index button small{display:block;color:var(--suave);font-size:12px}#index button.cur{border-color:var(--acento)}
+#zoombox{position:fixed;inset:0;background:rgba(20,26,34,.86);display:none;z-index:9;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+#zoombox.on{display:flex}#zoombox img{max-width:100%;max-height:100%;background:#fff;border-radius:6px}
+#zoombox p{position:fixed;top:10px;left:0;right:0;text-align:center;color:#fff;font-size:13px}
+@media print{#bar,#notes,#index,#prog,.cp{display:none!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="viewport"><div id="stage">
+
+<section class="slide" data-part="A" data-min="1" data-title="Portada"
+ data-notes="Laboratorio de 90 minutos. En S2 no dimos GitHub Actions: hoy es la primera vez que lo ven. Formato romper y arreglar: lo importante no es escribir YAML de memoria, sino entender qué hace cada línea, leer un registro rojo y arreglar el código sin borrar la prueba. Que cada persona tenga abierto su Codespace de su fork, en develop. Publicar imágenes y desplegar es de S4: hoy solo pruebas.">
+<p class="kick">S3 · ML e IA: de desarrollo a producción · 11:55–13:25 (hora de Perú)</p><h1>Laboratorio de GitHub Actions: romper y arreglar</h1>
+
+<div class="cover">
+ <p class="sub">En tu fork y tu Codespace: un workflow que ejecuta las pruebas del proyecto en cada <span class="mono">git push</span>. Lo verás en verde, lo romperás a propósito, leerás el registro y lo devolverás al verde.</p>
+ <div class="chips"><span class="tag">90 min</span><span class="tag">rama <span class="mono">lab/actions-s3</span></span><span class="tag">Codespace</span><span class="tag">sin GCP</span></div>
+ <div class="card" style="margin-top:22px"><h3>Cómo seguirla</h3><p class="small">Cada orden lleva <b>⧉</b> para copiarla en la terminal del Codespace. <b>← →</b> avanzan · <b>O</b> índice · <b>S</b> notas · <b>F</b> pantalla completa · clic en una captura para ampliarla y <b>Esc</b> para cerrarla. Todo está también en texto en <span class="mono">guia.md</span>, junto a esta presentación.</p></div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="2" data-title="El plan"
+ data-notes="Enseñe el mapa completo antes de empezar para que nadie se pierda. Los pasos 1 a 4 son la parte verde, 5 y 6 la roja, 7 y 8 el arreglo. Insista en la última línea: no hay despliegue hoy, ni GCP. Si alguien llega tarde, puede seguir la guía de texto, guia.md, que tiene los mismos pasos.">
+<p class="kick">Lo que vas a hacer</p><h1>Verde → rojo → verde, en ocho pasos</h1>
+
+<div class="grid2">
+ <div class="card"><h3>Los pasos</h3><ol class="ol">
+  <li>Crear la rama <span class="mono">lab/actions-s3</span></li><li>Añadir <span class="mono">.github/workflows/pruebas-proyecto.yml</span></li>
+  <li><span class="mono">git push</span></li><li>Ver el run <b class="okc">en verde</b> en la pestaña <b>Actions</b></li>
+  <li>Romper una regla con un cambio de <b>una línea</b></li><li>Ver el run <b class="malc">en rojo</b> y leer el registro</li>
+  <li>Arreglarlo con <span class="mono">git revert</span></li><li>Ver el run <b class="okc">en verde</b> otra vez y el historial</li></ol></div>
+ <div class="col">
+  <div class="card"><h3>Al terminar sabrás</h3><ul class="list"><li>Qué es <b>CI</b> (integración continua) y para qué sirve.</li><li>Leer un workflow: <b>cuándo</b> se dispara, <b>dónde</b> corre, <b>qué</b> pasos hace.</li><li>Encontrar en el registro <b>qué prueba</b> falló y <b>por qué</b>.</li><li>Arreglar <b>el código</b>, no la prueba.</li></ul></div>
+  <div class="callout">Hoy el workflow solo <b>comprueba</b>. Construir y publicar la imagen y desplegar con aprobación es <b>S4</b>.</div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="A" data-min="5" data-title="Qué es CI"
+ data-notes="Explique CI en un minuto con el dibujo: haces push, GitHub mira el workflow, una máquina Linux nueva descarga el repositorio, instala todo desde cero y pasa las pruebas. Si todas pasan, verde; si alguna falla, rojo y un registro que dice cuál. La palabra clave es máquina limpia: no tiene nada de tu Codespace, así que si pasa ahí, no depende de lo que tú tengas instalado. Enlace con S2: el problema de en mi máquina funciona.">
+<p class="kick">Concepto · en un minuto</p><h1><b>CI</b>: cada cambio se comprueba solo</h1>
+
+<div class="card"><svg viewBox="0 0 910 180" role="img" aria-label="Del push al resultado"><defs><marker id="fci" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0b5cad"/></marker></defs><rect x="10" y="50" width="210" height="80" rx="12" class="nodo"/><text x="115" y="84" class="t1">git push</text><text x="115" y="108" class="t2">desde tu Codespace</text><rect x="260" y="50" width="210" height="80" rx="12" class="nodo"/><text x="365" y="84" class="t1">GitHub</text><text x="365" y="108" class="t2">mira on: y elige el workflow</text><path d="M222 90 L256 90" class="fl" marker-end="url(#fci)"/><rect x="510" y="50" width="210" height="80" rx="12" class="nodo"/><text x="615" y="84" class="t1">Runner Linux nuevo</text><text x="615" y="108" class="t2">checkout · Python · pip · pytest</text><path d="M472 90 L506 90" class="fl" marker-end="url(#fci)"/><path d="M720 90 L770 50" class="fl" marker-end="url(#fci)"/><path d="M720 90 L770 130" class="fl" marker-end="url(#fci)"/><rect x="774" y="20" width="126" height="52" rx="10" class="nodo ok"/><text x="837" y="52" class="t1 tok">verde</text><rect x="774" y="108" width="126" height="52" rx="10" class="nodo mal"/><text x="837" y="140" class="t1 tmal">rojo + registro</text></svg></div>
+<div class="grid3" style="margin-top:14px">
+ <div class="card"><h3>CI</h3><p class="small"><b>Continuous Integration</b>, integración continua: cada cambio que subes se comprueba <b>solo</b>, en una máquina <b>limpia</b>, con las mismas órdenes de siempre.</p></div>
+ <div class="card"><h3>Sin CI</h3><p class="small">«En mi máquina funciona». Las pruebas se pasan cuando alguien se acuerda, y un fallo aparece semanas después sin saber qué cambio lo trajo.</p></div>
+ <div class="card"><h3>Con CI</h3><p class="small">Cada <span class="mono">git push</span> deja un resultado <b class="okc">verde</b> o <b class="malc">rojo</b>, con su registro, visible para todo el equipo. Sabes <b>qué cambio</b> rompió qué.</p></div>
+</div>
+</section>
+
+<section class="slide" data-part="A" data-min="4" data-title="Vocabulario de Actions"
+ data-notes="Seis palabras que verán escritas en la pestaña Actions. Señale el dibujo: un workflow contiene un job, el job corre en un runner y tiene cuatro pasos. Un run es cada vez que se ejecuta. YAML es solo el formato del archivo: listas y claves con sangría. La sangría es la sintaxis: dos espacios por nivel, nunca tabuladores.">
+<p class="kick">Concepto · seis palabras</p><h1>Workflow, disparador, runner, job, paso y run</h1>
+
+<div class="split" style="grid-template-columns:1.05fr .95fr">
+ <div class="card"><table class="tbl"><tr><th>Palabra</th><th>Qué es</th></tr><tr><td><b>workflow</b></td><td>archivo YAML en <span class="mono">.github/workflows/</span>: <b>cuándo</b> y <b>qué</b> ejecutar</td></tr><tr><td><b>disparador</b> (<span class="mono">on:</span>)</td><td>el suceso que lo pone en marcha: un <span class="mono">push</span>, un <i>pull request</i>, un botón</td></tr><tr><td><b>runner</b></td><td>la máquina que presta GitHub; aquí, Linux nueva y vacía</td></tr><tr><td><b>job</b></td><td>un trabajo del workflow; corre en un runner</td></tr><tr><td><b>paso</b> (<i>step</i>)</td><td>cada orden o acción del job, en orden; si uno falla, el job se para en rojo</td></tr><tr><td><b>run</b></td><td>una ejecución concreta, con su registro</td></tr></table></div>
+ <div class="card"><svg viewBox="0 0 560 300" role="img" aria-label="Workflow, job y pasos">
+<rect x="6" y="6" width="548" height="288" rx="14" class="nodo"/><text x="20" y="32" class="t1" text-anchor="start">workflow · pruebas-proyecto.yml</text>
+<text x="20" y="54" class="t2" text-anchor="start">on: push a lab/** · permissions: contents: read</text>
+<rect x="26" y="70" width="508" height="210" rx="12" class="nodo job"/><text x="40" y="94" class="t1" text-anchor="start">job «pruebas» · runs-on: ubuntu-latest · timeout 10 min</text>
+<rect x="46" y="110" width="468" height="32" rx="8" class="paso"/><text x="60" y="131" class="t2" text-anchor="start">1 · Descargar el repositorio (actions/checkout)</text>
+<rect x="46" y="150" width="468" height="32" rx="8" class="paso"/><text x="60" y="171" class="t2" text-anchor="start">2 · Preparar Python 3.11 (actions/setup-python, caché de pip)</text>
+<rect x="46" y="190" width="468" height="32" rx="8" class="paso"/><text x="60" y="211" class="t2" text-anchor="start">3 · Instalar dependencias (pip install …)</text>
+<rect x="46" y="230" width="468" height="32" rx="8" class="paso"/><text x="60" y="251" class="t2" text-anchor="start">4 · Ejecutar las pruebas (python -m pytest -v …)</text>
+</svg></div>
+</div>
+</section>
+
+<section class="slide" data-part="B" data-min="5" data-title="El workflow completo"
+ data-notes="Este es todo el workflow. En pantalla se ve sin comentarios para que quepa; el botón copia el archivo completo, con comentarios que explican cada línea. Lea de arriba abajo en voz alta, sin detenerse: nombre, cuándo, permisos, el job y cuatro pasos. Después lo desmontamos.">
+<p class="kick">El archivo que vas a copiar</p><h1>El workflow entero, en una pantalla</h1>
+
+<div class="split" style="grid-template-columns:1.45fr .55fr">
+ <div class="term yaml"><div class="bar"><em>.github/workflows/pruebas-proyecto.yml</em><button class="cp cpall" data-t="# Laboratorio de GitHub Actions (S3): ejecuta las pruebas del proyecto en cada push a una rama que empiece por lab/
+# Se copia en:  .github/workflows/pruebas-proyecto.yml  (en la raíz de tu copia del repositorio del curso)
+name: Pruebas del proyecto
+
+on:
+  push:
+    branches: [&#x27;lab/**&#x27;]   # solo las ramas del laboratorio: develop y main no lo disparan
+  workflow_dispatch:       # botón para lanzarlo a mano (GitHub solo lo muestra si el archivo está en la rama principal)
+
+permissions:
+  contents: read           # lo mínimo: solo leer el repositorio
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest   # una máquina Linux nueva y vacía, prestada por GitHub
+    timeout-minutes: 10      # si algo se cuelga, se corta a los 10 minutos
+    defaults:
+      run:
+        working-directory: 04-Proyecto-Base
+    env:
+      CURSO_SIN_PANTALLA: &quot;1&quot;   # gráficos sin ventana (no hay pantalla)
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: &quot;3.11&quot;
+          cache: pip
+          cache-dependency-path: 04-Proyecto-Base/requirements-*.txt
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements-dev.txt
+          pip install -e . --no-deps
+
+      - name: Ejecutar las pruebas
+        run: python -m pytest -v tests/test_raw_y_master.py tests/test_fs_y_ml.py tests/test_interfaz.py
+">Copiar el archivo</button></div><div class="yml2"><div class="yml"><span class="yl" style="padding-left:3ch;text-indent:-3ch">name: Pruebas del proyecto</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">&nbsp;</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">on:</span><span class="yl" style="padding-left:5ch;text-indent:-3ch">push:</span><span class="yl" style="padding-left:7ch;text-indent:-3ch">branches: [&#x27;lab/**&#x27;]</span><span class="yl" style="padding-left:5ch;text-indent:-3ch">workflow_dispatch:</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">&nbsp;</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">permissions:</span><span class="yl" style="padding-left:5ch;text-indent:-3ch">contents: read</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">&nbsp;</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">jobs:</span><span class="yl" style="padding-left:5ch;text-indent:-3ch">pruebas:</span><span class="yl" style="padding-left:7ch;text-indent:-3ch">runs-on: ubuntu-latest</span><span class="yl" style="padding-left:7ch;text-indent:-3ch">timeout-minutes: 10</span><span class="yl" style="padding-left:7ch;text-indent:-3ch">defaults:</span><span class="yl" style="padding-left:9ch;text-indent:-3ch">run:</span><span class="yl" style="padding-left:11ch;text-indent:-3ch">working-directory: 04-Proyecto-Base</span><span class="yl" style="padding-left:7ch;text-indent:-3ch">env:</span><span class="yl" style="padding-left:9ch;text-indent:-3ch">CURSO_SIN_PANTALLA: &quot;1&quot;</span></div><div class="yml"><span class="yl" style="padding-left:7ch;text-indent:-3ch">steps:</span><span class="yl" style="padding-left:9ch;text-indent:-3ch">- name: Descargar el repositorio</span><span class="yl" style="padding-left:11ch;text-indent:-3ch">uses: actions/checkout@v4</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">&nbsp;</span><span class="yl" style="padding-left:9ch;text-indent:-3ch">- name: Preparar Python 3.11</span><span class="yl" style="padding-left:11ch;text-indent:-3ch">uses: actions/setup-python@v5</span><span class="yl" style="padding-left:11ch;text-indent:-3ch">with:</span><span class="yl" style="padding-left:13ch;text-indent:-3ch">python-version: &quot;3.11&quot;</span><span class="yl" style="padding-left:13ch;text-indent:-3ch">cache: pip</span><span class="yl" style="padding-left:13ch;text-indent:-3ch">cache-dependency-path: 04-Proyecto-Base/requirements-*.txt</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">&nbsp;</span><span class="yl" style="padding-left:9ch;text-indent:-3ch">- name: Instalar dependencias</span><span class="yl" style="padding-left:11ch;text-indent:-3ch">run: |</span><span class="yl" style="padding-left:13ch;text-indent:-3ch">pip install -r requirements-dev.txt</span><span class="yl" style="padding-left:13ch;text-indent:-3ch">pip install -e . --no-deps</span><span class="yl" style="padding-left:3ch;text-indent:-3ch">&nbsp;</span><span class="yl" style="padding-left:9ch;text-indent:-3ch">- name: Ejecutar las pruebas</span><span class="yl" style="padding-left:11ch;text-indent:-3ch">run: python -m pytest -v tests/test_raw_y_master.py tests/test_fs_y_ml.py tests/test_interfaz.py</span></div></div></div>
+ <div class="col">
+  <div class="card"><h3>Dónde va</h3><p class="small">En la raíz de tu repositorio: <span class="mono">.github/workflows/pruebas-proyecto.yml</span>. Con el punto delante de <span class="mono">.github</span>. Si está en otra carpeta, GitHub no lo ve.</p></div>
+  <div class="card"><h3>De dónde se copia</h3><p class="small"><b>Copiar el archivo</b> (arriba a la izquierda) copia el archivo completo, con sus comentarios. Es el mismo que <span class="mono">pruebas-proyecto.yml</span> de esta carpeta.</p></div>
+  <div class="callout">No hay que entenderlo todo ya: las dos diapositivas siguientes lo leen línea a línea.</div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="B" data-min="4" data-title="Cuándo y con qué permisos"
+ data-notes="Primera mitad del archivo: cuándo y con qué permisos. El filtro lab/** hace que el laboratorio no se mezcle con nada: ni develop ni main lo disparan. Permisos: por defecto un workflow puede tener más permisos de los que necesita; aquí solo lee. El timeout evita que una prueba colgada consuma minutos durante horas. La tabla de la derecha es para quien se pregunte si van a saltar otros workflows del curso en su fork: no deberían, y en la pestaña Actions lo comprobamos.">
+<p class="kick">Anatomía · 1</p><h1><b>Cuándo</b> se ejecuta y <b>qué puede</b> hacer</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="card"><table class="tbl"><tr><th>Línea</th><th>Qué hace</th></tr><tr><td><span class="mono">name: Pruebas del proyecto</span></td><td>el nombre que verás en la pestaña Actions</td></tr><tr><td><span class="mono">on: push: branches: [&#x27;lab/**&#x27;]</span></td><td>se dispara con cada <span class="mono">push</span> a una rama que empiece por <span class="mono">lab/</span>; <span class="mono">develop</span> y <span class="mono">main</span> <b>no</b></td></tr><tr><td><span class="mono">workflow_dispatch:</span></td><td>botón para lanzarlo a mano; GitHub solo lo muestra si el archivo está en la rama principal (hoy no lo usamos)</td></tr><tr><td><span class="mono">permissions: contents: read</span></td><td>solo <b>leer</b> el repositorio: mínimo privilegio</td></tr><tr><td><span class="mono">runs-on: ubuntu-latest</span></td><td>una máquina Linux nueva de GitHub</td></tr><tr><td><span class="mono">timeout-minutes: 10</span></td><td>si algo se cuelga, se corta a los 10 minutos</td></tr></table></div>
+ <div class="col">
+  <div class="card"><h3>No choca con los workflows del curso</h3><table class="tbl"><tr><th>Workflow</th><th>Se dispara con</th></tr><tr><td><span class="mono">validar-dos-contenedores.yml</span></td><td><span class="mono">push</span> a <span class="mono">develop</span></td></tr><tr><td><span class="mono">validar-codespace.yml</span></td><td><i>pull requests</i></td></tr><tr><td><span class="mono">validar-windows.yml</span></td><td>cambios en <span class="mono">03-Entorno/</span></td></tr></table><p class="small" style="margin-top:8px">En la rama <span class="mono">lab/actions-s3</span> solo debería aparecer <b>Pruebas del proyecto</b>.</p></div>
+  <div class="callout">El filtro de ramas es la decisión de diseño: probamos en una rama aparte sin tocar <span class="mono">develop</span>.</div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="B" data-min="4" data-title="Los cuatro pasos"
+ data-notes="Segunda mitad: los pasos. Distinga uses de run: uses reutiliza una acción publicada por otros, con su versión; run son órdenes de bash normales, las mismas que escribirían en el Codespace. El paso 3 instala lo mismo que instala el workflow validar-dos-contenedores del curso. El paso 4 es el que decide el color.">
+<p class="kick">Anatomía · 2</p><h1>Los cuatro pasos del job</h1>
+
+<div class="grid2">
+<div class="card"><h3>1 · <span class="mono">uses: actions/checkout@v4</span></h3><p class="small">Una <b>acción</b> ya hecha (código de otro, versionado con <span class="mono">@v4</span>): descarga tu repositorio en el runner, en el commit que acabas de subir.</p></div><div class="card"><h3>2 · <span class="mono">uses: actions/setup-python@v5</span></h3><p class="small">Instala <b>Python 3.11</b>, el del curso. <span class="mono">cache: pip</span> guarda los paquetes descargados: el segundo run descarga menos.</p></div><div class="card"><h3>3 · <span class="mono">pip install -r requirements-dev.txt</span></h3><p class="small">Las <b>mismas versiones</b> que el entorno del curso; luego <span class="mono">pip install -e . --no-deps</span> instala el paquete <span class="mono">ia_mlops</span>. <span class="mono">working-directory</span> hace que todo corra dentro de <span class="mono">04-Proyecto-Base</span>.</p></div><div class="card"><h3>4 · <span class="mono">python -m pytest -v …</span></h3><p class="small">Las pruebas, con <span class="mono">-v</span> para ver una línea <span class="mono">PASSED</span> o <span class="mono">FAILED</span> por prueba. Si una falla, pytest termina con error, el paso se pone <b>en rojo</b> y el run también.</p></div>
+</div>
+<div class="callout" style="margin-top:12px"><span class="mono">uses:</span> = usar una acción hecha · <span class="mono">run:</span> = ejecutar órdenes de terminal, igual que en tu Codespace.</div>
+</section>
+
+<section class="slide" data-part="B" data-min="3" data-title="Qué pruebas y por qué"
+ data-notes="Por qué no todas las pruebas: las de cuadernos son lentas y las de imagen y contenedores necesitan más; para aprender el ciclo verde, rojo, verde, conviene que el run sea corto. Las tres elegidas no necesitan datos: el conftest crea la base operacional y la analítica desde la muestra versionada. Los tiempos son los medidos en local; el del run en GitHub se completa con la captura.">
+<p class="kick">Decisión · el subconjunto rápido</p><h1>Tres archivos de pruebas, sin datos descargados</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="card"><table class="tbl"><tr><th>Archivo</th><th>Qué comprueba</th></tr><tr><td><span class="mono">tests/test_raw_y_master.py</span></td><td>la ingesta: capas RAW y MASTER</td></tr><tr><td><span class="mono">tests/test_fs_y_ml.py</span></td><td>las variables (FS) y el conjunto del modelo (ML), por fecha de corte</td></tr><tr><td><span class="mono">tests/test_interfaz.py</span></td><td>la interfaz de S2: ids → variables → modelo → recomendación, y la <b>regla de negocio</b> de tramos</td></tr></table></div>
+ <div class="col">
+  <div class="card"><h3>Por qué estas</h3><ul class="list"><li><span class="mono">tests/conftest.py</span> construye las bases desde la <b>muestra</b> del repositorio: no hay que descargar datos ni ejecutar antes el pipeline.</li><li>No necesitan <b>Docker</b> ni ejecutar cuadernos (esas pruebas están marcadas <span class="mono">lento</span>).</li><li>En <span class="mono">test_interfaz.py</span> está la prueba que vamos a romper.</li></ul></div>
+  <div class="card"><h3>Cuánto tarda</h3><p class="small">En local (Windows): <span class="mono">test_raw_y_master</span> 6,8 s y <span class="mono">test_fs_y_ml</span> 4,5 s. En el Codespace (Linux): 45 pruebas en 21 s. En GitHub (20/11/2026): el run completo, <b>1 min 16 s</b> el primero y <b>51 s – 1 min 6 s</b> con la caché de pip; instalar dependencias es lo más largo (38–46 s) y las pruebas, 11–12 s.</p></div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="C" data-min="7" data-title="Preparar el fork y el Codespace"
+ data-notes="Dé tiempo: es donde más se atasca la gente. Comprobar tres cosas: que trabajan en su fork y no en el repositorio del curso (no tendrían permiso para subir), que el Codespace es de ese fork y que Actions está activado. El texto exacto del aviso de GitHub para activar Actions en un fork no lo afirmo aquí: que lo lean en su pantalla. Si alguien no tiene fork, que lo cree ahora y abra un Codespace nuevo.">
+<p class="kick">Antes de empezar</p><h1>Tu fork, tu Codespace y Actions activado</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="card"><h3>1 · Fork</h3><p class="small">Si no tienes tu copia del repositorio del curso en tu cuenta, créala con <b>Fork</b>. El laboratorio se hace <b>en tu fork</b>: los runs corren en tu cuenta.</p></div>
+  <div class="card"><h3>2 · Codespace</h3><p class="small">Ábrelo <b>desde tu fork</b>, en <span class="mono">develop</span>. Trabaja en la raíz: <span class="mono">/workspaces/&lt;tu-repositorio&gt;</span>.</p></div>
+  <div class="card"><h3>3 · Actions en el fork</h3><p class="small">En los forks, GitHub puede tener Actions desactivado al principio. Entra en la pestaña <b>Actions</b>: <b>si ves un aviso</b> que pide activar los workflows, acéptalo. Si no hay aviso, nada que hacer.</p></div>
+ </div>
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace · en la raíz del repositorio</em><button class="cp cpall" data-t="git switch develop
+git pull
+git status">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git switch develop</code><button class="cp" data-t="git switch develop" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git pull</code><button class="cp" data-t="git pull" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git status</code><button class="cp" data-t="git status" title="Copiar">⧉</button></div></div></div><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">On branch develop</span> y nada pendiente.</li><li>Si <span class="mono">git status</span> enseña cambios tuyos de otras sesiones, haz commit o guárdalos antes (<span class="mono">git stash</span>).</li></ul></div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="C" data-min="6" data-title="Paso 1 · Rama y archivo"
+ data-notes="La rama primero: así develop no se toca. Dos formas de crear el archivo: copiarlo de la carpeta del laboratorio si el fork está al día, o abrirlo vacío con code y pegar el contenido con el botón Copiar el archivo de la diapositiva del workflow. Pida que miren la sangría en el editor. Si en la captura el archivo se creó de otra forma, explique que el resultado es el mismo archivo.">
+<p class="kick">Pasos 1 y 2 · rama y workflow</p><h1>Crea la rama y el archivo del workflow</h1>
+
+<div class="split" style="grid-template-columns:.95fr 1.05fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace</em><button class="cp cpall" data-t="git switch -c lab/actions-s3
+mkdir -p .github/workflows
+cp 01-Sesiones/S3-Despliegue-y-Redes-Neuronales/laboratorio-github-actions/pruebas-proyecto.yml .github/workflows/
+code .github/workflows/pruebas-proyecto.yml
+git status">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git switch -c lab/actions-s3</code><button class="cp" data-t="git switch -c lab/actions-s3" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>mkdir -p .github/workflows</code><button class="cp" data-t="mkdir -p .github/workflows" title="Copiar">⧉</button></div><div class="tln c"># opción A: si tu fork tiene la carpeta del laboratorio</div><div class="tln"><span class="ps">$</span> <code>cp 01-Sesiones/S3-Despliegue-y-Redes-Neuronales/laboratorio-github-actions/pruebas-proyecto.yml .github/workflows/</code><button class="cp" data-t="cp 01-Sesiones/S3-Despliegue-y-Redes-Neuronales/laboratorio-github-actions/pruebas-proyecto.yml .github/workflows/" title="Copiar">⧉</button></div><div class="tln c"># opción B: abrirlo vacío, pegar con «Copiar el archivo» y guardar</div><div class="tln"><span class="ps">$</span> <code>code .github/workflows/pruebas-proyecto.yml</code><button class="cp" data-t="code .github/workflows/pruebas-proyecto.yml" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git status</code><button class="cp" data-t="git status" title="Copiar">⧉</button></div></div></div><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">On branch lab/actions-s3</span> y <span class="mono">.github/</span> como <b>archivo nuevo sin seguimiento</b>.</li><li>En el editor, la sangría de dos espacios tal cual. Nunca tabuladores.</li></ul></div>
+ </div>
+ <div class="capcol"><p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p><figure class="cap" data-img="a01-rama.webp"><button class="zoom" data-src="img/a01-rama.webp" data-alt="Terminal: crear la rama lab/actions-s3 y el archivo del workflow" title="Ampliar (Esc cierra)"><img src="img/a01-rama.webp" alt="Terminal: crear la rama lab/actions-s3 y el archivo del workflow" style="max-height:220px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Terminal: crear la rama lab/actions-s3 y el archivo del workflow</figcaption></figure><figure class="cap" data-img="a02-yaml.webp"><button class="zoom" data-src="img/a02-yaml.webp" data-alt="El YAML del workflow abierto en el editor del Codespace" title="Ampliar (Esc cierra)"><img src="img/a02-yaml.webp" alt="El YAML del workflow abierto en el editor del Codespace" style="max-height:220px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> El YAML del workflow abierto en el editor del Codespace</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="4" data-title="Paso 3 · Commit y push"
+ data-notes="Este push es el disparador: la rama empieza por lab/, así que el filtro del workflow se cumple. Que nadie haga push a develop. Si alguien no tiene permiso para subir, casi seguro está en el repositorio del curso y no en su fork: git remote -v lo dice.">
+<p class="kick">Paso 3 · subir</p><h1>Commit y push: aquí se dispara</h1>
+
+<div class="split" style="grid-template-columns:.95fr 1.05fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace</em><button class="cp cpall" data-t="git add .github/workflows/pruebas-proyecto.yml
+git commit -m &quot;Laboratorio S3: workflow que ejecuta las pruebas del proyecto&quot;
+git push -u origin lab/actions-s3">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git add .github/workflows/pruebas-proyecto.yml</code><button class="cp" data-t="git add .github/workflows/pruebas-proyecto.yml" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git commit -m &quot;Laboratorio S3: workflow que ejecuta las pruebas del proyecto&quot;</code><button class="cp" data-t="git commit -m &quot;Laboratorio S3: workflow que ejecuta las pruebas del proyecto&quot;" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/actions-s3</code><button class="cp" data-t="git push -u origin lab/actions-s3" title="Copiar">⧉</button></div></div></div><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>git crea la rama en GitHub; <span class="mono">-u</span> la deja enlazada: los próximos <span class="mono">git push</span> ya no llevan nombre.</li><li>Si git pide nombre y correo: <span class="mono">git config user.name &quot;Tu nombre&quot;</span> y <span class="mono">git config user.email &quot;tu-correo&quot;</span>, y repite el commit.</li></ul></div>
+ </div>
+ <div class="capcol"><p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p><figure class="cap" data-img="a03-push.webp"><button class="zoom" data-src="img/a03-push.webp" data-alt="Terminal: git push -u origin lab/actions-s3" title="Ampliar (Esc cierra)"><img src="img/a03-push.webp" alt="Terminal: git push -u origin lab/actions-s3" style="max-height:400px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Terminal: git push -u origin lab/actions-s3</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="C" data-min="8" data-title="Paso 4 · Verde en Actions"
+ data-notes="Que abran la pestaña Actions de su fork en el navegador. El primer run tarda más porque descarga e instala los paquetes; la caché de pip ayuda en los siguientes. Mientras corre, abran el paso Ejecutar las pruebas y vean aparecer los PASSED. Si no aparece ningún run: archivo fuera de .github/workflows, rama que no empieza por lab/, o Actions sin activar en el fork. La duración real del run se añade cuando estén las capturas.">
+<p class="kick">Paso 4 · la pestaña Actions</p><h1>El run en la pestaña Actions: en curso y en verde</h1>
+
+<p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p>
+<div class="grid3"><figure class="cap" data-img="a04-actions-lista.webp"><button class="zoom" data-src="img/a04-actions-lista.webp" data-alt="Pestaña Actions con el run de «Pruebas del proyecto»" title="Ampliar (Esc cierra)"><img src="img/a04-actions-lista.webp" alt="Pestaña Actions con el run de «Pruebas del proyecto»" style="max-height:240px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pestaña Actions con el run de «Pruebas del proyecto»</figcaption></figure><figure class="cap" data-img="a05-run-curso.webp"><button class="zoom" data-src="img/a05-run-curso.webp" data-alt="El run en curso: el job «pruebas» y sus pasos" title="Ampliar (Esc cierra)"><img src="img/a05-run-curso.webp" alt="El run en curso: el job «pruebas» y sus pasos" style="max-height:240px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> El run en curso: el job «pruebas» y sus pasos</figcaption></figure><figure class="cap" data-img="a06-run-verde.webp"><button class="zoom" data-src="img/a06-run-verde.webp" data-alt="El run terminado en verde" title="Ampliar (Esc cierra)"><img src="img/a06-run-verde.webp" alt="El run terminado en verde" style="max-height:240px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> El run terminado en verde</figcaption></figure></div>
+<div class="grid3" style="margin-top:10px">
+ <div class="card mira"><h3>1 · La lista</h3><ul class="list"><li>Un run de <b>Pruebas del proyecto</b> con el mensaje de tu commit y la rama <span class="mono">lab/actions-s3</span>; mientras corre, el círculo amarillo e «In progress».</li></ul></div>
+ <div class="card mira"><h3>2 · En curso</h3><ul class="list"><li>Entra en el run y en el job <b>pruebas</b>: los cuatro pasos, en orden, mientras se ejecutan.</li></ul></div>
+ <div class="card mira"><h3>3 · Verde</h3><ul class="list"><li>Todos los pasos en verde; en <b>Ejecutar las pruebas</b>, una línea <span class="mono">PASSED</span> por prueba y el resumen <span class="mono">passed</span>.</li></ul></div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="4" data-title="Paso 5 · Romper a propósito"
+ data-notes="sed busca el texto desde 0.70 y lo cambia por 0.75 en el archivo; solo hay una aparición. Antes de mirar el resultado, pregunte: ¿qué prueba creen que fallará? Recoja hipótesis. Que todos miren el git diff antes del commit: es la costumbre de revisar lo que subes. Sin -u esta vez: la rama ya está enlazada.">
+<p class="kick">Paso 5 · una línea</p><h1>Romper la regla de negocio con <b>una línea</b></h1>
+
+<div class="split" style="grid-template-columns:.95fr 1.05fr">
+ <div class="col">
+  <div class="card"><h3>La regla</h3><p class="small">En <span class="mono">04-Proyecto-Base/ia_mlops/config.py</span>, <span class="mono">SEGMENTOS_RECOMPRA</span>: un cliente es <b>alta</b> desde una probabilidad de <b>0,70</b>. La subimos a 0,75 sin avisar a la prueba.</p></div><div class="term"><div class="bar"><em>Terminal del Codespace · en la raíz del repositorio</em><button class="cp cpall" data-t="sed -i &quot;s/&#x27;desde&#x27;: 0.70/&#x27;desde&#x27;: 0.75/&quot; 04-Proyecto-Base/ia_mlops/config.py
+git diff
+git commit -am &quot;Rotura a propósito: el tramo alta empieza en 0,75&quot;
+git push">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>sed -i &quot;s/&#x27;desde&#x27;: 0.70/&#x27;desde&#x27;: 0.75/&quot; 04-Proyecto-Base/ia_mlops/config.py</code><button class="cp" data-t="sed -i &quot;s/&#x27;desde&#x27;: 0.70/&#x27;desde&#x27;: 0.75/&quot; 04-Proyecto-Base/ia_mlops/config.py" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git diff</code><button class="cp" data-t="git diff" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git commit -am &quot;Rotura a propósito: el tramo alta empieza en 0,75&quot;</code><button class="cp" data-t="git commit -am &quot;Rotura a propósito: el tramo alta empieza en 0,75&quot;" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push</code><button class="cp" data-t="git push" title="Copiar">⧉</button></div></div></div><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">git diff</span>: <b>una sola línea</b> cambiada, <span class="mono">&#x27;desde&#x27;: 0.70</span> → <span class="mono">&#x27;desde&#x27;: 0.75</span>.</li></ul></div>
+ </div>
+ <div class="capcol"><p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p><figure class="cap" data-img="a07-rotura.webp"><button class="zoom" data-src="img/a07-rotura.webp" data-alt="Terminal: el cambio de una línea (sed), git diff y el push" title="Ampliar (Esc cierra)"><img src="img/a07-rotura.webp" alt="Terminal: el cambio de una línea (sed), git diff y el push" style="max-height:400px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Terminal: el cambio de una línea (sed), git diff y el push</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="3" data-title="Paso 6 · Rojo"
+ data-notes="Señale que los pasos de descarga, Python e instalación siguen en verde: el problema no es del entorno, es del código. Tranquilice al grupo: el rojo es información, no un castigo. En un equipo, este rojo evita que el cambio llegue a develop.">
+<p class="kick">Paso 6 · el run en rojo</p><h1>El run nuevo sale en rojo</h1>
+
+<div class="split" style="grid-template-columns:1.2fr .8fr">
+ <div class="capcol"><p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p><figure class="cap" data-img="a08-run-rojo.webp"><button class="zoom" data-src="img/a08-run-rojo.webp" data-alt="El run en rojo" title="Ampliar (Esc cierra)"><img src="img/a08-run-rojo.webp" alt="El run en rojo" style="max-height:420px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> El run en rojo</figcaption></figure></div>
+ <div class="col"><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Un run nuevo con el mensaje «Rotura a propósito…», <b>en rojo</b>.</li><li>Dentro, el paso <b>Ejecutar las pruebas</b> en rojo; los anteriores, en verde.</li><li>El rojo no es un desastre: es el CI haciendo su trabajo <b>antes</b> de que llegue a nadie.</li></ul></div></div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="8" data-title="Leer el registro"
+ data-notes="La diapositiva más importante del laboratorio. Lea el registro con el grupo de abajo arriba: primero el resumen short test summary info, luego las líneas E. La prueba está en tests/test_interfaz.py, línea 98: comprueba que 0,99 y 0,70 son alta, 0,69 y 0,40 media y 0,39 y 0 baja. Con el umbral en 0,75, el 0,70 cae en media. En GitHub, con -v, pytest muestra la lista completa. Pida que cada persona encuentre la línea en su propio registro.">
+<p class="kick">Paso 6 · leer el log</p><h1>Leer el registro: <b>qué prueba</b>, <b>dónde</b> y <b>qué esperaba</b></h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="realbox"><div class="rk">Salida real · la misma prueba en local · 20/11/2026</div><pre>FAILED tests/test_interfaz.py::test_la_regla_de_negocio
+E       AssertionError: assert [&#x27;alta&#x27;, &#x27;med...baja&#x27;, &#x27;baja&#x27;] == [&#x27;alta&#x27;, &#x27;alt...baja&#x27;, &#x27;baja&#x27;]
+E         At index 1 diff: &#x27;media&#x27; != &#x27;alta&#x27;</pre></div>
+  <div class="card"><h3>Cómo leerlo</h3><ul class="list"><li><span class="mono">FAILED tests/test_interfaz.py::test_la_regla_de_negocio</span>: <b>qué prueba</b>.</li><li>La prueba pide que <b>0,70</b> (segunda de la lista, <b>índice 1</b>) sea <span class="mono">alta</span>.</li><li><span class="mono">At index 1 diff: &#x27;media&#x27; != &#x27;alta&#x27;</span>: obtuvo <span class="mono">media</span>, esperaba <span class="mono">alta</span>.</li><li>El resto sigue en <span class="mono">PASSED</span>: el fallo está <b>acotado</b>.</li></ul></div>
+ </div>
+ <div class="capcol"><p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p><figure class="cap" data-img="a09-log-error.webp"><button class="zoom" data-src="img/a09-log-error.webp" data-alt="Registro del paso «Ejecutar las pruebas» con la prueba que falla" title="Ampliar (Esc cierra)"><img src="img/a09-log-error.webp" alt="Registro del paso «Ejecutar las pruebas» con la prueba que falla" style="max-height:440px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Registro del paso «Ejecutar las pruebas» con la prueba que falla</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="3" data-title="¿Prueba o código?"
+ data-notes="Discusión corta. La tentación con un rojo es tocar la prueba hasta que pase. Aquí la respuesta es clara: el umbral es una decisión de negocio. Pero haga ver el caso contrario: si marketing decide 0,75, entonces se cambian regla y prueba juntas, y el CI demuestra que el cambio es coherente.">
+<p class="kick">Paso 6 · decidir</p><h1>¿Está mal la prueba o está mal el cambio?</h1>
+
+<div class="grid2">
+ <div class="card"><h3 class="okc">Arreglar el código</h3><p class="small">El umbral 0,70 es una <b>regla de negocio acordada</b> con quien hace la campaña. El cambio no estaba acordado: se deshace.</p></div>
+ <div class="card"><h3 class="malc">No: borrar o retocar la prueba</h3><p class="small">Quitar la prueba pone el run en verde y <b>esconde</b> el problema. La prueba existe justo para proteger esa regla.</p></div>
+</div>
+<div class="callout" style="margin-top:14px">Si el negocio <b>decide</b> cambiar el umbral, se cambian <b>a la vez</b> la regla y la prueba, en el mismo commit, y el run verde lo deja documentado.</div>
+</section>
+
+<section class="slide" data-part="E" data-min="4" data-title="Paso 7 · Arreglar"
+ data-notes="git revert es la forma segura de deshacer en una rama compartida: no borra la historia, añade un commit que la contrarresta. HEAD es el último commit, el de la rotura. --no-edit acepta el mensaje que propone git. Que miren git log: quedan los tres commits.">
+<p class="kick">Paso 7 · git revert</p><h1>Arreglar: deshacer el cambio con un commit nuevo</h1>
+
+<div class="split" style="grid-template-columns:.95fr 1.05fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace</em><button class="cp cpall" data-t="git revert --no-edit HEAD
+git log --oneline -3
+git push">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git revert --no-edit HEAD</code><button class="cp" data-t="git revert --no-edit HEAD" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git log --oneline -3</code><button class="cp" data-t="git log --oneline -3" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push</code><button class="cp" data-t="git push" title="Copiar">⧉</button></div></div></div><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">git revert</span> crea un commit <b>nuevo</b> («Revert …») que deshace el anterior.</li><li><span class="mono">git log</span>: los tres commits, el del workflow, la rotura y el revert. El historial <b>no se reescribe</b>.</li><li>Otra forma: editar la línea a mano de vuelta a <span class="mono">0.70</span>, <span class="mono">git commit -am &quot;…&quot;</span> y <span class="mono">git push</span>.</li></ul></div>
+ </div>
+ <div class="capcol"><p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p><figure class="cap" data-img="a10-arreglo.webp"><button class="zoom" data-src="img/a10-arreglo.webp" data-alt="Terminal: git revert y el push del arreglo" title="Ampliar (Esc cierra)"><img src="img/a10-arreglo.webp" alt="Terminal: git revert y el push del arreglo" style="max-height:400px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Terminal: git revert y el push del arreglo</figcaption></figure></div>
+</div>
+</section>
+
+<section class="slide" data-part="E" data-min="4" data-title="Paso 8 · Verde otra vez"
+ data-notes="Cierre del ciclo. La lista de runs es la evidencia: cada cambio se comprobó y se ve cuál rompió y cuál arregló. Esto es lo que pediremos en S4 como evidencia del workflow del caso propio: un historial de ejecuciones.">
+<p class="kick">Paso 8 · el historial</p><h1>Verde otra vez, y el historial lo cuenta todo</h1>
+
+<p class="small rot"><span class="tag ok">Captura real</span> Codespace y cuenta del profesor · rama <span class="mono">lab/actions-s3</span> · 20/11/2026</p>
+<div class="grid2"><figure class="cap" data-img="a11-run-verde-otra-vez.webp"><button class="zoom" data-src="img/a11-run-verde-otra-vez.webp" data-alt="El run del arreglo, en verde otra vez" title="Ampliar (Esc cierra)"><img src="img/a11-run-verde-otra-vez.webp" alt="El run del arreglo, en verde otra vez" style="max-height:300px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> El run del arreglo, en verde otra vez</figcaption></figure><figure class="cap" data-img="a12-historial.webp"><button class="zoom" data-src="img/a12-historial.webp" data-alt="Lista de runs del workflow: verde, rojo y verde" title="Ampliar (Esc cierra)"><img src="img/a12-historial.webp" alt="Lista de runs del workflow: verde, rojo y verde" style="max-height:300px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Lista de runs del workflow: verde, rojo y verde</figcaption></figure></div>
+<div class="grid2" style="margin-top:10px">
+ <div class="card mira"><h3>Verde</h3><ul class="list"><li>El run del revert, en verde: <span class="mono">test_la_regla_de_negocio</span> vuelve a <span class="mono">PASSED</span>.</li></ul></div>
+ <div class="card mira"><h3>Historial</h3><ul class="list"><li>La lista de <b>Pruebas del proyecto</b>: <b>verde · rojo · verde</b>, con los tres mensajes de commit (#1, #2 y #3).</li></ul></div>
+</div>
+</section>
+
+<section class="slide" data-part="E" data-min="4" data-title="Si algo falla"
+ data-notes="Tenga esta diapositiva a mano durante los pasos 3 a 7. Los dos más frecuentes en un primer laboratorio: Actions sin activar en el fork y trabajar en el repositorio del curso en lugar del fork. El de instalar dependencias es raro, pero si pasa, que vean que el rojo está en otro paso: la causa es otra.">
+<p class="kick">Problemas típicos</p><h1>Si algo falla</h1>
+<div class="card"><table class="tbl"><tr><th>Síntoma</th><th>Causa probable</th><th>Qué hacer</th></tr><tr><td>No aparece ningún run</td><td>archivo fuera de <span class="mono">.github/workflows/</span>, rama sin <span class="mono">lab/</span> o Actions sin activar en el fork</td><td><span class="mono">git status</span>, <span class="mono">git branch --show-current</span>, pestaña Actions del fork</td></tr><tr><td>El run falla sin llegar a los pasos</td><td>YAML mal sangrado (tabuladores, espacios de más)</td><td>abrir el archivo, comparar con el de la carpeta, volver a hacer push</td></tr><tr><td><span class="mono">git push</span> rechazado por permisos</td><td>el Codespace es del repositorio del curso, no de tu fork</td><td><span class="mono">git remote -v</span>; abrir un Codespace desde tu fork</td></tr><tr><td>git pide nombre y correo</td><td>identidad sin configurar</td><td><span class="mono">git config user.name …</span> y <span class="mono">git config user.email …</span></td></tr><tr><td>Rojo en «Instalar dependencias»</td><td>fallo de red o de un paquete, no de tu código</td><td>leer la última línea del paso y relanzar el run</td></tr><tr><td><span class="mono">sed</span> no cambia nada</td><td>no estás en la raíz del repositorio</td><td><span class="mono">pwd</span>; ir a la raíz y repetir; <span class="mono">git diff</span> debe mostrar una línea</td></tr></table></div>
+</section>
+
+<section class="slide" data-part="E" data-min="4" data-title="Limpieza y S4"
+ data-notes="La limpieza es opcional: la rama no molesta, pero conviene acostumbrarse a borrar ramas de prueba. Puente a S4: el mismo mecanismo, con más pasos. Lo que más interesa adelantar es la autenticación sin claves: nunca se guarda una clave de servicio de GCP en GitHub; se usa Workload Identity Federation. La plantilla ci.yml del proyecto ya hace pruebas más imagen.">
+<p class="kick">Al terminar · y lo que viene</p><h1>Limpieza, y el puente a S4</h1>
+
+<div class="split" style="grid-template-columns:.9fr 1.1fr">
+ <div class="col"><div class="term"><div class="bar"><em>Limpieza · cuando ya no necesites la rama</em><button class="cp cpall" data-t="git switch develop
+git push origin --delete lab/actions-s3
+git branch -D lab/actions-s3">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git switch develop</code><button class="cp" data-t="git switch develop" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push origin --delete lab/actions-s3</code><button class="cp" data-t="git push origin --delete lab/actions-s3" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git branch -D lab/actions-s3</code><button class="cp" data-t="git branch -D lab/actions-s3" title="Copiar">⧉</button></div></div></div>
+  <p class="small">Los runs ya ejecutados se quedan en Actions como historial.</p></div>
+ <div class="card"><h3>En S4, el workflow hará más</h3><ul class="list"><li>El <b>pipeline</b> raw → modelo y el registro en <b>MLflow</b>.</li><li><b>Construir y publicar la imagen</b> en Artifact Registry (Google Cloud).</li><li><b>Desplegar en Cloud Run con aprobación</b>: un paso que espera a que una persona autorizada lo apruebe.</li><li><b>Autenticación sin claves</b>: <i>Workload Identity Federation</i>. GitHub demuestra quién es con un token de corta duración y Google le da solo los permisos necesarios. Ninguna clave en el repositorio.</li><li>Paso intermedio ya escrito: <span class="mono">04-Proyecto-Base/deploy/github-actions/ci.yml</span> (pruebas + construir y probar la imagen).</li></ul></div>
+</div>
+</section>
+
+<section class="slide" data-part="E" data-min="3" data-title="Autoevaluación y cierre"
+ data-notes="Lea cada pregunta y deje que respondan antes de leer la respuesta. Cierre con la idea del día: cada cambio se comprueba solo, en una máquina limpia, y un rojo bien leído dice qué cambio rompió qué. En S4, el mismo workflow construye, publica y despliega.">
+<p class="kick">Comprueba que lo tienes</p><h1>Cinco preguntas</h1>
+<div class="grid2"><div class="card"><h3>1. ¿Qué líneas deciden <b>cuándo</b> se ejecuta?</h3><p class="small"><span class="mono">on: push: branches: [&#x27;lab/**&#x27;]</span> (y <span class="mono">workflow_dispatch</span> para lanzarlo a mano).</p></div><div class="card"><h3>2. ¿Por qué <span class="mono">permissions: contents: read</span>?</h3><p class="small">Mínimo privilegio: el workflow no necesita escribir nada.</p></div><div class="card"><h3>3. ¿Por qué sale verde sin tu entorno conda?</h3><p class="small">Porque instala todo desde <span class="mono">requirements-dev.txt</span> en una máquina limpia: justo lo que comprueba.</p></div><div class="card"><h3>4. El run sale rojo: ¿dónde miras primero?</h3><p class="small">En el paso rojo: la línea <span class="mono">FAILED</span> y las líneas <span class="mono">E</span> de debajo.</p></div><div class="card"><h3>5. ¿Por qué no se arregla borrando la prueba?</h3><p class="small">Porque protege una regla acordada: borrarla esconde el problema.</p></div></div>
+</section>
+
+</div></div>
+
+<aside id="notes" aria-label="Notas del ponente"><h3>Notas del ponente</h3><div id="notetext"></div><p class="small" id="notemin"></p></aside>
+<div id="index" aria-label="Índice"><h2>Índice</h2><div class="grid" id="idxgrid"></div></div>
+<div id="zoombox" aria-label="Captura ampliada"><p>Esc o clic para cerrar</p><img id="zoomimg" alt=""></div>
+<nav id="bar" aria-label="Controles">
+  <button id="bprev" aria-label="Anterior">←</button><button id="bnext" aria-label="Siguiente">→</button>
+  <span id="count">1 / 1</span><span id="clockref" title="Minuto planificado acumulado"></span>
+  <button class="part" data-p="A">Qué es CI</button><button class="part" data-p="B">El workflow</button><button class="part" data-p="C">Verde</button><button class="part" data-p="D">Rojo</button><button class="part" data-p="E">Arreglo y cierre</button>
+  <span class="sp"></span>
+  <a id="bhome" href="../index.html" title="Volver al índice de la sesión S3">⌂ S3</a><button id="bidx">Índice (O)</button><button id="bnotes">Notas (S)</button><button id="bfull">Pantalla completa (F)</button>
+</nav>
+<noscript>Esta presentación necesita JavaScript. El mismo contenido está en guia.md, en esta carpeta.</noscript>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PARTES={"A": "Qué es CI", "B": "El workflow", "C": "Verde", "D": "Rojo", "E": "Arreglo y cierre"};
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();return true}catch(e2){return false}}}
+const slides=$$('.slide'), N=slides.length; let cur=0;
+slides.forEach((s,i)=>{const f=document.createElement('div');f.className='foot';
+  f.innerHTML=`<span>ML e IA · S3 · Laboratorio de GitHub Actions</span><span><b>${esc(PARTES[s.dataset.part]||'')}</b> · ${i+1} / ${N}</span>`;s.appendChild(f)});
+const cum=[];(()=>{let t=0;slides.forEach(s=>{cum.push(t);t+=+s.dataset.min||0})})();
+const TOTAL=cum[N-1]+(+slides[N-1].dataset.min||0);
+function go(i){i=Math.max(0,Math.min(N-1,i));cur=i;slides.forEach((s,k)=>s.classList.toggle('active',k===i));chrome();try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+function chrome(){const s=slides[cur];
+  $('#count').textContent=(cur+1)+' / '+N; $('#clockref').textContent='min '+cum[cur]+' de '+TOTAL;
+  $('#prog').style.width=((cur+1)/N*100)+'%';
+  $$('#bar .part').forEach(b=>b.classList.toggle('on',b.dataset.p===s.dataset.part));
+  $('#notetext').innerHTML='<p>'+esc(s.dataset.notes||'')+'</p>';
+  $('#notemin').textContent='Tiempo previsto: '+(s.dataset.min||0)+' min · acumulado '+cum[cur]+' min de '+TOTAL;
+  $$('#idxgrid button').forEach((b,k)=>b.classList.toggle('cur',k===cur));}
+function fit(){const v=$('#viewport');$('#stage').style.setProperty('--s',Math.min(v.clientWidth/1280,v.clientHeight/720).toFixed(4))}
+addEventListener('resize',fit);
+$('#idxgrid').innerHTML=slides.map((s,i)=>`<button data-i="${i}"><small>${esc(PARTES[s.dataset.part]||'')} · ${s.dataset.min||0} min</small>${i+1}. ${esc(s.dataset.title||'')}</button>`).join('');
+$('#idxgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;toggle('#index',false);go(+b.dataset.i)});
+function toggle(sel,force){$(sel).classList.toggle('on',force)}
+$('#bprev').onclick=()=>go(cur-1); $('#bnext').onclick=()=>go(cur+1);
+$('#bidx').onclick=()=>toggle('#index'); $('#bnotes').onclick=()=>toggle('#notes');
+$('#bfull').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()};
+$$('#bar .part').forEach(b=>b.onclick=()=>go(slides.findIndex(s=>s.dataset.part===b.dataset.p)));
+function zoom(on,src,alt){const z=$('#zoombox');if(on){$('#zoomimg').src=src;$('#zoomimg').alt=alt||'';}z.classList.toggle('on',!!on)}
+$('#zoombox').onclick=()=>zoom(false);
+addEventListener('keydown',e=>{
+  const t=e.target; if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+  if(e.ctrlKey||e.metaKey||e.altKey) return;
+  const k=e.key;
+  if(k==='Escape'){zoom(false);toggle('#index',false);toggle('#notes',false);return}
+  if($('#zoombox').classList.contains('on')) return;
+  if(k==='ArrowRight'||k==='PageDown'||(k===' '&&!/^(BUTTON|A)$/.test(t.tagName))){e.preventDefault();go(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(k==='Home'){e.preventDefault();go(0)} else if(k==='End'){e.preventDefault();go(N-1)}
+  else if(k==='o'||k==='O'){toggle('#index')} else if(k==='s'||k==='S'){toggle('#notes')} else if(k==='f'||k==='F'){$('#bfull').click()}
+});
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60){dx<0?go(cur+1):go(cur-1)}},{passive:true});
+document.addEventListener('click',async e=>{
+  const z=e.target.closest('.zoom'); if(z){e.stopPropagation();zoom(true,z.dataset.src,z.dataset.alt);return}
+  const b=e.target.closest('.cp'); if(!b) return; e.stopPropagation();
+  const ok=await copyText(b.dataset.t); const t=b.textContent; b.classList.add('ok'); b.textContent=ok?'✓':'✗'; setTimeout(()=>{b.classList.remove('ok');b.textContent=t},1200)});
+fit();
+const h=parseInt((location.hash||'').slice(1),10); go(isNaN(h)?0:h-1);
+addEventListener('hashchange',()=>{const n=parseInt((location.hash||'').slice(1),10);if(!isNaN(n)&&n-1!==cur)go(n-1)});
+})();
+</script>
+</body>
+</html>

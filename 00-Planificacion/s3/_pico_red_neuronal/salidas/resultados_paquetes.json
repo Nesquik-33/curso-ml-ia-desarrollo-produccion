@@ -1,0 +1,322 @@
+{
+  "plataforma_objetivo": "Linux x86_64, CPython 3.11 (python:3.11-slim)",
+  "conjuntos": {
+    "A_onnxruntime": {
+      "peticiones": [
+        "mlflow-skinny==3.18.0",
+        "numpy==2.4.6",
+        "pandas==2.3.3",
+        "pillow",
+        "fastapi==0.162.2",
+        "uvicorn==0.54.0",
+        "pydantic==2.14.3",
+        "python-multipart==0.0.33",
+        "onnxruntime"
+      ],
+      "n_paquetes": 51,
+      "ruedas_comprimidas_MB": 83.2,
+      "instalado_descomprimido_MB_(suma de ficheros de las ruedas)": 263.5,
+      "mayores": [
+        {
+          "paquete": "onnxruntime-1.32.0-cp311-cp311-manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 27.8,
+          "descomprimida_MB": 75.7
+        },
+        {
+          "paquete": "numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 16.9,
+          "descomprimida_MB": 57.4
+        },
+        {
+          "paquete": "pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 12.8,
+          "descomprimida_MB": 43.6
+        },
+        {
+          "paquete": "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 7.1,
+          "descomprimida_MB": 20.4
+        },
+        {
+          "paquete": "mlflow_skinny-3.18.0-py3-none-any.whl",
+          "comprimida_MB": 4.4,
+          "descomprimida_MB": 17.7
+        },
+        {
+          "paquete": "cryptography-50.0.2-cp311-abi3-manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 4.8,
+          "descomprimida_MB": 15.0
+        }
+      ],
+      "todos": [
+        "annotated_doc-0.0.6-py3-none-any.whl",
+        "annotated_types-0.8.0-py3-none-any.whl",
+        "anyio-4.16.0-py3-none-any.whl",
+        "cachetools-7.3.2-py3-none-any.whl",
+        "certifi-2026.10.23-py3-none-any.whl",
+        "cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "click-8.5.1-py3-none-any.whl",
+        "cloudpickle-3.1.2-py3-none-any.whl",
+        "cryptography-50.0.2-cp311-abi3-manylinux_2_28_x86_64.whl",
+        "databricks_sdk-0.166.0-py3-none-any.whl",
+        "fastapi-0.162.2-py3-none-any.whl",
+        "flatbuffers-25.12.19-py2.py3-none-any.whl",
+        "gitdb-4.0.12-py3-none-any.whl",
+        "gitpython-3.2.1-py3-none-any.whl",
+        "google_auth-2.62.2-py3-none-any.whl",
+        "h11-0.16.0-py3-none-any.whl",
+        "idna-3.20-py3-none-any.whl",
+        "importlib_metadata-10.2.0-py3-none-any.whl",
+        "lazy_importer-0.1.0-py3-none-any.whl",
+        "mlflow_skinny-3.18.0-py3-none-any.whl",
+        "numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "onnxruntime-1.32.0-cp311-cp311-manylinux_2_28_x86_64.whl",
+        "opentelemetry_api-1.45.2-py3-none-any.whl",
+        "opentelemetry_proto-1.45.2-py3-none-any.whl",
+        "opentelemetry_sdk-1.45.2-py3-none-any.whl",
+        "opentelemetry_semantic_conventions-0.66b2-py3-none-any.whl",
+        "packaging-26.3-py3-none-any.whl",
+        "pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "pyasn1-0.6.5-py3-none-any.whl",
+        "pyasn1_modules-0.4.2-py3-none-any.whl",
+        "pycparser-3.12-py3-none-any.whl",
+        "pydantic-2.14.3-py3-none-any.whl",
+        "pydantic_core-2.50.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "python_dateutil-4.0.0-py3-none-any.whl",
+        "python_dotenv-1.2.4-py3-none-any.whl",
+        "python_multipart-0.0.33-py3-none-any.whl",
+        "pytz-2026.6-py2.py3-none-any.whl",
+        "pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "requests-2.34.2-py3-none-any.whl",
+        "smmap-5.0.3-py3-none-any.whl",
+        "sqlparse-0.6.1-py3-none-any.whl",
+        "starlette-1.10.0-py3-none-any.whl",
+        "typing_extensions-4.16.0-py3-none-any.whl",
+        "typing_inspection-0.4.5-py3-none-any.whl",
+        "tzdata-2026.6-py2.py3-none-any.whl",
+        "urllib3-2.8.0-py3-none-any.whl",
+        "uvicorn-0.54.0-py3-none-any.whl",
+        "zipp-4.1.2-py3-none-any.whl"
+      ]
+    },
+    "B_pytorch_cpu": {
+      "peticiones": [
+        "mlflow-skinny==3.18.0",
+        "numpy==2.4.6",
+        "pandas==2.3.3",
+        "pillow",
+        "fastapi==0.162.2",
+        "uvicorn==0.54.0",
+        "pydantic==2.14.3",
+        "python-multipart==0.0.33",
+        "torch"
+      ],
+      "n_paquetes": 58,
+      "ruedas_comprimidas_MB": 275.3,
+      "instalado_descomprimido_MB_(suma de ficheros de las ruedas)": 981.5,
+      "mayores": [
+        {
+          "paquete": "torch-2.15.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 209.5,
+          "descomprimida_MB": 752.5
+        },
+        {
+          "paquete": "numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 16.9,
+          "descomprimida_MB": 57.4
+        },
+        {
+          "paquete": "pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 12.8,
+          "descomprimida_MB": 43.6
+        },
+        {
+          "paquete": "sympy-1.14.0-py3-none-any.whl",
+          "comprimida_MB": 6.3,
+          "descomprimida_MB": 26.8
+        },
+        {
+          "paquete": "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 7.1,
+          "descomprimida_MB": 20.4
+        },
+        {
+          "paquete": "mlflow_skinny-3.18.0-py3-none-any.whl",
+          "comprimida_MB": 4.4,
+          "descomprimida_MB": 17.7
+        }
+      ],
+      "todos": [
+        "annotated_doc-0.0.6-py3-none-any.whl",
+        "annotated_types-0.8.0-py3-none-any.whl",
+        "anyio-4.16.0-py3-none-any.whl",
+        "cachetools-7.3.2-py3-none-any.whl",
+        "certifi-2026.10.23-py3-none-any.whl",
+        "cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "click-8.5.1-py3-none-any.whl",
+        "cloudpickle-3.1.2-py3-none-any.whl",
+        "cryptography-50.0.2-cp311-abi3-manylinux_2_28_x86_64.whl",
+        "databricks_sdk-0.166.0-py3-none-any.whl",
+        "fastapi-0.162.2-py3-none-any.whl",
+        "filelock-4.2.10-py3-none-any.whl",
+        "fsspec-2026.9.0-py3-none-any.whl",
+        "gitdb-4.0.12-py3-none-any.whl",
+        "gitpython-3.2.1-py3-none-any.whl",
+        "google_auth-2.62.2-py3-none-any.whl",
+        "h11-0.16.0-py3-none-any.whl",
+        "idna-3.20-py3-none-any.whl",
+        "importlib_metadata-10.2.0-py3-none-any.whl",
+        "jinja2-3.1.6-py3-none-any.whl",
+        "lazy_importer-0.1.0-py3-none-any.whl",
+        "markupsafe-3.0.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "mlflow_skinny-3.18.0-py3-none-any.whl",
+        "mpmath-1.3.0-py3-none-any.whl",
+        "networkx-3.6.1-py3-none-any.whl",
+        "numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "opentelemetry_api-1.45.2-py3-none-any.whl",
+        "opentelemetry_proto-1.45.2-py3-none-any.whl",
+        "opentelemetry_sdk-1.45.2-py3-none-any.whl",
+        "opentelemetry_semantic_conventions-0.66b2-py3-none-any.whl",
+        "packaging-26.3-py3-none-any.whl",
+        "pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "pyasn1-0.6.5-py3-none-any.whl",
+        "pyasn1_modules-0.4.2-py3-none-any.whl",
+        "pycparser-3.12-py3-none-any.whl",
+        "pydantic-2.14.3-py3-none-any.whl",
+        "pydantic_core-2.50.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "python_dateutil-4.0.0-py3-none-any.whl",
+        "python_dotenv-1.2.4-py3-none-any.whl",
+        "python_multipart-0.0.33-py3-none-any.whl",
+        "pytz-2026.6-py2.py3-none-any.whl",
+        "pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "requests-2.34.2-py3-none-any.whl",
+        "setuptools-84.2.1-py3-none-any.whl",
+        "smmap-5.0.3-py3-none-any.whl",
+        "sqlparse-0.6.1-py3-none-any.whl",
+        "starlette-1.10.0-py3-none-any.whl",
+        "sympy-1.14.0-py3-none-any.whl",
+        "torch-2.15.0+cpu-cp311-cp311-manylinux_2_28_x86_64.whl",
+        "typing_extensions-4.16.0-py3-none-any.whl",
+        "typing_inspection-0.4.5-py3-none-any.whl",
+        "tzdata-2026.6-py2.py3-none-any.whl",
+        "urllib3-2.8.0-py3-none-any.whl",
+        "uvicorn-0.54.0-py3-none-any.whl",
+        "zipp-4.1.2-py3-none-any.whl"
+      ]
+    },
+    "C_scikit_learn_(MLP)": {
+      "peticiones": [
+        "mlflow-skinny==3.18.0",
+        "numpy==2.4.6",
+        "pandas==2.3.3",
+        "pillow",
+        "fastapi==0.162.2",
+        "uvicorn==0.54.0",
+        "pydantic==2.14.3",
+        "python-multipart==0.0.33",
+        "scikit-learn==1.9.1",
+        "scipy==1.17.1",
+        "joblib==1.6.0"
+      ],
+      "n_paquetes": 54,
+      "ruedas_comprimidas_MB": 100.9,
+      "instalado_descomprimido_MB_(suma de ficheros de las ruedas)": 336.6,
+      "mayores": [
+        {
+          "paquete": "scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 35.3,
+          "descomprimida_MB": 114.3
+        },
+        {
+          "paquete": "numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 16.9,
+          "descomprimida_MB": 57.4
+        },
+        {
+          "paquete": "pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 12.8,
+          "descomprimida_MB": 43.6
+        },
+        {
+          "paquete": "scikit_learn-1.9.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 9.3,
+          "descomprimida_MB": 31.5
+        },
+        {
+          "paquete": "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+          "comprimida_MB": 7.1,
+          "descomprimida_MB": 20.4
+        },
+        {
+          "paquete": "mlflow_skinny-3.18.0-py3-none-any.whl",
+          "comprimida_MB": 4.4,
+          "descomprimida_MB": 17.7
+        }
+      ],
+      "todos": [
+        "annotated_doc-0.0.6-py3-none-any.whl",
+        "annotated_types-0.8.0-py3-none-any.whl",
+        "anyio-4.16.0-py3-none-any.whl",
+        "cachetools-7.3.2-py3-none-any.whl",
+        "certifi-2026.10.23-py3-none-any.whl",
+        "cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "click-8.5.1-py3-none-any.whl",
+        "cloudpickle-3.1.2-py3-none-any.whl",
+        "cryptography-50.0.2-cp311-abi3-manylinux_2_28_x86_64.whl",
+        "databricks_sdk-0.166.0-py3-none-any.whl",
+        "fastapi-0.162.2-py3-none-any.whl",
+        "gitdb-4.0.12-py3-none-any.whl",
+        "gitpython-3.2.1-py3-none-any.whl",
+        "google_auth-2.62.2-py3-none-any.whl",
+        "h11-0.16.0-py3-none-any.whl",
+        "idna-3.20-py3-none-any.whl",
+        "importlib_metadata-10.2.0-py3-none-any.whl",
+        "joblib-1.6.0-py3-none-any.whl",
+        "lazy_importer-0.1.0-py3-none-any.whl",
+        "mlflow_skinny-3.18.0-py3-none-any.whl",
+        "narwhals-2.28.0-py3-none-any.whl",
+        "numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "opentelemetry_api-1.45.2-py3-none-any.whl",
+        "opentelemetry_proto-1.45.2-py3-none-any.whl",
+        "opentelemetry_sdk-1.45.2-py3-none-any.whl",
+        "opentelemetry_semantic_conventions-0.66b2-py3-none-any.whl",
+        "packaging-26.3-py3-none-any.whl",
+        "pandas-2.3.3-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "pyasn1-0.6.5-py3-none-any.whl",
+        "pyasn1_modules-0.4.2-py3-none-any.whl",
+        "pycparser-3.12-py3-none-any.whl",
+        "pydantic-2.14.3-py3-none-any.whl",
+        "pydantic_core-2.50.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "python_dateutil-4.0.0-py3-none-any.whl",
+        "python_dotenv-1.2.4-py3-none-any.whl",
+        "python_multipart-0.0.33-py3-none-any.whl",
+        "pytz-2026.6-py2.py3-none-any.whl",
+        "pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "requests-2.34.2-py3-none-any.whl",
+        "scikit_learn-1.9.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "smmap-5.0.3-py3-none-any.whl",
+        "sqlparse-0.6.1-py3-none-any.whl",
+        "starlette-1.10.0-py3-none-any.whl",
+        "threadpoolctl-3.8.0-py3-none-any.whl",
+        "typing_extensions-4.16.0-py3-none-any.whl",
+        "typing_inspection-0.4.5-py3-none-any.whl",
+        "tzdata-2026.6-py2.py3-none-any.whl",
+        "urllib3-2.8.0-py3-none-any.whl",
+        "uvicorn-0.54.0-py3-none-any.whl",
+        "zipp-4.1.2-py3-none-any.whl"
+      ]
+    }
+  },
+  "python_3.11-slim_amd64_comprimida_MB": 45.6,
+  "python_3.11-slim_actualizada": "2026-11-08T08:06:33.475026Z"
+}

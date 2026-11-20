@@ -1,0 +1,12 @@
+# Laboratorio de red neuronal (S3). Versiones exactas con las que se probó red_gato_perro.py (Python 3.11, solo CPU, 20/11/2026).
+# En el Codespace del curso, mlflow, scikit-learn, pillow y pandas ya están en env-ia-mlops: basta con instalar torch y torchvision:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# Para un entorno nuevo:  pip install -r requisitos.txt
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0+cpu
+torchvision==0.29.2+cpu
+mlflow==3.18.0
+scikit-learn==1.9.1
+pillow==13.0.0
+pandas==3.1.1
+numpy==2.4.6

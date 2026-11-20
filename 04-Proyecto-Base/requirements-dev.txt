@@ -13,3 +13,5 @@ ipykernel==7.4.0
 pyyaml==6.0.3
 # mlflow completo (seguimiento con SQLite); la imagen solo instala mlflow-skinny
 mlflow==3.18.0
+# Parquet para ia_mlops.migracion (S3). Version del entorno env-ia-mlops (03-Entorno/conda/environment.yml, comprobada con import). La imagen del servicio NO la necesita.
+pyarrow==26.0.1
