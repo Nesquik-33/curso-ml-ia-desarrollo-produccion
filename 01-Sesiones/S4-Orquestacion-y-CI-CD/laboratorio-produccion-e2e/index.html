@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio de cierre de S4: producción e2e del caso Retail · ML e IA: de desarrollo a producción</title>
+<!-- Generado por generar.py: no se edita a mano. -->
+<style>
+:root{--tinta:#1f2937;--suave:#5b6472;--linea:#d6dde6;--fondo:#ffffff;--gris:#f4f6f9;--acento:#0b5cad;--ok:#15803d;--mal:#b91c1c;--aviso:#92400e;
+ --mono:Consolas,"Cascadia Mono","DejaVu Sans Mono",Menlo,monospace;--sans:"Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#e8ecf1;color:var(--tinta);font-family:var(--sans)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+#viewport{position:fixed;inset:0 0 48px 0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#stage{width:1280px;height:720px;flex:none;position:relative;transform:scale(var(--s,1));background:var(--fondo);box-shadow:0 2px 14px rgba(0,0,0,.12)}
+.slide{position:absolute;inset:0;padding:30px 52px 46px;display:none;flex-direction:column;gap:10px;overflow:hidden}
+.slide.active{display:flex}
+.kick{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--acento);font-weight:700}
+h1{font-size:31px;line-height:1.15;font-weight:700;margin-bottom:4px}
+h3{font-size:17px;margin-bottom:5px}
+.sub{font-size:22px;line-height:1.4;color:var(--suave);max-width:1050px}
+.cover{display:flex;flex-direction:column;justify-content:flex-start;padding-top:70px;flex:1}
+.chips{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.tag{display:inline-block;font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--linea);background:var(--gris);color:var(--tinta)}
+.tag.ok{border-color:#86c79c;background:#ecf8f0;color:var(--ok)}.tag.warn{border-color:#e2b56b;background:#fdf6e9;color:var(--aviso)}
+.card{border:1px solid var(--linea);border-radius:12px;padding:10px 14px;background:#fff}
+.callout{border-left:4px solid var(--acento);background:#eef5fc;padding:9px 14px;border-radius:0 10px 10px 0;font-size:15.5px;line-height:1.4}
+.small{font-size:15px;line-height:1.42}
+.mono{font-family:var(--mono);font-size:.92em;background:var(--gris);padding:0 4px;border-radius:4px}
+.okc{color:var(--ok)}.malc{color:var(--mal)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.thumbs{display:grid;gap:8px}.thumbs.t2{grid-template-columns:1fr 1fr}
+.split{display:grid;gap:18px;min-height:0}.col,.capcol{display:flex;flex-direction:column;gap:9px;min-width:0}
+.list{list-style:none;display:flex;flex-direction:column;gap:4px}.list li{font-size:15px;line-height:1.38;padding-left:16px;position:relative}
+.list li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--acento)}
+.ol{padding-left:24px;display:flex;flex-direction:column;gap:5px;font-size:17px}.ol.sm{font-size:15px;gap:3px}
+.mira h3{color:var(--acento);font-size:15.5px}.mira .list li{font-size:14.5px}
+.falla{border-color:#e2b56b;background:#fffaf0}.falla h3{color:var(--aviso);font-size:15.5px}.falla .list li{font-size:14.5px}.falla .list li::before{background:var(--aviso)}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}.tbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--suave);border-bottom:2px solid var(--linea);padding:5px 8px}
+.tbl td{border-bottom:1px solid var(--linea);padding:6px 8px;line-height:1.35;vertical-align:top}
+.term{border:1px solid var(--linea);border-radius:10px;background:var(--gris);overflow:hidden}
+.term .bar{display:flex;align-items:center;gap:8px;padding:5px 10px;border-bottom:1px solid var(--linea);background:#eaeef3}
+.term .bar em{flex:1;font-style:normal;font-size:12.5px;color:var(--suave)}
+.tls{padding:6px 8px;font-family:var(--mono);font-size:13px;line-height:1.42}
+.tln{display:flex;align-items:flex-start;gap:6px;padding:2px 4px}
+.tln code{flex:1;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono)}
+.tln.c{color:var(--suave);font-style:italic}
+.ps{color:var(--ok);font-weight:700}
+.cp{flex:none;min-width:26px;height:24px;border-radius:6px;border:1px solid #b9c3cf;background:#fff;font-size:13px;color:var(--suave)}
+.cp.ok{border-color:var(--ok);color:var(--ok)}.cpall{padding:0 10px;font-size:12px;font-family:var(--sans)}
+.realbox{border:1px solid #86c79c;background:#f3fbf5;border-radius:10px;padding:8px 12px}
+.realbox .rk{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ok);font-weight:700;margin-bottom:3px}
+.realbox pre{font-family:var(--mono);font-size:12.5px;line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere}
+.rot{margin:-4px 0 0}
+.cap{display:flex;flex-direction:column;gap:4px;min-width:0}
+.cap figcaption{font-size:12px;line-height:1.35;color:var(--suave)}
+.cap .nota{color:var(--aviso)}
+.zoom{display:block;position:relative;cursor:zoom-in;text-align:left}
+.zoom img{display:block;max-width:100%;height:auto;border:1px solid var(--linea);border-radius:8px}
+.lupa{position:absolute;right:6px;bottom:6px;font-size:11.5px;background:rgba(255,255,255,.92);border:1px solid var(--linea);border-radius:6px;padding:1px 6px;display:flex;align-items:center;gap:4px;color:var(--suave)}
+.pend{border:2px dashed #c9a65e;background:#fdf9f0;border-radius:10px;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px;text-align:center;font-size:13.5px;color:var(--aviso)}
+.pend b{font-size:16px}
+.grande .small{font-size:17.5px}.grande .list li{font-size:17px}.grande .mira .list li,.grande .falla .list li{font-size:16.5px}.grande .tbl{font-size:16.5px}.grande .tbl td{padding:8px 10px}
+.grande .tls{font-size:14.5px;line-height:1.5}.grande .callout{font-size:18px}.grande .ol{font-size:19px}.grande .ol.sm{font-size:17px}.grande h3{font-size:19px}.grande .mira h3,.grande .falla h3{font-size:17px}
+.grande .card{padding:13px 17px}.grande .grid4 .kpi{min-height:250px;padding-top:20px}.grande .grid4 .kpi .small{font-size:19px}.grande .grid4{margin-top:36px!important}.grande .kpi .n{font-size:30px}.grande .msg{font-size:32px}
+.kpi .n{display:block;font-size:27px;line-height:1.15;color:var(--acento);margin-bottom:4px}.kpi .n.okc{color:var(--ok)}
+.msg{font-size:27px;line-height:1.3;font-weight:600;border-left:6px solid var(--acento);padding:12px 20px;background:#eef5fc;border-radius:0 12px 12px 0}
+svg .nodo{fill:#f4f8fc;stroke:#8fb2d6;stroke-width:1.5}svg .nodo.puerta{fill:#fdf6e9;stroke:#c9a65e}svg .nodo.ok{fill:#ecf8f0;stroke:var(--ok)}svg .nodo.mal{fill:#fdeeee;stroke:var(--mal)}
+svg .fl{stroke:var(--acento);stroke-width:2;fill:none}svg .fl.dis{stroke-dasharray:5 4;stroke:#8fb2d6}
+svg .t1{font:700 15px var(--sans);fill:var(--tinta);text-anchor:middle}svg .t2{font:13px var(--sans);fill:var(--suave);text-anchor:middle}
+svg .tok{fill:var(--ok)}svg .tmal{fill:var(--mal)}
+.card svg{display:block;width:100%;height:auto}
+.foot{position:absolute;left:52px;right:52px;bottom:14px;display:flex;justify-content:space-between;font-size:12px;color:var(--suave);border-top:1px solid var(--linea);padding-top:6px}
+#prog{position:fixed;left:0;top:0;height:3px;background:var(--acento);z-index:5}
+#bar{position:fixed;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#fff;border-top:1px solid var(--linea);font-size:13px;z-index:6}
+#bar button,#bar a{border:1px solid var(--linea);border-radius:8px;padding:4px 10px;background:#fff;color:var(--tinta);text-decoration:none;font-size:13px}
+#bar .part.on{border-color:var(--acento);color:var(--acento);font-weight:700}
+#bar .sp{flex:1}#count,#clockref{color:var(--suave);padding:0 6px}
+#notes{position:fixed;right:0;top:0;bottom:48px;width:400px;background:#fff;border-left:1px solid var(--linea);padding:18px;overflow:auto;display:none;z-index:7;font-size:15px;line-height:1.5}
+#notes.on{display:block}#notes h3{margin-bottom:8px}
+#index{position:fixed;inset:0 0 48px 0;background:rgba(255,255,255,.98);display:none;z-index:8;padding:28px;overflow:auto}
+#index.on{display:block}#index .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+#index button{border:1px solid var(--linea);border-radius:10px;padding:10px;text-align:left;font-size:14px;background:#fff}
+#index button small{display:block;color:var(--suave);font-size:12px}#index button.cur{border-color:var(--acento)}
+#zoombox{position:fixed;inset:0;background:rgba(20,26,34,.86);display:none;z-index:9;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+#zoombox.on{display:flex}#zoombox img{max-width:100%;max-height:100%;background:#fff;border-radius:6px}
+#zoombox p{position:fixed;top:10px;left:0;right:0;text-align:center;color:#fff;font-size:13px}
+@media print{#bar,#notes,#index,#prog,.cp{display:none!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="viewport"><div id="stage">
+
+<section class="slide" data-part="A" data-min="3" data-title="Portada"
+ data-notes="Cierre de la puesta en producción (laboratorio final de S4): el modelo ya está entrenado y desplegado en S3, hoy se ve cómo se explota y cómo se cambia con control. Que cada persona tenga abierto su fork y su Codespace. Todo lo que se enseña pasó de verdad en la cuenta del profesor el 22 de noviembre; las cifras salen de los runs y de las capturas, no están inventadas. No se usa Google Cloud.">
+<p class="kick">1 · Qué vamos a hacer · ML e IA: de desarrollo a producción · S4</p><h1>Laboratorio de cierre: producción de punta a punta del caso Retail</h1>
+
+<div class="cover">
+ <p class="sub">El mismo modelo de retención a 90 días, explotado de <b>tres maneras</b>; y cómo entra en producción una <b>versión nueva</b> con puerta de calidad, aprobación humana y vuelta atrás. Todo en tu fork y tu Codespace, sin Google Cloud.</p>
+ <div class="chips"><span class="tag">Caso Online Retail II</span><span class="tag">GitHub Actions</span><span class="tag">GHCR</span><span class="tag">Codespace</span><span class="tag">sin GCP</span></div>
+ <div class="card" style="margin-top:22px"><h3>Cómo seguirla</h3><p class="small">Cada orden lleva <b>⧉</b> para copiarla en la terminal del Codespace. <b>← →</b> avanzan · <b>O</b> índice · <b>S</b> notas · <b>F</b> pantalla completa · clic en una captura para ampliarla y <b>Esc</b> para cerrarla. Todo está también en texto en <span class="mono">guia.md</span>, junto a esta presentación. Las capturas son reales (22/11/2026, cuenta del profesor).</p></div>
+</div>
+</section>
+
+<section class="slide grande" data-part="A" data-min="4" data-title="El plan"
+ data-notes="Mapa completo antes de empezar. Los pasos 1 y 2 se hacen una vez. El 3 y el 4 enseñan los tres modos. Del 5 al 7 es el ciclo de una versión nueva: entrar, fusionar y volver atrás. Insista en la regla de oro: las ramas de ensayo empiezan por lab/, así no se toca develop ni main.">
+<p class="kick">1 · Qué vamos a hacer · Lo que vas a hacer</p><h1>Siete pasos: de configurar a volver atrás</h1>
+
+<div class="grid2">
+ <div class="card"><h3>Los pasos</h3><ol class="ol">
+  <li>Preparar la rama y copiar los cuatro workflows</li>
+  <li>Configurar el repositorio <b>una vez</b> (environment y permiso de PR)</li>
+  <li>Modo 1: <b>puntuación por lotes</b> con Actions</li>
+  <li>Modos 2 y 3 y el <b>panel</b> en el Codespace</li>
+  <li><b>Nueva versión</b>: igual, rechazada, aceptada, aprobada y publicada</li>
+  <li><b>Fusionar</b> el pull request de la referencia</li>
+  <li><b>Rollback</b> a la versión anterior</li></ol></div>
+ <div class="col">
+  <div class="card"><h3>Al terminar sabrás</h3><ul class="list"><li>Cuándo conviene <b>lote</b>, <b>bajo demanda</b> u <b>online</b>, y por qué dan lo mismo hasta que llegan datos nuevos.</li><li>Qué es «el modelo en producción»: <b>una imagen</b> con etiqueta y <b>una ficha</b> en el repositorio.</li><li>Cómo una <b>puerta de calidad</b> y una <b>aprobación</b> protegen la publicación.</li><li>Cómo <b>volver atrás</b> sin borrar nada.</li></ul></div>
+  <div class="callout">Nada se empuja a <span class="mono">develop</span> ni a <span class="mono">main</span>: se ensaya en ramas <span class="mono">lab/…</span> y los cambios entran por pull request.</div>
+ </div></div>
+</section>
+
+<section class="slide grande" data-part="A" data-min="6" data-title="Los tres modos"
+ data-notes="Esta tabla es la columna vertebral del laboratorio. Pregunte al grupo qué modo usarían para: la campaña de la mañana (lote), un agente de call center que consulta a un cliente concreto (bajo demanda) y una web que reacciona a una compra que acaba de ocurrir (online). La diferencia está en de dónde salen las variables: leídas o calculadas ahora. Lo veremos medido: online cuesta algo más de tiempo pero ve la compra nueva.">
+<p class="kick">1 · Qué vamos a hacer · Concepto · una pregunta, un modo</p><h1>Tres modos de explotación del mismo modelo</h1>
+
+<div class="card"><table class="tbl"><tr><th>Modo</th><th>La pregunta del negocio</th><th>De dónde salen las 13 variables</th><th>Cuándo se calcula</th><th>Dónde corre aquí</th></tr><tr><td><b>1 · Lote</b> (<i>batch</i>)</td><td>«¿A quién llamo hoy?» Se puntúa a <b>todos</b> y se ordena</td><td>del pipeline, en el corte del día</td><td>una vez al día: <span class="mono">schedule</span> 05:17 UTC y <b>Run workflow</b></td><td>GitHub Actions: <span class="mono">puntuar-lote.yml</span></td></tr><tr><td><b>2 · Bajo demanda</b></td><td>«¿Qué probabilidad tiene el cliente 12670?»</td><td><b>leídas</b> de la tabla <span class="mono">fs_produccion</span> (ya calculadas, las de ayer)</td><td>al preguntar, sin cálculo de variables</td><td>API + interfaz: <span class="mono">GET /bajo-demanda/{id}</span> y <span class="mono">POST /bajo-demanda</span></td></tr><tr><td><b>3 · Online</b></td><td>«Acaba de comprar: ¿qué le ofrezco <b>ahora</b>?»</td><td><b>calculadas al vuelo</b> con el SQL de la capa FS, hasta el instante de la petición</td><td>al preguntar, con los datos frescos</td><td>API + interfaz: <span class="mono">GET /online/{id}?corte=</span></td></tr></table></div>
+<div class="grid3" style="margin-top:12px">
+ <div class="card"><h3>Lote</h3><p class="small">Barato y programado: <b>una vez al día</b>, para todos los clientes a la vez.</p></div>
+ <div class="card"><h3>Bajo demanda</h3><p class="small">Rápido: consulta por clave de variables <b>ya calculadas</b>. No ve lo que pasó hoy.</p></div>
+ <div class="card"><h3>Online</h3><p class="small">Rápido y con datos frescos, pero hay que calcular las variables al vuelo <b>sin fuga</b>: solo datos anteriores a la petición.</p></div>
+</div>
+<div class="grid2" style="margin-top:12px">
+ <div class="callout">Los tres usan <b>la misma versión</b> del modelo y, mientras no llegan datos nuevos, dan <b>la misma probabilidad</b> para el mismo cliente y corte.</div>
+ <div class="callout">La demo lo hace visible: una <b>compra simulada</b> cambia la probabilidad <b>online</b> y no la del lote ni la de bajo demanda.</div>
+</div>
+</section>
+
+<section class="slide grande" data-part="A" data-min="4" data-title="Siglas y palabras"
+ data-notes="Vocabulario mínimo para no perderse. Insista en tres: environment, que es lo que hace que la publicación espere a una persona; huella, que es lo que permite decir que no hay nada nuevo; y tolerancia, que es la puerta de calidad. AUC se explicó en el curso: 0,5 es el azar. GHCR y PR no se habían usado antes en el curso.">
+<p class="kick">1 · Qué vamos a hacer · Vocabulario · antes de empezar</p><h1>Siglas y palabras que van a aparecer</h1>
+<div class="card"><table class="tbl"><tr><th>Palabra</th><th>Qué es</th></tr><tr><td><b>GHCR</b></td><td><i>GitHub Container Registry</i>: el almacén de imágenes de contenedor de GitHub (<span class="mono">ghcr.io</span>). Aquí guarda <span class="mono">retencion-api</span>, la API con el modelo dentro</td></tr><tr><td><b>PR</b> (<i>pull request</i>)</td><td>una propuesta de cambio entre dos ramas, con revisión y fusión (<i>merge</i>) a mano. Nuestros workflows <b>nunca</b> empujan a <span class="mono">develop</span> ni a <span class="mono">main</span>: abren un PR</td></tr><tr><td><i><b>environment</b></i></td><td>un «entorno» de GitHub con reglas de protección. El nuestro se llama <span class="mono">produccion</span> y exige que una persona <b>revise y apruebe</b> antes de publicar</td></tr><tr><td><b>huella</b> (de datos)</td><td>resumen corto de los datos de entrenamiento: los mismos datos dan la misma huella. Va en la etiqueta de la imagen: <span class="mono">retencion-api:v1-35a94deb4e04ab4a</span></td></tr><tr><td><b>AUC</b></td><td>área bajo la curva ROC: <b>0,5</b> es el azar y <b>1</b> es acertar siempre. Es la métrica de la puerta de calidad</td></tr><tr><td><b>tolerancia</b></td><td>cuánto puede <b>empeorar</b> el AUC de test la versión nueva sin ser rechazada (por defecto <b>0,02</b>)</td></tr><tr><td><b>campeón / candidata</b></td><td>el campeón es el modelo en producción; la candidata, la versión nueva que aspira a sustituirlo</td></tr><tr><td><span class="mono">referencia.json</span></td><td>la ficha de la versión en producción en el repositorio: versión, huella, imagen y métricas de test</td></tr></table></div>
+</section>
+
+<section class="slide grande" data-part="B" data-min="7" data-title="Fork, Codespace y rama"
+ data-notes="Preparación. Dos formas de tener los cuatro YAML: copiarlos de la carpeta del laboratorio, o abrir cada uno y pegarlo. El push se deja para después de configurar el repositorio: así el primer push lanza el lote y la validación y ya hay environment. Que nadie trabaje en el repositorio del curso: tiene que ser su fork, o no podrán subir.">
+<p class="kick">2 · Preparar el repositorio · paso 1, rama y workflows</p><h1>Rama de trabajo y los cuatro workflows</h1>
+
+<div class="split" style="grid-template-columns:1.05fr .95fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace · en la raíz del repositorio</em><button class="cp cpall" data-t="git switch develop
+git pull
+git switch -c lab/produccion-e2e
+mkdir -p .github/workflows
+cp 01-Sesiones/S4-Orquestacion-y-CI-CD/laboratorio-produccion-e2e/{puntuar-lote,validar-produccion,nueva-version,rollback}.yml .github/workflows/
+git add .github/workflows
+git commit -m &quot;Laboratorio de cierre de S4: workflows de producción&quot;">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git switch develop</code><button class="cp" data-t="git switch develop" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git pull</code><button class="cp" data-t="git pull" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git switch -c lab/produccion-e2e</code><button class="cp" data-t="git switch -c lab/produccion-e2e" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>mkdir -p .github/workflows</code><button class="cp" data-t="mkdir -p .github/workflows" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>cp 01-Sesiones/S4-Orquestacion-y-CI-CD/laboratorio-produccion-e2e/{puntuar-lote,validar-produccion,nueva-version,rollback}.yml .github/workflows/</code><button class="cp" data-t="cp 01-Sesiones/S4-Orquestacion-y-CI-CD/laboratorio-produccion-e2e/{puntuar-lote,validar-produccion,nueva-version,rollback}.yml .github/workflows/" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git add .github/workflows</code><button class="cp" data-t="git add .github/workflows" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git commit -m &quot;Laboratorio de cierre de S4: workflows de producción&quot;</code><button class="cp" data-t="git commit -m &quot;Laboratorio de cierre de S4: workflows de producción&quot;" title="Copiar">⧉</button></div></div></div>
+  <div class="callout">En un <b>fork</b>, antes: pestaña <b>Actions</b> y aceptar el aviso para activar los workflows. Aún <b>no hagas push</b>: primero se configura el repositorio.</div>
+ </div>
+ <div class="col"><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">On branch lab/produccion-e2e</span> y <span class="mono">.github/workflows/</span> con <b>cuatro</b> archivos nuevos.</li><li>Los cuatro: <span class="mono">puntuar-lote.yml</span>, <span class="mono">validar-produccion.yml</span>, <span class="mono">nueva-version.yml</span> y <span class="mono">rollback.yml</span>.</li><li>El <span class="mono">cp</span> copia los cuatro de una vez (llaves de bash); en otra terminal, cópialos uno a uno.</li></ul></div><div class="card falla"><h3>Si falla</h3><ul class="list"><li><span class="mono">cp: cannot stat …</span>: tu fork no tiene la carpeta del laboratorio; haz <b>Sync fork</b> o copia cada YAML con «Copiar el archivo».</li><li>Sin Actions activado en el fork no aparecerá ningún run: pestaña Actions del fork.</li></ul></div>
+ </div></div>
+</section>
+
+<section class="slide grande" data-part="B" data-min="8" data-title="Configurar el repositorio"
+ data-notes="El paso más importante de la preparación y el que más se olvida. Primera captura: la lista de environments con produccion y una regla de protección. Segunda: Required reviewers con el propio usuario y Save protection rules; en la captura también está marcado Allow administrators to bypass, que es lo que GitHub propone por defecto. Tercera: Actions habilitado. Cuarta: la casilla del permiso de PR, en Workflow permissions; el permiso del token puede seguir en solo lectura porque cada trabajo pide los suyos.">
+<p class="kick">2 · Preparar el repositorio · una sola vez, en Settings de GitHub</p><h1>Configurar el repositorio: environment y permiso de PR</h1>
+
+<div class="split" style="grid-template-columns:.9fr 1.1fr">
+ <div class="col">
+  <div class="card"><h3>A · El environment <span class="mono">produccion</span></h3><ol class="ol sm">
+   <li><b>Settings</b> › <b>Environments</b> › <b>New environment</b></li>
+   <li>Nombre exacto: <span class="mono">produccion</span> (sin tilde)</li>
+   <li>Marca <b>Required reviewers</b> y añádete a ti mismo</li>
+   <li><b>Save protection rules</b></li></ol></div>
+  <div class="card"><h3>B · Permiso para abrir PR</h3><ol class="ol sm">
+   <li><b>Settings</b> › <b>Actions</b> › <b>General</b> › <b>Workflow permissions</b></li>
+   <li>Marca <b>Allow GitHub Actions to create and approve pull requests</b></li>
+   <li><b>Save</b></li></ol></div>
+  <div class="callout">Sin A, la publicación <b>no espera</b> a nadie. Sin B, el último paso falla.</div>
+ </div>
+ <div class="capcol"><p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p>
+  <div class="thumbs t2"><figure class="cap" data-img="cfg-01-environments.webp"><button class="zoom" data-src="img/cfg-01-environments.webp" data-alt="Settings &gt; Environments del fork: el environment «produccion» con «1 protection rule» y el botón New environment" title="Ampliar (Esc cierra)"><img src="img/cfg-01-environments.webp" alt="Settings &gt; Environments del fork: el environment «produccion» con «1 protection rule» y el botón New environment" style="max-height:175px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Settings &gt; Environments del fork: el environment «produccion» con «1 protection rule» y el botón New environment</figcaption></figure><figure class="cap" data-img="cfg-02-environment-revisores.webp"><button class="zoom" data-src="img/cfg-02-environment-revisores.webp" data-alt="Configure produccion: Required reviewers marcado con helicr como revisor y el botón verde Save protection rules" title="Ampliar (Esc cierra)"><img src="img/cfg-02-environment-revisores.webp" alt="Configure produccion: Required reviewers marcado con helicr como revisor y el botón verde Save protection rules" style="max-height:175px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Configure produccion: Required reviewers marcado con helicr como revisor y el botón verde Save protection rules</figcaption></figure><figure class="cap" data-img="cfg-03-actions-permisos.webp"><button class="zoom" data-src="img/cfg-03-actions-permisos.webp" data-alt="Settings &gt; Actions &gt; General: seleccionada la opción «Allow all actions and reusable workflows» (Actions activado)" title="Ampliar (Esc cierra)"><img src="img/cfg-03-actions-permisos.webp" alt="Settings &gt; Actions &gt; General: seleccionada la opción «Allow all actions and reusable workflows» (Actions activado)" style="max-height:175px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Settings &gt; Actions &gt; General: seleccionada la opción «Allow all actions and reusable workflows» (Actions activado)</figcaption></figure><figure class="cap" data-img="cfg-04-workflow-permissions.webp"><button class="zoom" data-src="img/cfg-04-workflow-permissions.webp" data-alt="Workflow permissions: marcada la casilla «Allow GitHub Actions to create and approve pull requests»" title="Ampliar (Esc cierra)"><img src="img/cfg-04-workflow-permissions.webp" alt="Workflow permissions: marcada la casilla «Allow GitHub Actions to create and approve pull requests»" style="max-height:175px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Workflow permissions: marcada la casilla «Allow GitHub Actions to create and approve pull requests»</figcaption></figure></div>
+ </div>
+</div>
+</section>
+
+<section class="slide grande" data-part="C" data-min="6" data-title="Puntuar por lotes"
+ data-notes="El lote responde a ¿a quién llamo hoy? No se pregunta por nadie: se puntúa a todos y se ordena por probabilidad. El cron es 17 5: cinco y diecisiete UTC. GitHub puede retrasar un schedule varios minutos. En un fork el schedule viene desactivado, y Run workflow solo aparece si el archivo está en la rama por defecto; en el laboratorio, el primer push a lab/produccion-e2e lo lanza porque cambia el propio workflow. Los artefactos se pueden descargar desde la página del run.">
+<p class="kick">3 · Modo 1 · lote · cuándo y qué hace</p><h1>Puntuación por lotes: todos los clientes, cada día</h1>
+
+<div class="split" style="grid-template-columns:1fr 1fr">
+ <div class="col">
+  <div class="card"><h3>Cuándo se ejecuta</h3><table class="tbl"><tr><th>Disparador</th><th>Detalle</th></tr><tr><td><span class="mono">schedule</span></td><td><b>todos los días a las 05:17 UTC</b> (<span class="mono">cron: &#x27;17 5 * * *&#x27;</span>); un minuto «raro» a propósito, porque a las horas en punto GitHub va cargado</td></tr><tr><td><span class="mono">workflow_dispatch</span></td><td><b>Run workflow</b> a mano, con tres entradas: <span class="mono">capacidad</span> (0.10 = el 10 %), <span class="mono">corte</span> e <span class="mono">imagen</span> (construir o ghcr)</td></tr><tr><td><span class="mono">push</span> a <span class="mono">lab/**</span></td><td>solo si cambia el workflow o <span class="mono">explotacion.py</span>: así se prueba sin esperar al día siguiente</td></tr></table></div>
+  <div class="callout"><b>En un fork, el <span class="mono">schedule</span> viene desactivado</b>. Se lanza con Run workflow; y Run workflow solo aparece si el workflow está en la rama por defecto: por eso en el laboratorio se dispara con el <b>push</b>.</div>
+ </div>
+ <div class="col">
+  <div class="card"><h3>Qué hace: tres trabajos</h3><ul class="list"><li><b>1 · Preparar datos</b> (operacional + pipeline).</li><li><b>2 · Puntuar a todos los clientes</b>: levanta la API en un contenedor y ejecuta <span class="mono">explotacion --url</span>.</li><li><b>3 · Resumen</b>: corte, clientes puntuados, campaña, probabilidad media, versión y huella del modelo.</li></ul></div>
+  <div class="card"><h3>Qué deja</h3><ul class="list"><li>Artefacto <b>campana</b>: <span class="mono">campana_&lt;corte&gt;.csv</span> y <span class="mono">.json</span> (todos los clientes, ordenados).</li><li>Artefacto <b>base-fs-produccion</b>: la base con la tabla <span class="mono">fs_produccion</span> (las 13 variables del corte), la que lee «bajo demanda».</li></ul></div>
+  <div class="term"><div class="bar"><em>Terminal · tras configurar el repositorio: este push lanza el lote y la validación</em><button class="cp cpall" data-t="git push -u origin lab/produccion-e2e">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/produccion-e2e</code><button class="cp" data-t="git push -u origin lab/produccion-e2e" title="Copiar">⧉</button></div></div></div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="C" data-min="5" data-title="Lote y validación en Actions"
+ data-notes="Los dos workflows se lanzaron con el mismo push a lab/produccion-e2e. El lote tarda unos tres minutos: el trabajo de puntuar es el más largo porque construye y levanta la API. El segundo es la prueba de humo de la producción completa: comprueba en Actions, con Docker real, lo mismo que el alumno hará a mano en el Codespace. Cada persona verá sus propios números de run; los de aquí son los del profesor.">
+<p class="kick">3 · Modo 1 · lote · los runs reales</p><h1>El lote y la validación de la producción, en verde</h1>
+
+<p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p>
+<div class="grid2"><figure class="cap" data-img="gh-10-run-lote.webp"><button class="zoom" data-src="img/gh-10-run-lote.webp" data-alt="Puntuar por lotes en verde (2 m 55 s): trabajos de 55 s, 1 min 51 s y 4 s; resumen con corte 2011-12-10 y 148 clientes puntuados" title="Ampliar (Esc cierra)"><img src="img/gh-10-run-lote.webp" alt="Puntuar por lotes en verde (2 m 55 s): trabajos de 55 s, 1 min 51 s y 4 s; resumen con corte 2011-12-10 y 148 clientes puntuados" style="max-height:300px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Puntuar por lotes en verde (2 m 55 s): trabajos de 55 s, 1 min 51 s y 4 s; resumen con corte 2011-12-10 y 148 clientes puntuados</figcaption></figure><figure class="cap" data-img="gh-11-run-validar.webp"><button class="zoom" data-src="img/gh-11-run-validar.webp" data-alt="Validar la producción completa en verde (2 m 16 s): un trabajo de 2 m 13 s; resumen con la campaña de 148 clientes y la versión v1" title="Ampliar (Esc cierra)"><img src="img/gh-11-run-validar.webp" alt="Validar la producción completa en verde (2 m 16 s): un trabajo de 2 m 13 s; resumen con la campaña de 148 clientes y la versión v1" style="max-height:300px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Validar la producción completa en verde (2 m 16 s): un trabajo de 2 m 13 s; resumen con la campaña de 148 clientes y la versión v1</figcaption></figure></div>
+<div class="grid2" style="margin-top:8px">
+ <div class="card mira"><h3>Lote</h3><ul class="list"><li><b>Puntuar por lotes</b>, run nº 45026646958: trabajos de <b>55 s</b>, <b>111 s</b> y <b>4 s</b>; total 2 m 55 s.</li><li>Resumen: corte <b>2011-12-10</b>, <b>148</b> clientes puntuados; en la campaña, el 10 % (15 clientes en el panel).</li></ul></div>
+ <div class="card mira"><h3>Validación</h3><ul class="list"><li><b>Validar la producción completa</b>, run nº 45026646944: un trabajo de <b>133 s</b>; total 2 m 16 s.</li><li>Levanta API + interfaz con docker compose y comprueba los tres modos con <span class="mono">curl</span>.</li></ul></div>
+</div>
+</section>
+
+<section class="slide grande" data-part="D" data-min="6" data-title="Levantar el panel"
+ data-notes="Orden de las tres órdenes de Python: primero la base operacional, luego el pipeline que entrena y crea la base analítica, y por último el lote, que escribe la campaña y la tabla fs_produccion. Sin ellas el compose arranca pero el panel sale vacío. Cuota de Codespaces: si se detiene, el panel también se puede abrir en local. Honestidad: el compose no se ha ejecutado todavía en un Codespace; sí en Actions y en local.">
+<p class="kick">4 · Modos 2 y 3 y el panel · preparar y levantar</p><h1>Datos, modelo y panel en el Codespace</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace</em><button class="cp cpall" data-t="cd 04-Proyecto-Base
+python -m ia_mlops.operacional
+python -m ia_mlops.pipeline
+python -m ia_mlops.explotacion
+docker compose -f deploy/docker/compose-produccion.yaml up --build -d
+docker compose -f deploy/docker/compose-produccion.yaml ps
+curl -fsS http://127.0.0.1:8090/listo">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>cd 04-Proyecto-Base</code><button class="cp" data-t="cd 04-Proyecto-Base" title="Copiar">⧉</button></div><div class="tln c"># 1) deja los datos, el modelo y el lote (el compose no los crea)</div><div class="tln"><span class="ps">$</span> <code>python -m ia_mlops.operacional</code><button class="cp" data-t="python -m ia_mlops.operacional" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>python -m ia_mlops.pipeline</code><button class="cp" data-t="python -m ia_mlops.pipeline" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>python -m ia_mlops.explotacion</code><button class="cp" data-t="python -m ia_mlops.explotacion" title="Copiar">⧉</button></div><div class="tln c"># 2) levanta la API y la interfaz con el panel</div><div class="tln"><span class="ps">$</span> <code>docker compose -f deploy/docker/compose-produccion.yaml up --build -d</code><button class="cp" data-t="docker compose -f deploy/docker/compose-produccion.yaml up --build -d" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>docker compose -f deploy/docker/compose-produccion.yaml ps</code><button class="cp" data-t="docker compose -f deploy/docker/compose-produccion.yaml ps" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>curl -fsS http://127.0.0.1:8090/listo</code><button class="cp" data-t="curl -fsS http://127.0.0.1:8090/listo" title="Copiar">⧉</button></div></div></div>
+ </div>
+ <div class="col"><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li><span class="mono">ps</span>: dos servicios, <span class="mono">api</span> e <span class="mono">interfaz</span>; la <span class="mono">api</span> pasa a <b>healthy</b>. La primera vez tarda unos minutos (construye dos imágenes).</li><li><span class="mono">/listo</span> responde con <span class="mono">&quot;estado&quot;: &quot;listo&quot;</span>.</li><li>En la pestaña <b>Puertos</b> abre el <b>8090</b> y añade <span class="mono">/panel</span> a la dirección.</li></ul></div><div class="card falla"><h3>Si falla</h3><ul class="list"><li><span class="mono">No existe …</span>: te saltaste una de las tres órdenes de Python; ejecútalas en ese orden.</li><li><span class="mono">curl</span> da 503: la API aún no está sana; mira <span class="mono">docker compose … logs api interfaz</span>.</li></ul></div>
+  <div class="callout"><b>Sin verificar en Codespace.</b> Estas órdenes se probaron en local y en Actions (<span class="mono">validar-produccion.yml</span>); en un Codespace todavía no se han ejecutado.</div>
+ </div></div>
+</section>
+
+<section class="slide grande" data-part="D" data-min="6" data-title="Bajo demanda y online con curl"
+ data-notes="La demostración conceptual más importante del día. Bajo demanda hace una consulta por clave a fs_produccion y llama a la API: rápido y barato. Online calcula las trece variables con el SQL de la capa FS hasta el instante de la petición: más caro pero ve lo último. Las latencias son de una medición local con TestClient, sin red: sirven para comparar, no como promesa de producción. El id 12670 es del lote del 2011-12-10 que se ve en las capturas.">
+<p class="kick">4 · Modos 2 y 3 y el panel · lo mismo, dos caminos</p><h1>Mismo cliente, dos caminos: leer o calcular</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal del Codespace · el cliente 12670 es de la campaña del lote</em><button class="cp cpall" data-t="ID=12670
+curl -s http://127.0.0.1:8090/bajo-demanda/$ID
+curl -s http://127.0.0.1:8090/online/$ID
+curl -s -X POST http://127.0.0.1:8090/demo/compra -H &#x27;content-type: application/json&#x27; -d &quot;{\&quot;cliente_id\&quot;: $ID, \&quot;importe\&quot;: 120.5, \&quot;unidades\&quot;: 3}&quot;
+curl -s http://127.0.0.1:8090/bajo-demanda/$ID
+curl -s http://127.0.0.1:8090/online/$ID
+curl -s -X POST http://127.0.0.1:8090/demo/reiniciar
+docker compose -f deploy/docker/compose-produccion.yaml down">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>ID=12670</code><button class="cp" data-t="ID=12670" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>curl -s http://127.0.0.1:8090/bajo-demanda/$ID</code><button class="cp" data-t="curl -s http://127.0.0.1:8090/bajo-demanda/$ID" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>curl -s http://127.0.0.1:8090/online/$ID</code><button class="cp" data-t="curl -s http://127.0.0.1:8090/online/$ID" title="Copiar">⧉</button></div><div class="tln c"># llega una compra nueva y se vuelve a preguntar</div><div class="tln"><span class="ps">$</span> <code>curl -s -X POST http://127.0.0.1:8090/demo/compra -H &#x27;content-type: application/json&#x27; -d &quot;{\&quot;cliente_id\&quot;: $ID, \&quot;importe\&quot;: 120.5, \&quot;unidades\&quot;: 3}&quot;</code><button class="cp" data-t="curl -s -X POST http://127.0.0.1:8090/demo/compra -H &#x27;content-type: application/json&#x27; -d &quot;{\&quot;cliente_id\&quot;: $ID, \&quot;importe\&quot;: 120.5, \&quot;unidades\&quot;: 3}&quot;" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>curl -s http://127.0.0.1:8090/bajo-demanda/$ID</code><button class="cp" data-t="curl -s http://127.0.0.1:8090/bajo-demanda/$ID" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>curl -s http://127.0.0.1:8090/online/$ID</code><button class="cp" data-t="curl -s http://127.0.0.1:8090/online/$ID" title="Copiar">⧉</button></div><div class="tln c"># dejar la demo como al principio</div><div class="tln"><span class="ps">$</span> <code>curl -s -X POST http://127.0.0.1:8090/demo/reiniciar</code><button class="cp" data-t="curl -s -X POST http://127.0.0.1:8090/demo/reiniciar" title="Copiar">⧉</button></div><div class="tln c"># al terminar: parar el panel</div><div class="tln"><span class="ps">$</span> <code>docker compose -f deploy/docker/compose-produccion.yaml down</code><button class="cp" data-t="docker compose -f deploy/docker/compose-produccion.yaml down" title="Copiar">⧉</button></div></div></div>
+ </div>
+ <div class="col"><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Antes de la compra, <b>bajo demanda y online dan la misma</b> <span class="mono">probabilidad</span> y el mismo <span class="mono">corte</span>.</li><li>Después: <b>bajo demanda no cambia</b> (lee la tabla de ayer) y <b>online cambia</b> (suma la compra).</li><li>La compra se guarda en una <b>copia</b> de la base dentro del contenedor, nunca en la del proyecto.</li></ul></div><div class="card falla"><h3>Si falla</h3><ul class="list"><li><span class="mono">404</span> «no está en fs_produccion»: ese cliente no tiene compras válidas antes del corte; elige otro de la pestaña Lote.</li><li><span class="mono">404</span> «El modo demo está apagado»: usa <span class="mono">compose-produccion.yaml</span>, no <span class="mono">compose.yaml</span>.</li></ul></div>
+  <div class="card"><h3>Tiempos medidos</h3><p class="small">Latencia p50 con <span class="mono">TestClient</span> (local, <b>no en red</b>): bajo demanda <b>26,8 ms</b>, online <b>33,5 ms</b>.</p></div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="D" data-min="4" data-title="Pestañas del panel"
+ data-notes="Cuatro pestañas, tres capturas aquí y la cuarta, Online, en la siguiente diapositiva. Lote: la última campaña con enlace al CSV. Bajo demanda: el id y la recomendación; la primera consulta tardó casi seis segundos en la captura porque el modelo estaba frío, por eso las latencias se miden con p50 y no con una sola llamada. Versiones: compara la ficha referencia.json con el modelo que sirve; el historial aparece después de fusionar el primer PR.">
+<p class="kick">4 · Modos 2 y 3 y el panel · cuatro pestañas</p><h1>El panel: Lote, Bajo demanda, Online y Versiones</h1>
+
+<p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p>
+<div class="grid3"><figure class="cap" data-img="panel-1-lote.webp"><button class="zoom" data-src="img/panel-1-lote.webp" data-alt="Panel de producción, pestaña Lote: corte 2011-12-10, 148 clientes puntuados, 15 en la campaña y los 20 primeros clientes con su probabilidad" title="Ampliar (Esc cierra)"><img src="img/panel-1-lote.webp" alt="Panel de producción, pestaña Lote: corte 2011-12-10, 148 clientes puntuados, 15 en la campaña y los 20 primeros clientes con su probabilidad" style="max-height:250px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Panel de producción, pestaña Lote: corte 2011-12-10, 148 clientes puntuados, 15 en la campaña y los 20 primeros clientes con su probabilidad</figcaption></figure><figure class="cap" data-img="panel-2-bajo-demanda.webp"><button class="zoom" data-src="img/panel-2-bajo-demanda.webp" data-alt="Pestaña Bajo demanda: el cliente 12670 con probabilidad 79,9 %, tramo alta y corte 2011-12-10" title="Ampliar (Esc cierra)"><img src="img/panel-2-bajo-demanda.webp" alt="Pestaña Bajo demanda: el cliente 12670 con probabilidad 79,9 %, tramo alta y corte 2011-12-10" style="max-height:250px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pestaña Bajo demanda: el cliente 12670 con probabilidad 79,9 %, tramo alta y corte 2011-12-10</figcaption></figure><figure class="cap" data-img="panel-5-versiones.webp"><button class="zoom" data-src="img/panel-5-versiones.webp" data-alt="Pestaña Versiones: en producción v1 (retencion-api:v1-35a94deb4e04ab4a, AUC 0,747), coincide con el modelo que sirve, sin historial guardado" title="Ampliar (Esc cierra)"><img src="img/panel-5-versiones.webp" alt="Pestaña Versiones: en producción v1 (retencion-api:v1-35a94deb4e04ab4a, AUC 0,747), coincide con el modelo que sirve, sin historial guardado" style="max-height:250px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pestaña Versiones: en producción v1 (retencion-api:v1-35a94deb4e04ab4a, AUC 0,747), coincide con el modelo que sirve, sin historial guardado</figcaption></figure></div>
+<div class="grid3" style="margin-top:8px">
+ <div class="card mira"><h3>Lote</h3><ul class="list"><li>Corte <b>2011-12-10</b>, <b>148</b> clientes puntuados, <b>15</b> en la campaña (el 10 %), probabilidad media <b>48,6 %</b>.</li><li>Los 20 primeros, con su probabilidad y avisos.</li></ul></div>
+ <div class="card mira"><h3>Bajo demanda</h3><ul class="list"><li>El cliente <b>12670</b>: <b>79,9 %</b>, tramo <b>alta</b>, corte 2011-12-10.</li><li>Dice que «las variables son las de ayer».</li></ul></div>
+ <div class="card mira"><h3>Versiones</h3><ul class="list"><li>En producción <b>v1</b> (AUC test <b>0,747</b>) y el modelo que sirve coincide. El historial sale vacío: aún no hay versión 2.</li></ul></div>
+</div>
+</section>
+
+<section class="slide" data-part="D" data-min="5" data-title="La compra simulada"
+ data-notes="Es la imagen que resume los tres modos. Antes de pulsar el botón, los tres cuadros dicen 79,9 por ciento. Se simula una compra de 120,5 en tres unidades; online baja a 76,2 por ciento porque la recencia y la frecuencia cambian, y lote y bajo demanda no se mueven hasta el siguiente run diario. En producción real esa compra llegaría por una cola o un feature store online; aquí se simula sobre una copia de la base.">
+<p class="kick">4 · Modos 2 y 3 y el panel · la pestaña Online</p><h1>Una compra simulada: solo cambia el modo online</h1>
+
+<p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p>
+<div class="grid2"><figure class="cap" data-img="panel-3-online-antes.webp"><button class="zoom" data-src="img/panel-3-online-antes.webp" data-alt="Pestaña Online antes de la compra: lote, bajo demanda y online dan 79,9 % para el cliente 12670" title="Ampliar (Esc cierra)"><img src="img/panel-3-online-antes.webp" alt="Pestaña Online antes de la compra: lote, bajo demanda y online dan 79,9 % para el cliente 12670" style="max-height:290px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pestaña Online antes de la compra: lote, bajo demanda y online dan 79,9 % para el cliente 12670</figcaption></figure><figure class="cap" data-img="panel-4-online-despues.webp"><button class="zoom" data-src="img/panel-4-online-despues.webp" data-alt="Pestaña Online tras «Simular una compra nueva»: online pasa a 76,2 % y lote y bajo demanda siguen en 79,9 %" title="Ampliar (Esc cierra)"><img src="img/panel-4-online-despues.webp" alt="Pestaña Online tras «Simular una compra nueva»: online pasa a 76,2 % y lote y bajo demanda siguen en 79,9 %" style="max-height:290px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pestaña Online tras «Simular una compra nueva»: online pasa a 76,2 % y lote y bajo demanda siguen en 79,9 %</figcaption></figure></div>
+<div class="grid3" style="margin-top:8px">
+ <div class="card kpi"><b class="n okc">79,9 %</b><p class="small"><b>antes</b>: lote, bajo demanda y online dan lo mismo para el cliente 12670</p></div>
+ <div class="card kpi"><b class="n ">76,2 %</b><p class="small"><b>online después</b> de «Simular una compra nueva» (120,5 en 3 unidades)</p></div>
+ <div class="card kpi"><b class="n okc">79,9 %</b><p class="small"><b>lote y bajo demanda siguen igual</b> hasta que se recalcule <span class="mono">fs_produccion</span></p></div>
+</div>
+</section>
+
+<section class="slide grande" data-part="E" data-min="8" data-title="Ramas de ensayo"
+ data-notes="Lo que hace posible ensayar sin tocar la rama principal. Dos reglas: el nombre de la rama elige el escenario (muestra, completo, completo-rechazo) y los runs del mismo grupo de concurrency esperan en cola, por eso se lanza el completo el último: se quedará esperando a que alguien lo apruebe. La rama nueva apunta al mismo commit que la de base, pero crear una rama es un push y dispara el workflow. La tolerancia negativa es una exigencia de mejora, útil para ensayar un rechazo con datos reales, porque con el Excel completo el modelo nuevo no empeora.">
+<p class="kick">5 · Una versión nueva · cómo se ensaya</p><h1>El nombre de la rama elige el escenario</h1>
+
+<div class="split" style="grid-template-columns:1.05fr .95fr">
+ <div class="col">
+  <div class="card"><table class="tbl"><tr><th>Rama de ensayo (<span class="mono">lab/nueva-version/…</span>)</th><th>Escenario</th><th>Resultado esperado</th></tr><tr><td><span class="mono">muestra</span></td><td>datos de la muestra del repositorio (la fuente de la v1)</td><td><b>IGUAL</b>: misma huella; trabajos 2 a 4 omitidos</td></tr><tr><td><span class="mono">completo-rechazo</span></td><td>Excel completo y <b>tolerancia -0,10</b> (se exige mejorar 0,10)</td><td><b>RECHAZADA</b>: el trabajo 1 sale en rojo</td></tr><tr><td><span class="mono">completo</span></td><td>Excel completo con la tolerancia por defecto (0,02)</td><td><b>ACEPTADA</b>: construye, espera aprobación, publica y abre el PR</td></tr></table></div>
+  <div class="callout"><b>Por qué ramas:</b> <span class="mono">Run workflow</span> solo aparece si el workflow está en la rama por defecto. Un <b>push</b> a una rama <span class="mono">lab/nueva-version/…</span> lo lanza igual y el nombre decide los datos y la tolerancia. Hazlo en este orden: <b>completo</b> el último.</div>
+ </div>
+ <div class="col"><div class="term"><div class="bar"><em>Terminal · una orden por escenario</em><button class="cp cpall" data-t="git switch lab/produccion-e2e
+git switch -c lab/nueva-version/muestra
+git push -u origin lab/nueva-version/muestra
+git switch lab/produccion-e2e &amp;&amp; git switch -c lab/nueva-version/completo-rechazo
+git push -u origin lab/nueva-version/completo-rechazo
+git switch lab/produccion-e2e &amp;&amp; git switch -c lab/nueva-version/completo
+git push -u origin lab/nueva-version/completo">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git switch lab/produccion-e2e</code><button class="cp" data-t="git switch lab/produccion-e2e" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git switch -c lab/nueva-version/muestra</code><button class="cp" data-t="git switch -c lab/nueva-version/muestra" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/nueva-version/muestra</code><button class="cp" data-t="git push -u origin lab/nueva-version/muestra" title="Copiar">⧉</button></div><div class="tln c"># cuando acabe: el rechazo</div><div class="tln"><span class="ps">$</span> <code>git switch lab/produccion-e2e &amp;&amp; git switch -c lab/nueva-version/completo-rechazo</code><button class="cp" data-t="git switch lab/produccion-e2e &amp;&amp; git switch -c lab/nueva-version/completo-rechazo" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/nueva-version/completo-rechazo</code><button class="cp" data-t="git push -u origin lab/nueva-version/completo-rechazo" title="Copiar">⧉</button></div><div class="tln c"># el último: el completo (espera aprobación)</div><div class="tln"><span class="ps">$</span> <code>git switch lab/produccion-e2e &amp;&amp; git switch -c lab/nueva-version/completo</code><button class="cp" data-t="git switch lab/produccion-e2e &amp;&amp; git switch -c lab/nueva-version/completo" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/nueva-version/completo</code><button class="cp" data-t="git push -u origin lab/nueva-version/completo" title="Copiar">⧉</button></div></div></div>
+ </div></div>
+</section>
+
+<section class="slide grande" data-part="E" data-min="6" data-title="Puerta de calidad y los cuatro trabajos"
+ data-notes="El dibujo es el grafo real de nueva-version.yml. Tres decisiones en el primer trabajo: igual, rechazada y aceptada. Si es igual, los trabajos 2 a 4 se omiten y aparecen en gris. Si es rechazada, el trabajo 1 sale en rojo y no se construye nada. Solo aceptada sigue. El trabajo 2 construye la imagen, la prueba y compara campeón y candidata: cuántos clientes cambian de tramo puntuando las mismas filas de test. El 3 espera a una persona. El 4 abre un PR, nunca hace push directo.">
+<p class="kick">5 · Una versión nueva · el pipeline</p><h1>Cuatro trabajos y una puerta de calidad</h1>
+
+<div class="card"><svg viewBox="0 0 1100 205" role="img" aria-label="Los cuatro trabajos de nueva-version.yml y las tres decisiones posibles del primero"><defs><marker id="fg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0b5cad"/></marker></defs><rect x="6" y="20" width="238" height="84" rx="12" class="nodo"/><text x="125" y="55" class="t1">1 · Entrenar y comparar</text><text x="125" y="80" class="t2">con la versión en producción</text><rect x="281" y="20" width="238" height="84" rx="12" class="nodo"/><text x="400" y="55" class="t1">2 · Construir la imagen</text><text x="400" y="80" class="t2">probarla; campeón frente a candidata</text><path d="M247 62 L278 62" class="fl" marker-end="url(#fg)"/><rect x="556" y="20" width="238" height="84" rx="12" class="nodo puerta"/><text x="675" y="55" class="t1">3 · Publicar en GHCR</text><text x="675" y="80" class="t2">espera la aprobación de una persona</text><path d="M522 62 L553 62" class="fl" marker-end="url(#fg)"/><rect x="831" y="20" width="238" height="84" rx="12" class="nodo"/><text x="950" y="55" class="t1">4 · Abrir el PR</text><text x="950" y="80" class="t2">que actualiza models/referencia.json</text><path d="M797 62 L828 62" class="fl" marker-end="url(#fg)"/><path d="M125 106 L125 124 L675 124" class="fl dis"/><path d="M400 124 L400 138" class="fl dis"/><path d="M675 124 L675 138" class="fl dis"/><path d="M125 106 L125 138" class="fl" marker-end="url(#fg)"/><rect x="6" y="142" width="238" height="52" rx="10" class="nodo ok"/><text x="125" y="165" class="t1 tok">aceptada</text><text x="125" y="184" class="t2">sigue con los trabajos 2 a 4</text><rect x="281" y="142" width="238" height="52" rx="10" class="nodo"/><text x="400" y="165" class="t1">igual</text><text x="400" y="184" class="t2">misma huella: 2 a 4 omitidos</text><rect x="556" y="142" width="238" height="52" rx="10" class="nodo mal"/><text x="675" y="165" class="t1 tmal">rechazada</text><text x="675" y="184" class="t2">el trabajo 1 sale en rojo</text></svg></div>
+<div class="grid3" style="margin-top:12px">
+ <div class="card"><h3>La puerta</h3><p class="small">Compara el <b>AUC de test</b> con el de <span class="mono">models/referencia.json</span> y una <b>tolerancia de 0,02</b>: misma huella → <b>igual</b>; el AUC cae más que la tolerancia → <b>rechazada</b>; en otro caso → <b>aceptada</b>.</p></div>
+ <div class="card"><h3>La aprobación</h3><p class="small">El trabajo 3 usa el <i>environment</i> <span class="mono">produccion</span>: se queda <b>esperando</b> hasta que un revisor aprueba. Es el único con permiso para escribir paquetes.</p></div>
+ <div class="card"><h3>«En producción» es…</h3><p class="small">la imagen <span class="mono">retencion-api:v&lt;N&gt;-&lt;huella&gt;</span> en GHCR <b>más</b> <span class="mono">referencia.json</span> y <span class="mono">historial_versiones.json</span> (la pestaña Versiones). Pasa a ser la de producción al <b>fusionar el PR</b>.</p></div>
+</div>
+</section>
+
+<section class="slide grande" data-part="E" data-min="4" data-title="Escenario igual"
+ data-notes="Primer escenario: no llegan datos nuevos. El pipeline recalcula la huella de los datos, la compara con la de referencia.json y, al coincidir, se detiene con éxito. Es lo correcto: un run verde que no publica nada. Los grises no son un error. Pregunte al grupo por qué es útil: porque se puede programar el reentrenamiento todos los días sin llenar GHCR de imágenes idénticas.">
+<p class="kick">5 · Una versión nueva · escenario 1</p><h1>Sin datos nuevos: «igual · nada que publicar»</h1>
+
+<div class="split" style="grid-template-columns:1.15fr .85fr">
+ <div class="capcol"><p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p><figure class="cap" data-img="gh-12-nueva-igual.webp"><button class="zoom" data-src="img/gh-12-nueva-igual.webp" data-alt="Nueva versión con la rama …/muestra: trabajo 1 en verde (1 m 4 s), los otros tres omitidos y «IGUAL · nada que publicar»" title="Ampliar (Esc cierra)"><img src="img/gh-12-nueva-igual.webp" alt="Nueva versión con la rama …/muestra: trabajo 1 en verde (1 m 4 s), los otros tres omitidos y «IGUAL · nada que publicar»" style="max-height:400px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Nueva versión con la rama …/muestra: trabajo 1 en verde (1 m 4 s), los otros tres omitidos y «IGUAL · nada que publicar»</figcaption></figure></div>
+ <div class="col"><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Rama <span class="mono">lab/nueva-version/muestra</span>, run nº 45027468464, <b>en verde</b>.</li><li>El trabajo 1 (entrenar y comparar) tarda <b>64 s</b>.</li><li>Los trabajos 2, 3 y 4 salen <b>omitidos</b> (gris con un círculo tachado).</li><li>El resumen dice: «los datos son los mismos que los de la versión 1 (huella 35a94deb4e04ab4a): no hay nada que publicar».</li></ul></div>
+  <div class="callout">Entrenar con los mismos datos da el mismo modelo: no se publica nada. Es la <b>idempotencia por huella</b>.</div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="E" data-min="5" data-title="Escenario rechazada"
+ data-notes="Esta captura se hizo antes de corregir el texto del motivo, y por eso es importante leerla con el pie. Con una tolerancia negativa la regla es una exigencia de mejora: la versión nueva tiene que mejorar al menos 0,10, y mejoró 0,0485. El código actual lo dice bien: no mejora lo exigido, al menos más 0,1, tolerancia de menos 0,1. No se publica. Con la tolerancia por defecto, esta misma versión sale aceptada: es la siguiente diapositiva.">
+<p class="kick">5 · Una versión nueva · escenario 2</p><h1>Una versión que no pasa la puerta: rechazada</h1>
+
+<div class="split" style="grid-template-columns:1.15fr .85fr">
+ <div class="capcol"><p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p><figure class="cap" data-img="gh-13-nueva-rechazada.webp"><button class="zoom" data-src="img/gh-13-nueva-rechazada.webp" data-alt="Nueva versión con …/completo-rechazo: trabajo 1 en rojo (2 m 43 s), los demás omitidos y «RECHAZADA · no se publica» con tolerancia -0.1" title="Ampliar (Esc cierra)"><img src="img/gh-13-nueva-rechazada.webp" alt="Nueva versión con …/completo-rechazo: trabajo 1 en rojo (2 m 43 s), los demás omitidos y «RECHAZADA · no se publica» con tolerancia -0.1" style="max-height:330px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Nueva versión con …/completo-rechazo: trabajo 1 en rojo (2 m 43 s), los demás omitidos y «RECHAZADA · no se publica» con tolerancia -0.1<br><span class="nota">Esta captura se hizo antes de corregir el texto del motivo: pone «empeora más que la tolerancia de -0.1» con una diferencia de +0.0485, que no tiene sentido. El texto actual del código, para una tolerancia negativa, dice «no mejora lo exigido (al menos +0.1, tolerancia de -0.1). No se publica.». La decisión (rechazada) es la misma.</span></figcaption></figure></div>
+ <div class="col"><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Rama <span class="mono">lab/nueva-version/completo-rechazo</span>, run nº 45027468487, <b>en rojo</b> en el trabajo 1 («Rechazar la versión si empeora más que la tolerancia»); total 3 m 53 s.</li><li>Los trabajos 2, 3 y 4 <b>no se ejecutan</b>: no se construye ni se publica nada.</li><li>AUC de test <b>0,7956</b> frente a <b>0,7471</b>: la versión nueva <b>mejora</b> +0,0485.</li></ul></div>
+  <div class="callout">Se ensaya con <b>tolerancia -0,10</b>: «tienes que mejorar 0,10». Mejoró 0,0485, así que <b>no basta</b> y se rechaza.</div>
+ </div></div>
+</section>
+
+<section class="slide grande" data-part="E" data-min="7" data-title="Aceptada: espera la aprobación"
+ data-notes="El momento humano del pipeline. Sin esta aprobación, un pipeline automático publicaría cualquier versión que supere la puerta. El aviso amarillo dice quién pidió la revisión; con un solo usuario, uno se aprueba a sí mismo, que es lo que se hace en el laboratorio. La captura es de un run anterior del mismo escenario; el definitivo fue el número 5, cuyas cifras se ven en la diapositiva siguiente.">
+<p class="kick">5 · Una versión nueva · escenario 3</p><h1>Aceptada, construida… y esperando a una persona</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="capcol"><p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p><figure class="cap" data-img="gh-01-esperando-aprobacion.webp"><button class="zoom" data-src="img/gh-01-esperando-aprobacion.webp" data-alt="Run en espera: aviso amarillo «helicr requested your review to deploy to produccion» con el botón Review deployments; trabajos 1 y 2 en verde y el 3 esperando" title="Ampliar (Esc cierra)"><img src="img/gh-01-esperando-aprobacion.webp" alt="Run en espera: aviso amarillo «helicr requested your review to deploy to produccion» con el botón Review deployments; trabajos 1 y 2 en verde y el 3 esperando" style="max-height:420px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Run en espera: aviso amarillo «helicr requested your review to deploy to produccion» con el botón Review deployments; trabajos 1 y 2 en verde y el 3 esperando<br><span class="nota">Es el run nº 3 de este mismo escenario (rama <span class="mono">lab/nueva-version/completo</span>); el que acabó publicando fue el nº 5. El paso de espera es idéntico.</span></figcaption></figure></div>
+ <div class="col">
+  <div class="card"><h3>Aprobar el despliegue</h3><ol class="ol sm">
+   <li>Abre el run: estado <b>Waiting</b> y el aviso amarillo</li>
+   <li>Pulsa <b>Review deployments</b></li>
+   <li>Marca <b>produccion</b></li>
+   <li>Pulsa <b>Approve and deploy</b></li></ol></div><div class="card mira"><h3>Qué debes ver</h3><ul class="list"><li>Texto del aviso: «<b>helicr requested your review to deploy to produccion</b>».</li><li>Trabajos 1 y 2 en verde; el 3, «waiting for review».</li><li>Resumen del trabajo 1: <b>ACEPTADA</b>, AUC de test <b>0,7956</b> frente a <b>0,7471</b> (diferencia <b>+0,0485</b>) dentro de la tolerancia de 0,02.</li></ul></div><div class="card falla"><h3>Si falla</h3><ul class="list"><li>Pasa sin pedir aprobación: el <i>environment</i> no existe o no tiene revisores (paso de configuración A).</li></ul></div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="E" data-min="7" data-title="Publicada y PR abierto"
+ data-notes="Tras aprobar, el trabajo 3 sube la imagen ya probada a GHCR con la etiqueta v2 guion huella; solo tarda 17 segundos porque la imagen se construyó en el trabajo anterior. El trabajo 4 abre un pull request desde una rama nueva con el nombre referencia barra v2 guion número de ejecución. El tiempo total del run en la captura, 1 h 19 min, incluye la espera hasta aprobar; el trabajo real suma unos seis minutos. El PR va contra la rama de ensayo, no contra develop.">
+<p class="kick">5 · Una versión nueva · tras aprobar</p><h1>Publicada en GHCR y PR de la referencia abierto</h1>
+
+<p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p>
+<div class="grid3"><figure class="cap" data-img="gh-02-run-publicado.webp"><button class="zoom" data-src="img/gh-02-run-publicado.webp" data-alt="Run terminado con éxito: los cuatro trabajos en verde (3 m 11 s, 2 m 18 s, 17 s y 14 s) y el resumen «ACEPTADA»" title="Ampliar (Esc cierra)"><img src="img/gh-02-run-publicado.webp" alt="Run terminado con éxito: los cuatro trabajos en verde (3 m 11 s, 2 m 18 s, 17 s y 14 s) y el resumen «ACEPTADA»" style="max-height:215px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Run terminado con éxito: los cuatro trabajos en verde (3 m 11 s, 2 m 18 s, 17 s y 14 s) y el resumen «ACEPTADA»</figcaption></figure><figure class="cap" data-img="gh-03-pr-referencia.webp"><button class="zoom" data-src="img/gh-03-pr-referencia.webp" data-alt="Pull request nº 2 «Referencia del modelo: v2-3521a0421905ba28», abierto por github-actions[bot], con la tabla v1 frente a v2" title="Ampliar (Esc cierra)"><img src="img/gh-03-pr-referencia.webp" alt="Pull request nº 2 «Referencia del modelo: v2-3521a0421905ba28», abierto por github-actions[bot], con la tabla v1 frente a v2" style="max-height:215px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pull request nº 2 «Referencia del modelo: v2-3521a0421905ba28», abierto por github-actions[bot], con la tabla v1 frente a v2</figcaption></figure><figure class="cap" data-img="gh-04-pr-cambios.webp"><button class="zoom" data-src="img/gh-04-pr-cambios.webp" data-alt="Archivos cambiados del PR nº 2: en historial_versiones.json se añade la versión 2 y la 1 pasa a «anterior»" title="Ampliar (Esc cierra)"><img src="img/gh-04-pr-cambios.webp" alt="Archivos cambiados del PR nº 2: en historial_versiones.json se añade la versión 2 y la 1 pasa a «anterior»" style="max-height:215px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Archivos cambiados del PR nº 2: en historial_versiones.json se añade la versión 2 y la 1 pasa a «anterior»</figcaption></figure></div>
+<div class="grid3" style="margin-top:8px">
+ <div class="card mira"><h3>El run</h3><ul class="list"><li>Run nº 45030152194 en verde: entrenar <b>191 s</b>, construir <b>138 s</b>, publicar <b>17 s</b> tras aprobar, referencia <b>14 s</b>.</li><li>Imagen: <span class="mono">ghcr.io/helicr/retencion-api:v2-3521a0421905ba28</span>.</li></ul></div>
+ <div class="card mira"><h3>El PR</h3><ul class="list"><li>PR <b>nº 2</b> «Referencia del modelo: v2-3521a0421905ba28», abierto por <span class="mono">github-actions[bot]</span> desde <span class="mono">referencia/v2-45030152194</span>.</li><li>Tabla v1 → v2: AUC <b>0,7471 → 0,7956</b>.</li></ul></div>
+ <div class="card mira"><h3>Los archivos</h3><ul class="list"><li>Cambia <span class="mono">referencia.json</span> e <span class="mono">historial_versiones.json</span>.</li><li>En el historial: la v2 queda <b>produccion</b> y la v1, <b>anterior</b>.</li></ul></div>
+</div>
+</section>
+
+<section class="slide grande" data-part="E" data-min="5" data-title="Fusionar el PR"
+ data-notes="Fusionar es el acto que cambia qué versión está en producción. Mientras el PR esté abierto, la ficha referencia.json sigue apuntando a la v1. Los textos de los botones son los de GitHub en inglés: Merge pull request y Confirm merge. En este ensayo el PR se fusiona en la rama lab/nueva-version/completo. El bloque verde es lo que se lee en el diff de la captura del PR nº 2.">
+<p class="kick">5 · Una versión nueva · la v2 pasa a ser la de producción</p><h1>Fusionar el PR: ahora sí es la de producción</h1>
+
+<div class="split" style="grid-template-columns:.9fr 1.1fr">
+ <div class="col">
+  <div class="card"><h3>Fusionar</h3><ol class="ol sm">
+   <li>Abre el PR nº 2 (pestaña <b>Pull requests</b>)</li>
+   <li>Revisa <b>Files changed</b>: dos archivos</li>
+   <li><b>Merge pull request</b></li>
+   <li><b>Confirm merge</b></li></ol></div>
+  <div class="callout">Hasta fusionar, la v2 existe en GHCR pero <b>no está en producción</b>: la ficha sigue diciendo v1. El siguiente lote usará la v2 cuando el PR esté fusionado.</div>
+  <div class="card"><h3>Qué no hace</h3><ul class="list"><li>No empuja a <span class="mono">develop</span> ni a <span class="mono">main</span>: aquí el PR va contra la rama de ensayo.</li><li>Un PR creado con el <span class="mono">GITHUB_TOKEN</span> <b>no lanza otros workflows</b> (regla de GitHub).</li></ul></div>
+ </div>
+ <div class="col">
+  <div class="card"><h3>Qué cambia al fusionar</h3><table class="tbl"><tr><th></th><th>Antes (v1)</th><th>Después (v2)</th></tr><tr><td><span class="mono">etiqueta_imagen</span></td><td><span class="mono">retencion-api:v1-35a94deb4e04ab4a</span></td><td><span class="mono">retencion-api:v2-3521a0421905ba28</span></td></tr><tr><td>fuente de los datos</td><td>muestra</td><td>completo</td></tr><tr><td>AUC de test</td><td>0,7471</td><td>0,7956</td></tr><tr><td>historial</td><td>v1 · producción</td><td>v1 · anterior; v2 · producción</td></tr></table></div>
+  <div class="realbox"><div class="rk">Captura real del diff · historial_versiones.json (PR nº 2)</div><pre>+    "estado": "anterior"      (la v1)
++    "version": 2, "fuente_datos": "completo"
++    "etiqueta_imagen": "retencion-api:v2-3521a0421905ba28"
++    "estado": "produccion"    (la v2)</pre></div>
+ </div></div>
+</section>
+
+<section class="slide grande" data-part="F" data-min="5" data-title="Lanzar el rollback"
+ data-notes="El rollback se lanza igual que la nueva versión: con un push a una rama cuyo nombre empieza por lab/rollback. Sale de la rama donde se fusionó el PR de la v2, porque necesita ver en el historial de git la ficha anterior. Primero se hace con la comprobación de la imagen, que se parará; después se repite con sin-comprobar en el nombre para ver el mecanismo completo.">
+<p class="kick">6 · Volver atrás · cómo se lanza</p><h1>Lanzar el rollback desde una rama con la v2 fusionada</h1>
+
+<div class="split" style="grid-template-columns:1.1fr .9fr">
+ <div class="col"><div class="term"><div class="bar"><em>Terminal · tras fusionar el PR nº 2</em><button class="cp cpall" data-t="git fetch origin
+git switch lab/nueva-version/completo
+git pull
+git switch -c lab/rollback/v1
+git push -u origin lab/rollback/v1
+git switch -c lab/rollback/v1-sin-comprobar
+git push -u origin lab/rollback/v1-sin-comprobar">Copiar todo</button></div><div class="tls"><div class="tln"><span class="ps">$</span> <code>git fetch origin</code><button class="cp" data-t="git fetch origin" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git switch lab/nueva-version/completo</code><button class="cp" data-t="git switch lab/nueva-version/completo" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git pull</code><button class="cp" data-t="git pull" title="Copiar">⧉</button></div><div class="tln c"># 1) con comprobación: se parará, a propósito</div><div class="tln"><span class="ps">$</span> <code>git switch -c lab/rollback/v1</code><button class="cp" data-t="git switch -c lab/rollback/v1" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/rollback/v1</code><button class="cp" data-t="git push -u origin lab/rollback/v1" title="Copiar">⧉</button></div><div class="tln c"># 2) sin comprobar la imagen: abre el PR</div><div class="tln"><span class="ps">$</span> <code>git switch -c lab/rollback/v1-sin-comprobar</code><button class="cp" data-t="git switch -c lab/rollback/v1-sin-comprobar" title="Copiar">⧉</button></div><div class="tln"><span class="ps">$</span> <code>git push -u origin lab/rollback/v1-sin-comprobar</code><button class="cp" data-t="git push -u origin lab/rollback/v1-sin-comprobar" title="Copiar">⧉</button></div></div></div>
+ </div>
+ <div class="col"><div class="card mira"><h3>Cómo funciona</h3><ul class="list"><li>El rollback <b>no reentrena ni reconstruye</b>: busca en el historial de git la ficha de la versión pedida (por defecto, la anterior a la actual).</li><li>Por defecto <b>comprueba que su imagen exista en GHCR</b>; con «sin-comprobar» en el nombre de la rama, no.</li><li>Abre un PR y <b>no borra nada</b>.</li></ul></div><div class="card falla"><h3>Si falla</h3><ul class="list"><li>El run no arranca: puede haber otro run del grupo <span class="mono">nueva-version-modelo</span> esperando aprobación; cancélalo o apruébalo.</li><li>Hay que salir de una rama que <b>ya tenga la v2 fusionada</b>: si no, no hay una versión anterior que restaurar.</li></ul></div>
+ </div></div>
+</section>
+
+<section class="slide" data-part="F" data-min="6" data-title="Rollback: dos intentos"
+ data-notes="El rollback no reentrena ni reconstruye: devuelve la ficha a una versión anterior. Por defecto comprueba que la imagen de esa versión exista en GHCR, porque si no, la ficha apuntaría a algo que no se puede descargar. La v1 nunca se publicó, así que el primer intento se detiene con un mensaje claro; es una lección: lo que no está publicado no se puede restaurar. En el segundo se salta la comprobación con una rama cuyo nombre lleva sin-comprobar, solo para ensayar el mecanismo. No se borra nada en GHCR.">
+<p class="kick">6 · Volver atrás · volver a la v1</p><h1>Rollback: primero se para, a propósito</h1>
+
+<p class="small rot"><span class="tag ok">Capturas reales</span> cuenta del profesor (<span class="mono">helicr</span>) · 22/11/2026</p>
+<div class="grid2">
+ <div class="col">
+  <figure class="cap" data-img="gh-05-rollback-parado.webp"><button class="zoom" data-src="img/gh-05-rollback-parado.webp" data-alt="Rollback en rojo (10 s): «La imagen no está en GHCR. No se encuentra ghcr.io/helicr/retencion-api:v1-35a94deb4e04ab4a…»" title="Ampliar (Esc cierra)"><img src="img/gh-05-rollback-parado.webp" alt="Rollback en rojo (10 s): «La imagen no está en GHCR. No se encuentra ghcr.io/helicr/retencion-api:v1-35a94deb4e04ab4a…»" style="max-height:270px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Rollback en rojo (10 s): «La imagen no está en GHCR. No se encuentra ghcr.io/helicr/retencion-api:v1-35a94deb4e04ab4a…»</figcaption></figure>
+  <div class="card mira"><h3>1 · Con comprobación</h3><ul class="list"><li>Rama <span class="mono">lab/rollback/v1</span>, run nº 45041023548, <b>rojo</b> en <b>10 s</b>.</li><li>«La imagen no está en GHCR: No se encuentra ghcr.io/helicr/retencion-api:v1-35a94deb4e04ab4a…».</li><li>Es <b>a propósito</b>: la v1 se entrenó en local y <b>nunca se publicó</b>.</li></ul></div>
+ </div>
+ <div class="col">
+  <figure class="cap" data-img="gh-06-rollback-pr.webp"><button class="zoom" data-src="img/gh-06-rollback-pr.webp" data-alt="Rollback en verde (16 s): resumen «Rollback · de v2 a v1» con el enlace al pull request nº 3" title="Ampliar (Esc cierra)"><img src="img/gh-06-rollback-pr.webp" alt="Rollback en verde (16 s): resumen «Rollback · de v2 a v1» con el enlace al pull request nº 3" style="max-height:270px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Rollback en verde (16 s): resumen «Rollback · de v2 a v1» con el enlace al pull request nº 3</figcaption></figure>
+  <div class="card mira"><h3>2 · Sin comprobar</h3><ul class="list"><li>Rama <span class="mono">lab/rollback/v1-sin-comprobar</span> (con «sin-comprobar» en el nombre no se comprueba la imagen), run nº 45041634741, <b>verde</b> en <b>16 s</b>.</li><li>Resumen «Rollback · de v2 a v1» y enlace al <b>PR nº 3</b>.</li></ul></div>
+ </div>
+</div>
+</section>
+
+<section class="slide" data-part="F" data-min="5" data-title="El PR del rollback"
+ data-notes="El PR nº 3 es la prueba de que se puede volver atrás con control: queda revisado y fusionado como cualquier cambio, con rastro. Fíjese en la segunda captura: en historial_versiones.json la 1 pasa de anterior a produccion y la 2 de produccion a retirada. Lo retirado no se elimina. En el día a día, el rollback va con la imagen ya publicada, así que se hace en segundos; aquí la v1 no estaba publicada y por eso hubo que saltarse la comprobación.">
+<p class="kick">6 · Volver atrás · lo que cambia</p><h1>El PR nº 3 restaura la ficha y no borra nada</h1>
+
+<div class="grid2"><figure class="cap" data-img="gh-07-pr-rollback.webp"><button class="zoom" data-src="img/gh-07-pr-rollback.webp" data-alt="Pull request nº 3 «Rollback del modelo: v2 a v1», abierto por github-actions[bot]: devuelve referencia.json a la versión 1" title="Ampliar (Esc cierra)"><img src="img/gh-07-pr-rollback.webp" alt="Pull request nº 3 «Rollback del modelo: v2 a v1», abierto por github-actions[bot]: devuelve referencia.json a la versión 1" style="max-height:270px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Pull request nº 3 «Rollback del modelo: v2 a v1», abierto por github-actions[bot]: devuelve referencia.json a la versión 1</figcaption></figure><figure class="cap" data-img="gh-08-pr-rollback-cambios.webp"><button class="zoom" data-src="img/gh-08-pr-rollback-cambios.webp" data-alt="Archivos cambiados del PR nº 3: en el historial la 1 pasa de «anterior» a «produccion» y la 2 de «produccion» a «retirada»" title="Ampliar (Esc cierra)"><img src="img/gh-08-pr-rollback-cambios.webp" alt="Archivos cambiados del PR nº 3: en el historial la 1 pasa de «anterior» a «produccion» y la 2 de «produccion» a «retirada»" style="max-height:270px"><span class="lupa"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.5 12.5 L18 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg> Ampliar</span></button><figcaption><span class="tag ok">Captura real</span> Archivos cambiados del PR nº 3: en el historial la 1 pasa de «anterior» a «produccion» y la 2 de «produccion» a «retirada»</figcaption></figure></div>
+<div class="grid2" style="margin-top:8px">
+ <div class="card mira"><h3>Qué hace</h3><ul class="list"><li><b>Restaura</b> <span class="mono">referencia.json</span> tal cual estaba en el commit anterior (la v1).</li><li>En el historial: la v1 vuelve a <b>produccion</b> y la v2 pasa a <b>retirada</b>.</li><li>Al fusionarlo, el siguiente lote vuelve a usar la imagen de la v1.</li></ul></div>
+ <div class="card mira"><h3>Qué no hace</h3><ul class="list"><li><b>No se borra nada</b>: la imagen de la v2 sigue en GHCR y el historial se conserva.</li><li>Volver a avanzar es lanzar «Nueva versión del modelo» otra vez.</li><li>Alternativa: el botón <b>Revert</b> del PR de referencia que se fusionó.</li></ul></div>
+</div>
+</section>
+
+<section class="slide grande" data-part="G" data-min="6" data-title="Si algo falla"
+ data-notes="Los cuatro primeros pasaron de verdad durante los ensayos. El primero es el más engañoso: parece que GitHub no hace nada, pero hay un run anterior esperando aprobación en el mismo grupo. El segundo es un detalle de YAML: los defaults se heredan a todos los trabajos, y un trabajo que no hace checkout no tiene la carpeta. El tercero y el cuarto son, otra vez, la configuración del repositorio. El quinto es el de siempre en un fork.">
+<p class="kick">7 · Problemas y cierre · casos reales que pasaron</p><h1>Si algo falla: cuatro casos reales</h1>
+<div class="card"><table class="tbl"><tr><th>Síntoma</th><th>Causa</th><th>Qué hacer</th></tr><tr><td>El run nuevo <b>no arranca</b>: se queda en cola («Pending»)</td><td>Un run <b>esperando aprobación bloquea</b> al siguiente del mismo grupo de <i>concurrency</i> (<span class="mono">nueva-version-modelo</span>, compartido con <span class="mono">rollback</span>)</td><td><b>Cancela</b> el run viejo (Cancel workflow) o <b>apruébalo</b></td></tr><tr><td>El trabajo «Publicar» falla con «No such file or directory»</td><td>Un trabajo <b>sin checkout</b> hereda <span class="mono">defaults.run.working-directory: 04-Proyecto-Base</span>, que no existe en ese trabajo</td><td>Se arregló con <span class="mono">working-directory: .</span> en el trabajo <span class="mono">publicar</span> (una prueba lo vigila)</td></tr><tr><td>Publica <b>sin esperar</b> aprobación</td><td>El <i>environment</i> <span class="mono">produccion</span> <b>no existía</b> (GitHub lo crea solo, <b>sin revisores</b>) o sin Required reviewers</td><td>Repite la configuración A y vuelve a lanzar</td></tr><tr><td>El último paso (abrir el PR) falla</td><td>Falta <b>Allow GitHub Actions to create and approve pull requests</b></td><td>Repite la configuración B y relanza el trabajo 4 (Re-run)</td></tr><tr><td>No aparece ningún run</td><td>Actions sin activar en el fork, o la rama no empieza por <span class="mono">lab/…</span></td><td>Pestaña Actions del fork; revisa el nombre de la rama</td></tr></table></div>
+</section>
+
+<section class="slide grande" data-part="G" data-min="5" data-title="Qué está verificado"
+ data-notes="Diapositiva de honestidad: lo comprobado y lo que no. Los números de run permiten abrir cada ejecución en la cuenta del profesor. Lo no verificado es sobre todo el entorno Codespace para el compose y la ejecución programada real; ambos se anotan como pendientes en CODESPACE.md. Si algún alumno los comprueba, que lo cuente para completar la guía.">
+<p class="kick">7 · Problemas y cierre · qué se comprobó y qué no</p><h1>Qué se comprobó de verdad y qué falta</h1>
+
+<div class="grid2">
+ <div class="card"><h3 class="okc">Comprobado en runs reales (22/11/2026)</h3><ul class="list"><li>Lote nº 45026646958 y validación nº 45026646944 en verde.</li><li>Nueva versión: igual (nº 45027468464), rechazada (nº 45027468487) y aceptada con aprobación, publicación y PR (nº 45030152194).</li><li>Rollback: parado (nº 45041023548) y con PR nº 3 (nº 45041634741).</li><li>Configuración del repositorio (cuatro capturas) y panel con los tres modos y la compra simulada.</li></ul></div>
+ <div class="card"><h3 class="malc">Sin verificar o sin dato</h3><ul class="list"><li>El compose del panel <b>en un Codespace</b>: se probó en local y en Actions.</li><li>El <span class="mono">schedule</span> de las 05:17 UTC <b>corriendo solo</b>: se lanzó por push.</li><li>Descargar la imagen con <span class="mono">docker pull</span> desde un Codespace.</li><li>Tamaño de la imagen <span class="mono">retencion-api</span>: <b>sin dato</b>.</li><li>Las latencias son locales (<span class="mono">TestClient</span>), no en red.</li><li>Duración total del laboratorio para un grupo: <b>sin dato</b>.</li></ul></div>
+</div>
+<div class="callout" style="margin-top:12px">Cada run se puede abrir con <span class="mono">https://github.com/helicr/curso-ml-ia-desarrollo-produccion/actions/runs/&lt;nº&gt;</span>.</div>
+</section>
+
+<section class="slide grande" data-part="G" data-min="5" data-title="Autoevaluación"
+ data-notes="Lea cada pregunta y deje que respondan antes de leer la respuesta. La tercera enlaza con la diapositiva de la puerta; la quinta con el rollback: la comprobación de la imagen es una protección, no un fallo. Cierre con la idea del día en la diapositiva siguiente.">
+<p class="kick">7 · Problemas y cierre · Comprueba que lo tienes</p><h1>Seis preguntas</h1>
+<div class="grid3"><div class="card"><h3>1. ¿Qué modo usarías para la campaña de cada mañana y cuál para una compra que acaba de ocurrir?</h3><p class="small">Lote para la campaña (puntúa a todos); <b>online</b> para lo que acaba de ocurrir (variables calculadas al vuelo).</p></div><div class="card"><h3>2. ¿Por qué «bajo demanda» no cambia tras la compra simulada?</h3><p class="small">Lee las variables ya calculadas de <span class="mono">fs_produccion</span>, las de ayer; solo online las recalcula.</p></div><div class="card"><h3>3. ¿Qué decide la puerta de calidad?</h3><p class="small">Compara el <b>AUC de test</b> con <span class="mono">referencia.json</span> y la tolerancia: igual, rechazada o aceptada.</p></div><div class="card"><h3>4. ¿Qué hace el <i>environment</i> <span class="mono">produccion</span>?</h3><p class="small">Obliga a que un revisor apruebe antes de publicar en GHCR.</p></div><div class="card"><h3>5. ¿Por qué el primer rollback se para y qué no borra ninguno?</h3><p class="small">La imagen de la v1 nunca se publicó. Ninguno borra imágenes ni el historial: se restaura la ficha.</p></div><div class="card"><h3>6. ¿Dónde ves qué versión está en producción?</h3><p class="small">En <span class="mono">models/referencia.json</span> (y su historial) y en la pestaña <b>Versiones</b> del panel.</p></div></div>
+</section>
+
+<section class="slide grande" data-part="G" data-min="4" data-title="Cierre"
+ data-notes="Cierre con un único mensaje. Las cuatro cifras son reales: el AUC de test del run nº 45030152194, la probabilidad online del panel, la suma de los tiempos de los cuatro trabajos del mismo run (191, 138, 17 y 14 segundos, que dan 360) y el rollback del run nº 45041634741. Este laboratorio no usa Google Cloud; la operación del modelo (deriva, monitoreo, alertas) sigue en S5.">
+<p class="kick">7 · Problemas y cierre · El mensaje</p><h1>Producción no es subir un modelo: es poder cambiarlo con control y volver atrás</h1>
+
+<div class="msg">Un modelo en producción se <b>mide</b>, se <b>aprueba</b>, se <b>versiona</b> y se puede <b>deshacer</b>.</div>
+<div class="grid4" style="margin-top:18px">
+ <div class="card kpi"><b class="n ">0,7471 → 0,7956</b><p class="small">AUC de test de la v1 a la v2: <b>+0,0485</b>, dentro de la tolerancia de 0,02</p></div>
+ <div class="card kpi"><b class="n ">79,9 % → 76,2 %</b><p class="small">probabilidad <b>online</b> del cliente 12670 tras una compra simulada; lote y bajo demanda siguen en 79,9 %</p></div>
+ <div class="card kpi"><b class="n ">6 min</b><p class="small">de trabajo de la v2: 191 s + 138 s + 17 s + 14 s, sin contar la espera de la aprobación</p></div>
+ <div class="card kpi"><b class="n ">16 s</b><p class="small">el rollback a la v1: un PR, y <b>ninguna</b> imagen borrada de GHCR</p></div>
+</div>
+<div style="text-align:center;margin-top:44px;font-size:44px;font-weight:700;color:var(--acento)">¿Preguntas?</div>
+</section>
+
+</div></div>
+
+<aside id="notes" aria-label="Notas del ponente"><h3>Notas del ponente</h3><div id="notetext"></div><p class="small" id="notemin"></p></aside>
+<div id="index" aria-label="Índice"><h2>Índice</h2><div class="grid" id="idxgrid"></div></div>
+<div id="zoombox" aria-label="Captura ampliada"><p>Esc o clic para cerrar</p><img id="zoomimg" alt=""></div>
+<nav id="bar" aria-label="Controles">
+  <button id="bprev" aria-label="Anterior">←</button><button id="bnext" aria-label="Siguiente">→</button>
+  <span id="count">1 / 1</span><span id="clockref" title="Minuto planificado acumulado (propuesta)"></span>
+  <button class="part" data-p="A">Plan</button><button class="part" data-p="B">Preparar</button><button class="part" data-p="C">Lote</button><button class="part" data-p="D">Panel</button><button class="part" data-p="E">Versión</button><button class="part" data-p="F">Rollback</button><button class="part" data-p="G">Cierre</button>
+  <span class="sp"></span>
+  <a id="bhome" href="../index.html" title="Volver al índice de la sesión S4">⌂ S4</a><button id="bidx">Índice (O)</button><button id="bnotes">Notas (S)</button><button id="bfull">Pantalla completa (F)</button>
+</nav>
+<noscript>Esta presentación necesita JavaScript. El mismo contenido está en guia.md, en esta carpeta.</noscript>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PARTES={"A": "Plan", "B": "Preparar", "C": "Lote", "D": "Panel", "E": "Versión", "F": "Rollback", "G": "Cierre"};
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){try{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();return true}catch(e2){return false}}}
+const slides=$$('.slide'), N=slides.length; let cur=0;
+slides.forEach((s,i)=>{const f=document.createElement('div');f.className='foot';
+  f.innerHTML=`<span>ML e IA · S4 · Laboratorio de producción e2e</span><span><b>${esc(PARTES[s.dataset.part]||'')}</b> · ${i+1} / ${N}</span>`;s.appendChild(f)});
+const cum=[];(()=>{let t=0;slides.forEach(s=>{cum.push(t);t+=+s.dataset.min||0})})();
+const TOTAL=cum[N-1]+(+slides[N-1].dataset.min||0);
+function go(i){i=Math.max(0,Math.min(N-1,i));cur=i;slides.forEach((s,k)=>s.classList.toggle('active',k===i));chrome();try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+function chrome(){const s=slides[cur];
+  $('#count').textContent=(cur+1)+' / '+N; $('#clockref').textContent='min '+cum[cur]+' de '+TOTAL+' (propuesta)';
+  $('#prog').style.width=((cur+1)/N*100)+'%';
+  $$('#bar .part').forEach(b=>b.classList.toggle('on',b.dataset.p===s.dataset.part));
+  $('#notetext').innerHTML='<p>'+esc(s.dataset.notes||'')+'</p>';
+  $('#notemin').textContent='Tiempo previsto (propuesta): '+(s.dataset.min||0)+' min · acumulado '+cum[cur]+' min de '+TOTAL;
+  $$('#idxgrid button').forEach((b,k)=>b.classList.toggle('cur',k===cur));}
+function fit(){const v=$('#viewport');$('#stage').style.setProperty('--s',Math.min(v.clientWidth/1280,v.clientHeight/720).toFixed(4))}
+addEventListener('resize',fit);
+$('#idxgrid').innerHTML=slides.map((s,i)=>`<button data-i="${i}"><small>${esc(PARTES[s.dataset.part]||'')} · ${s.dataset.min||0} min</small>${i+1}. ${esc(s.dataset.title||'')}</button>`).join('');
+$('#idxgrid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;toggle('#index',false);go(+b.dataset.i)});
+function toggle(sel,force){$(sel).classList.toggle('on',force)}
+$('#bprev').onclick=()=>go(cur-1); $('#bnext').onclick=()=>go(cur+1);
+$('#bidx').onclick=()=>toggle('#index'); $('#bnotes').onclick=()=>toggle('#notes');
+$('#bfull').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()};
+$$('#bar .part').forEach(b=>b.onclick=()=>go(slides.findIndex(s=>s.dataset.part===b.dataset.p)));
+function zoom(on,src,alt){const z=$('#zoombox');if(on){$('#zoomimg').src=src;$('#zoomimg').alt=alt||'';}z.classList.toggle('on',!!on)}
+$('#zoombox').onclick=()=>zoom(false);
+addEventListener('keydown',e=>{
+  const t=e.target; if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+  if(e.ctrlKey||e.metaKey||e.altKey) return;
+  const k=e.key;
+  if(k==='Escape'){zoom(false);toggle('#index',false);toggle('#notes',false);return}
+  if($('#zoombox').classList.contains('on')) return;
+  if(k==='ArrowRight'||k==='PageDown'||(k===' '&&!/^(BUTTON|A)$/.test(t.tagName))){e.preventDefault();go(cur+1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(k==='Home'){e.preventDefault();go(0)} else if(k==='End'){e.preventDefault();go(N-1)}
+  else if(k==='o'||k==='O'){toggle('#index')} else if(k==='s'||k==='S'){toggle('#notes')} else if(k==='f'||k==='F'){$('#bfull').click()}
+});
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60){dx<0?go(cur+1):go(cur-1)}},{passive:true});
+document.addEventListener('click',async e=>{
+  const z=e.target.closest('.zoom'); if(z){e.stopPropagation();zoom(true,z.dataset.src,z.dataset.alt);return}
+  const b=e.target.closest('.cp'); if(!b) return; e.stopPropagation();
+  const ok=await copyText(b.dataset.t); const t=b.textContent; b.classList.add('ok'); b.textContent=ok?'✓':'✗'; setTimeout(()=>{b.classList.remove('ok');b.textContent=t},1200)});
+fit();
+const h=parseInt((location.hash||'').slice(1),10); go(isNaN(h)?0:h-1);
+addEventListener('hashchange',()=>{const n=parseInt((location.hash||'').slice(1),10);if(!isNaN(n)&&n-1!==cur)go(n-1)});
+})();
+</script>
+</body>
+</html>

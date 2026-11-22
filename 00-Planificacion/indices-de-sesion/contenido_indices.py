@@ -206,10 +206,24 @@ SESIONES = [
     dict(
         id='S4', titulo='Orquestación y CI/CD con GitHub Actions', horas='4 h', carpeta=S4, estado=SOLO_README, esperados=TODOS,
         resumen='Workflows y disparadores, secretos y autenticación con GCP sin claves, pruebas, registro del modelo, imagen y despliegue con aprobación.',
-        nota='La sesión está por preparar. Ya está disponible su extra «Un LLM y el estilo de color» (carpeta extra-estilo-llm/): '
-             'notebooks ejecutados y pipeline en GitHub Actions con un run real en verde (21/11/2026).',
+        nota='Preparados por ahora: el laboratorio de cierre «Producción e2e del caso Retail» '
+             '(carpeta laboratorio-produccion-e2e/: lote diario, bajo demanda, online con variables al vuelo, panel, versión nueva con '
+             'aprobación y rollback, ensayados en GitHub Actions el 22/11/2026) y el extra «Un LLM y el estilo de color» (carpeta extra-estilo-llm/): '
+             'notebooks ejecutados y pipeline en GitHub Actions con un run real en verde (21/11/2026). '
+             'Falta por preparar el resto de la sesión (la migración a GCP en vivo; su material previo está en S3).',
         enlaces=[
             instructor('README de S4', f'{S4}/README.md'),
+            deck('Laboratorio de cierre: producción e2e del caso Retail (diapositivas)', f'{S4}/laboratorio-produccion-e2e/index.html',
+                 '26 diapositivas: los tres modos de explotación, el panel, configurar el repositorio, versión nueva con puerta de calidad y aprobación, y rollback; capturas de runs reales.', volver=True),
+            alumno('Laboratorio de cierre: guía paso a paso', f'{S4}/laboratorio-produccion-e2e/guia.md', 'Cada orden, qué debes ver y si falla.'),
+            alumno('Configurar el repositorio (environment y permisos)', f'{S4}/laboratorio-produccion-e2e/CONFIGURAR-REPOSITORIO.md', 'Una sola vez, en Settings de tu fork; con capturas.'),
+            alumno('Levantar el panel en el Codespace', f'{S4}/laboratorio-produccion-e2e/CODESPACE.md'),
+            alumno('Workflow: puntuar por lotes (diario)', f'{S4}/laboratorio-produccion-e2e/puntuar-lote.yml'),
+            alumno('Workflow: validar la producción completa', f'{S4}/laboratorio-produccion-e2e/validar-produccion.yml'),
+            alumno('Workflow: nueva versión del modelo', f'{S4}/laboratorio-produccion-e2e/nueva-version.yml'),
+            alumno('Workflow: rollback de la versión', f'{S4}/laboratorio-produccion-e2e/rollback.yml'),
+            deck('Extra: un LLM y el estilo de color (diapositivas paso a paso)', f'{S4}/extra-estilo-llm/index.html',
+                 '60 min. Instalar, ejecutar cada notebook (órdenes para copiar), los tres actos con sus cifras y capturas reales, y orquestarlo en GitHub Actions.', volver=True),
             alumno('Extra: un LLM y el estilo de color (tres actos)', f'{S4}/extra-estilo-llm/README.md',
                    'El LLM lee el estilo y falla, la línea base gana, el LLM lo explica con LoRA; notebooks y pipeline en GitHub Actions.'),
             alumno('Extra: el pipeline en GitHub Actions (guía)', f'{S4}/extra-estilo-llm/guia-pipeline.md'),
