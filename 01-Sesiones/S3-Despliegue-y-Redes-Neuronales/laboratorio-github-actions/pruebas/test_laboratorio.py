@@ -156,7 +156,8 @@ def test_las_capturas_son_las_de_la_lista(html):
         else:
             assert f'<span class="mono">img/{nombre}</span>' in html, nombre
     en_disco = {p.name for p in (AQUI / 'img').glob('*') if p.is_file() and p.name != '.gitkeep'}
-    assert en_disco <= set(CAPTURAS), f'archivos en img/ que no están en la lista: {en_disco - set(CAPTURAS)}'
+    de_la_guia_e2e = {'e01-grafo-pipeline-e2e.webp'}   # captura que usa guia-pipeline-e2e.md, no la presentación
+    assert en_disco <= set(CAPTURAS) | de_la_guia_e2e, f'archivos en img/ que no están en la lista: {en_disco - set(CAPTURAS) - de_la_guia_e2e}'
     assert set(re.findall(r'src="img/([^"]+)"', html)) <= en_disco
 
 

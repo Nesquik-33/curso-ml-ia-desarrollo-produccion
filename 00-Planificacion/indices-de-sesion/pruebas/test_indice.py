@@ -78,6 +78,11 @@ def test_estado_solo_readme_es_verdad(i, s):
     carpeta = RAIZ / s['carpeta']
     archivos = {p.relative_to(carpeta).as_posix() for p in carpeta.rglob('*') if p.is_file() and not p.name.startswith('.') and p.name != 'index.html'}
     if s['estado'] == C.SOLO_README:
+        # Un extra (carpeta «extra-*») puede adelantarse a la sesión sin que la sesión esté preparada; el índice lo dice en su nota.
+        hay_extra = any(a.startswith('extra-') for a in archivos)
+        archivos = {a for a in archivos if not a.startswith('extra-')}
+        if hay_extra:
+            assert 'extra' in (s.get('nota') or ''), f'{s["id"]} tiene una carpeta extra-*: dilo en su «nota» de contenido_indices.py'
         assert archivos == {'README.md'}, f'{s["id"]} está marcada «Solo README» pero tiene {sorted(archivos)}: cambia su estado en contenido_indices.py'
     else:
         assert len(archivos) > 1, f'{s["id"]} está marcada «preparada» pero solo tiene README'

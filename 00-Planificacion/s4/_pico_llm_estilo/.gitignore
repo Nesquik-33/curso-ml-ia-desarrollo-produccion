@@ -1,0 +1,6 @@
+# Carpeta de trabajo por defecto (datos, caché de modelos, adaptador, MLflow): nunca al repo
+_trabajo/
+__pycache__/
+.ipynb_checkpoints/
+mlruns/
+mlartifacts/

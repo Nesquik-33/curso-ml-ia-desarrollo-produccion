@@ -181,6 +181,9 @@ SESIONES = [
             alumno('2 · Guía del laboratorio de MLflow', f'{S3}/laboratorio-mlflow/guia.md', 'El mismo recorrido en texto: cada orden, qué debes ver y si falla.'),
             alumno('3 · Guía del laboratorio de GitHub Actions', f'{S3}/laboratorio-github-actions/guia.md', 'El YAML línea a línea y los ocho pasos del laboratorio.'),
             alumno('3 · El workflow del laboratorio', f'{S3}/laboratorio-github-actions/pruebas-proyecto.yml', 'Se copia en .github/workflows/ de tu copia del repositorio.'),
+            alumno('3+ · Pipeline de datos e2e en GitHub Actions (guía paso a paso)', f'{S3}/laboratorio-github-actions/guia-pipeline-e2e.md',
+                   'Un job por etapa (origen → RAW → MASTER → FS/ML → entrenar → API y campaña → resumen), encadenados con needs: y artefactos. Run real en verde: 6 min 49 s.'),
+            alumno('3+ · El workflow del pipeline e2e', f'{S3}/laboratorio-github-actions/pipeline-e2e.yml', 'Se copia en .github/workflows/pipeline-e2e.yml de tu copia del repositorio.'),
             alumno('4 · Guía del laboratorio de red neuronal', f'{S3}/laboratorio-red-neuronal/guia.md', 'Instalar, preparar las fotos, entrenar, ver en MLflow y predecir.'),
             alumno('4 · Script del laboratorio de red neuronal', f'{S3}/laboratorio-red-neuronal/red_gato_perro.py', 'Subórdenes datos, entrenar y predecir.'),
             alumno('Tarea (avance 3)', f'{S3}/tarea/README.md', 'Entrega: miércoles 25/11/2026, 10:00 (hora de Perú).'),
@@ -203,7 +206,21 @@ SESIONES = [
     dict(
         id='S4', titulo='Orquestación y CI/CD con GitHub Actions', horas='4 h', carpeta=S4, estado=SOLO_README, esperados=TODOS,
         resumen='Workflows y disparadores, secretos y autenticación con GCP sin claves, pruebas, registro del modelo, imagen y despliegue con aprobación.',
-        enlaces=[instructor('README de S4', f'{S4}/README.md')],
+        nota='La sesión está por preparar. Ya está disponible su extra «Un LLM y el estilo de color» (carpeta extra-estilo-llm/): '
+             'notebooks ejecutados y pipeline en GitHub Actions con un run real en verde (21/11/2026).',
+        enlaces=[
+            instructor('README de S4', f'{S4}/README.md'),
+            alumno('Extra: un LLM y el estilo de color (tres actos)', f'{S4}/extra-estilo-llm/README.md',
+                   'El LLM lee el estilo y falla, la línea base gana, el LLM lo explica con LoRA; notebooks y pipeline en GitHub Actions.'),
+            alumno('Extra: el pipeline en GitHub Actions (guía)', f'{S4}/extra-estilo-llm/guia-pipeline.md'),
+            alumno('Extra: checklist antes de usar Actions', f'{S4}/extra-estilo-llm/checklist-actions.md'),
+            alumno('Extra 00 · preparar el entorno', f'{S4}/extra-estilo-llm/00_preparar_entorno.ipynb'),
+            alumno('Extra 01 · datos fabricados', f'{S4}/extra-estilo-llm/01_datos_fabricados.ipynb'),
+            alumno('Extra 02 · zero-shot', f'{S4}/extra-estilo-llm/02_zero_shot.ipynb'),
+            alumno('Extra 03 · fine-tuning con LoRA', f'{S4}/extra-estilo-llm/03_fine_tuning_lora.ipynb'),
+            alumno('Extra 04 · comparar y transferir', f'{S4}/extra-estilo-llm/04_comparar_y_transferir.ipynb'),
+            alumno('Extra 05 · explicar el estilo', f'{S4}/extra-estilo-llm/05_explicar_estilo.ipynb'),
+        ],
     ),
     dict(
         id='S5', titulo='MLOps y operación', horas='4 h', carpeta=S5, estado=SOLO_README, esperados=TODOS,
